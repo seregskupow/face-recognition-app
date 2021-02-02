@@ -1,0 +1,12 @@
+{
+    "port":"5000",
+    "connectURI":"mongodb+srv://Sergey:diplomaproj12345@cluster0-veca5.mongodb.net/app?retryWrites=true&w=majority",
+    "jwtSecret":"Sergey Skupow face reco",
+    "mongologin":"Sergey",
+    "password":"diplomaproj12345",
+    "imdbAPI":"f1cc94c6",
+    "adress":"http://localhost:5000",
+    "email":"recofunfun@gmail.com",
+    "emailPassword":"ActorRecognize12345",
+    "corsPort":"http://localhost:3000"
+}

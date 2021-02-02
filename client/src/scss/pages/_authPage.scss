@@ -1,0 +1,44 @@
+.card {
+	& .signType {
+		font-size: 30px;
+		padding: 5px;
+		cursor: pointer;
+		border-radius: 10px;
+		// &:hover{
+		//     background:var(--accent-gradient);
+		// }
+	}
+	& button {
+		width: 150px !important;
+	}
+	& .btn-in {
+		background: var(--accent-gradient);
+		outline: none;
+		border: none;
+	}
+}
+.auth-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: url("../../images/background_new.jpg") no-repeat center center fixed;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
+	& .auth-form {
+		width: 90%;
+		max-width: 800px;
+		& .card {
+			background-color: var(--transparent-grey) !important;
+			-webkit-backdrop-filter: blur(15px);
+			backdrop-filter: blur(15px);
+		}
+	}
+}
