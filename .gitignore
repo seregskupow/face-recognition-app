@@ -4,6 +4,9 @@
 /node_modules
 client/node_modules
 
+server/uploads/*
+server/userImages/*
+
 /.pnp
 .pnp.js
 
