@@ -43,12 +43,9 @@ const ActorPageComponent = ({
   }, [knownFor]);
   return (
     <section id="actorPage">
-      <div className="actor-page-wrapper">
-        <div className="actor-info page">
-          <div className="actor-info-wrapper">
-            <div className="actor-img">
-              <img src={image.url} alt="" />
-            </div>
+      <div className="actor-info page">
+        <div className="actor-shortinfo-wrapper">
+          <aside className="actor-shortinfo">
             <div className="actor-data">
               <div className="actor-data-wrapper">
                 <h1 className="actor-data-name">{name}</h1>
@@ -66,21 +63,28 @@ const ActorPageComponent = ({
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="actor-bio page">
-          <h1 className="actor-bio-title">Biography</h1>
-          <div className="actor-bio-wrapper">
-            <p>{biography}</p>
-          </div>
-        </div>
-        {filmData.length > 0 && (
-          <div className="actor-films page">
-            <div className="actor-films-title-wrapper">
-              <h1 className="actor-films-title">Top rated films</h1>
+
+            <div className="actor-img">
+              <img src={image.url} alt="" />
             </div>
-            <div className="actor-films-wrap">
-              {filmData
+          </aside>
+        </div>
+        <div className="actor-bio-wrapper">
+          <div className="actor-bio">
+            <h1 className="actor-bio-title">Biography</h1>
+            <div className="actor-bio-text">
+              <p>{biography}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {filmData.length > 0 && (
+      <div className="actor-films page">
+        <div className="actor-films-title-wrapper">
+          <h1 className="actor-films-title">Top rated films</h1>
+        </div>
+        <div className="actor-films-wrap">
+          {filmData
                 && filmData.map((film, index) => (
                   <div
                     key={index * Math.random() * (9999 - 1111) * 1000}
@@ -160,16 +164,16 @@ const ActorPageComponent = ({
                     </div>
                   </div>
                 ))}
-            </div>
-            <div className="slider-arrow-wrapper">
-              <div className="slider__arrows--left slider__arrow">&#10094;</div>
-              <div className="slider__arrows--right slider__arrow">
-                &#10095;
-              </div>
-            </div>
+        </div>
+        <div className="slider-arrow-wrapper">
+          <div className="slider__arrows--left slider__arrow">&#10094;</div>
+          <div className="slider__arrows--right slider__arrow">
+            &#10095;
           </div>
-        )}
+        </div>
       </div>
+      )}
+
     </section>
   );
 };

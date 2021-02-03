@@ -322,9 +322,7 @@ export default class FaceMatch extends Component {
                 sessionStorage.setItem('repeat', JSON.stringify(true));
               }}
             >
-              <span>
-                <MdArrowBack />
-              </span>
+              <MdArrowBack />
               <span>Back</span>
             </button>
           </div>
@@ -422,7 +420,7 @@ export default class FaceMatch extends Component {
                 </div>
               </div>
 
-              <div className="">
+              <div>
                 <div style={{ textAlign: 'center' }}>
                   <p style={{ color: 'white' }}>OR just Ctr+V</p>
                 </div>
@@ -456,7 +454,7 @@ export default class FaceMatch extends Component {
                     onKeyDown={() => {
                       this.urlUpload(Trio);
                       this.setState({ disableUpload: true });
-									 }}
+                    }}
                     style={{
                       pointerEvents: `${
                         disableUpload === true ? 'none' : 'auto'

@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
 import './scss/main.scss';
-import './scss/utils/media.scss';
 import Loader from './components/Loader';
 
 function App() {

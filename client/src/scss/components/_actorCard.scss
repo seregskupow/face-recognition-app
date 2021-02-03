@@ -54,6 +54,7 @@
 					transition: all 0.4s ease-in-out;
 				}
 				& h4 {
+					font-size: 2rem;
 				}
 			}
 			&:hover {
@@ -67,8 +68,10 @@
 					overflow-wrap: break-word;
 					word-wrap: break-word;
 					hyphens: auto;
+					font-size: 1.5rem;
 					& span {
 						font-weight: bold;
+						font-size: 1.5rem;
 					}
 				}
 			}

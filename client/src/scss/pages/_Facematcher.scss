@@ -7,12 +7,12 @@
 	max-width: 1600px;
 	min-height: 90vh;
 
-	margin: 20px auto 100px auto;
-	padding: 50px 0;
+	margin: 2rem auto 10rem auto;
+	padding: 5rem 0;
 
 	@include media("sm") {
 		width: 80vw;
-		margin-top: 50px;
+		margin-top: 5rem;
 	}
 }
 
@@ -26,7 +26,7 @@
 	& .control-panel {
 		display: flex;
 
-		margin-bottom: 10px;
+		margin-bottom: 1rem;
 
 		& .close-button {
 			display: flex;
@@ -40,12 +40,12 @@
 
 			color: $darkWhite;
 
-			padding: 10px;
+			padding: 1rem;
 
 			border: none;
 			border-radius: 15px;
 
-			font-size: 20px;
+			font-size: 2rem;
 
 			box-shadow: var(--large-shadow);
 
@@ -55,29 +55,25 @@
 				outline: none;
 			}
 
-			& span {
-				line-height: 1em;
+			& svg {
+				font-size: 3rem;
+				transform: translateY(-1px);
 			}
-
-			& span:nth-child(1) {
-				font-size: 2em;
-				transition: transform 0.3s ease-in-out;
+			& span {
+				font-size: 2rem;
+				line-height: 2rem;
 			}
 
 			&:hover {
 				box-shadow: var(--small-shadow);
-
-				& span:nth-child(1) {
-					transform: translateX(-10px);
-				}
 			}
 		}
 	}
 	& .face-matcher-wrapper {
 		width: 100%;
 
-		margin: 10px auto 0 auto;
-		padding: 30px;
+		margin: 1rem auto 0 auto;
+		padding: 3rem;
 
 		border-radius: 30px;
 
@@ -108,17 +104,21 @@
 				justify-content: center;
 				align-items: center;
 
-				width: 40%;
+				width: 100%;
 
-				padding: 10px;
+				padding: 1rem;
 
 				text-align: center;
 
 				background: var(--accent-gradient);
 
-				border-radius: 20px;
+				border-radius: 2rem;
 
 				box-shadow: var(--large-shadow);
+
+				@include media("sm") {
+					width: 40%;
+				}
 
 				& canvas {
 					display: none;
@@ -136,18 +136,25 @@
 
 				& .result-img-container {
 					& img {
-						border-radius: 15px;
+						display: inline;
+
 						max-height: 350px;
 						max-width: 100%;
-						display: inline;
+
+						border-radius: 15px;
 					}
 				}
 			}
 
 			& .wiki-wrapper {
-				width: 60%;
+				width: 100%;
+
 				display: flex;
 				justify-content: center;
+
+				@include media("sm") {
+					width: 60%;
+				}
 
 				& .wiki {
 					& .results-wrap {
@@ -158,65 +165,98 @@
 
 						& h3 {
 							color: $darkWhite;
+
 							text-shadow: $VolumeTextShadow;
-							font-size: 2em;
+
+							font-size: 2.5rem;
 						}
 
 						& .reco {
 							height: 100%;
 							width: 100%;
-							padding: 5px 30px 0px 30px;
+
+							padding: 0.5rem 3rem 0rem 3rem;
+
 							border-radius: 20px;
-							box-shadow: inset 0 0px 40px rgba(0, 0, 0, 0.25), inset 0 0px 10px rgba(0, 0, 0, 0.22);
+
+							box-shadow: var(--large-shadow);
+
 							overflow-y: auto;
 
 							& .wiki-preloader {
+								position: relative;
+
 								display: block;
+
 								height: 40px;
 								width: 100%;
+
 								margin: 10px;
-								animation: shimmer 2s infinite;
+
 								background: linear-gradient(to right, #1b1e24 4%, #292d36 25%, #1b1e24 36%);
-								box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+								box-shadow: var(--large-shadow);
+
 								background-size: 1000px 100%;
+
 								border-radius: 20px;
-								position: relative;
+
+								animation: shimmer 2s infinite;
 
 								&:before {
 									content: "";
+
 									position: absolute;
 									left: -30px;
 									top: 40%;
+
 									width: 15px;
 									height: 15px;
+
 									border-radius: 50%;
-									animation: shimmer 2s infinite;
+
 									background: linear-gradient(to right, #1b1e24 4%, #292d36 25%, #1b1e24 36%);
-									box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+									box-shadow: var(--large-shadow);
+
 									background-size: 1000px 100%;
+
+									animation: shimmer 2s infinite;
 								}
 							}
 
 							& a {
+								position: relative;
+								display: inline-block;
+
 								height: 40px;
 								width: 100%;
-								display: inline-block;
-								position: relative;
-								font-size: 1.5em;
-								padding: 5px 10px;
-								color: $darkWhite;
-								background: var(--secondary);
-								border-radius: 15px;
-								box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
 								margin: 10px;
+								padding: 0.5rem 1rem;
+
+								font-size: 2rem;
+
+								color: $darkWhite;
+
+								background: var(--secondary);
+
+								border-radius: 15px;
+
+								box-shadow: var(--large-shadow);
+
 								&:before {
 									content: "";
+
 									position: absolute;
 									left: -30px;
 									top: 40%;
+
 									width: 15px;
 									height: 15px;
+
 									border-radius: 50%;
+
 									background: var(--accent-gradient);
 								}
 							}
@@ -225,38 +265,17 @@
 				}
 			}
 		}
-		& .col {
-			& #imageUpload {
-				opacity: 0;
-			}
-
-			& .reco {
-				background: var(--primary);
-				padding: 15px 10px 10px 10px;
-				width: 30%;
-				border-radius: 15px;
-
-				& a {
-					color: #fff;
-				}
-			}
-
-			& h1 {
-				background-color: #2876f9;
-				background-image: linear-gradient(315deg, #2876f9 30%, #6d17cb 74%);
-				color: #fff;
-				display: inline;
-				padding: 5px;
-				border-radius: 20px;
-			}
-		}
 	}
 }
 .found-actors {
 	position: relative;
-	margin-top: 100px;
+	margin-top: 5rem;
+
+	@include media("sm") {
+		margin-top: 6rem;
+	}
 	& .found-actor-wrapper-title {
-		margin-bottom: 30px;
+		margin-bottom: 3rem;
 		& h1 {
 			color: $darkWhite;
 			text-shadow: $VolumeTextShadow;
@@ -271,24 +290,23 @@
 		flex-wrap: wrap;
 		position: relative;
 		border-radius: 20px;
-		padding: 30px;
+		padding: 0.5rem;
 		box-shadow: inset 0 0px 40px rgba(0, 0, 0, 0.25), inset 0 0px 10px rgba(0, 0, 0, 0.22);
-
-		@media only screen and (max-width: 1250px) {
-			padding: 20px;
+		@include media("md") {
+			padding: 2rem;
 		}
-
-		@media only screen and (max-width: 875px) {
-			padding: 5px;
+		@include media("lg") {
+			padding: 3rem;
 		}
 
 		& .actor-card {
-			width: 30%;
-			@media only screen and (max-width: 1250px) {
+			width: 100%;
+
+			@include media("md") {
 				width: 45%;
 			}
-			@media only screen and (max-width: 875px) {
-				width: 100%;
+			@include media("lg") {
+				width: 30%;
 			}
 		}
 	}
@@ -296,28 +314,39 @@
 .options {
 	display: flex;
 	flex-direction: column;
+
 	background: var(--accent-gradient-light);
+
 	border-radius: 20px;
+
 	box-shadow: inset 0 0px 40px rgba(0, 0, 0, 0.25), inset 0 0px 10px rgba(0, 0, 0, 0.22);
+
 	& .upload-type {
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+
 		margin: 50px 0;
+
 		& .upload-type-item {
-			width: 40%;
+			width: 90%;
 			height: 70px;
 
-			@media screen and (max-width: 900px) {
+			@include media("xs") {
 				width: 70%;
 			}
-			@media screen and (max-width: 600px) {
-				width: 90%;
+
+			@include media("md") {
+				width: 40%;
 			}
 
 			& .aws-btn {
 				width: 100%;
 				height: 100%;
+
+				& span {
+					font-size: 2rem;
+				}
 			}
 
 			& .type {
@@ -332,63 +361,67 @@
 				width: 100%;
 				height: 100%;
 			}
-
-			& .url {
-				background: transparent;
-				border: none;
-				background: $blue;
-				border-top-right-radius: 15px;
-				border-bottom-right-radius: 15px;
-
-				&:focus {
-					outline: 0;
-				}
-
-				&:hover {
-					box-shadow: 0 0 0.15em $lightBlue, 0 0 calc(0.15em * 2) $lightBlue, 0 0 calc(0.15em * 3) $lightBlue,
-						0 0 calc(0.15em * 3.5) $lightBlue, 0 0 calc(0.15em * 4) $lightBlue, 0 0 calc(0.15em * 4.5) $lightBlue;
-				}
-			}
 		}
 	}
 
 	& .demo-img-wrapper {
 		width: 100%;
+
 		text-align: center;
+
 		color: $darkWhite;
 
 		& .demo-img-container {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			margin-bottom: 20px;
+
+			margin-bottom: 2rem;
 
 			& .demo-img {
 				display: block;
+
 				height: 100%;
-				margin: 0 10px;
-				overflow: hidden;
+
+				margin: 0 1rem;
 				border-radius: 20px;
-				cursor: pointer;
+
+				overflow: hidden;
+
 				position: relative;
 
+				cursor: pointer;
+
 				& img {
-					max-width: 60px;
-					height: 60px;
+					width: 40px;
+					height: 40px;
+
 					border-radius: 20px;
+
 					transition: transform 0.3s ease-in;
+
+					@include media("sm") {
+						width: 60px;
+						height: 60px;
+					}
 				}
 
 				&:before {
 					content: "";
+
 					position: absolute;
 					top: 0;
 					left: 0;
+
 					height: 100%;
 					width: 100%;
+
 					background: $violet;
-					opacity: 0;
+
 					border-radius: 20px;
+
+					opacity: 0;
+
 					z-index: 2;
 				}
 

@@ -1,4 +1,10 @@
-import gsap, { Back } from "gsap/all";
+import gsap, { Back } from 'gsap';
+
+const largeShadow =
+  '0 0px 30px rgba(0, 0, 0, 0.25), 0 0px 10px rgba(0, 0, 0, 0.22)';
+const smallShadow =
+  '0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.24)';
+
 export default class Slider {
   constructor(slides) {
     this.currentItem = 0;
@@ -8,31 +14,51 @@ export default class Slider {
     this.out = this.out.bind(this);
     this.next_slide = this.next_slide.bind(this);
     this.prev_slide = this.prev_slide.bind(this);
-    this.resetAnimation = this.resetAnimation.bind(this)
+    this.resetAnimation = this.resetAnimation.bind(this);
   }
 
   init() {
-    this.in(this.currentItem,false,0);
+    this.in(this.currentItem, false, 0);
   }
-  resetAnimation(){
+
+  resetAnimation() {
     //   this.animating = false;
-    
   }
-  in(index, toLeft,del=1) {
+
+  in(index, toLeft, del = 1) {
     const item = this.slider_items[index];
-    const texts = item.querySelectorAll(".item-appear");
+    const texts = item.querySelectorAll('.item-appear');
     const timeline = gsap.timeline({});
-    const allComplete = ()=>{this.animating = false;}
+    const allComplete = () => {
+      this.animating = false;
+    };
     gsap.set(item, { scale: 0.9 });
-    gsap.set(item.querySelector('.film-card-wrapper'),{boxShadow:"0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.24)"});
-    gsap.set([item.querySelector('.img-wrap'),item.querySelector('.film-info')],{boxShadow:"0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.24)"});
-    gsap.set(item, { left: toLeft ? "100vw" : "-100vw" });
+    gsap.set(item.querySelector('.film-card-wrapper'), {
+      boxShadow: smallShadow,
+    });
+    gsap.set(
+      [item.querySelector('.img-wrap'), item.querySelector('.film-info')],
+      {
+        boxShadow: smallShadow,
+      }
+    );
+    gsap.set(item, { left: toLeft ? '100vw' : '-100vw' });
     timeline
       .to(item, 0.5, { left: 0, delay: del })
-      .to(item, 0.5, { scale: 1})
-      .to(item.querySelector('.film-card-wrapper'), 0.5, { boxShadow:"0 15px 30px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)",delay:-0.5})
-      .from(item.querySelectorAll(".rating"),{width:0,delay:0.2})
-      .to([item.querySelector('.img-wrap'),item.querySelector('.film-info')],0.5,{boxShadow:"0 15px 30px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)",delay:-1})
+      .to(item, 0.5, { scale: 1 })
+      .to(item.querySelector('.film-card-wrapper'), 0.5, {
+        boxShadow: largeShadow,
+        delay: -0.5,
+      })
+      .from(item.querySelectorAll('.rating'), { width: 0, delay: 0.2 })
+      .to(
+        [item.querySelector('.img-wrap'), item.querySelector('.film-info')],
+        0.5,
+        {
+          boxShadow: largeShadow,
+          delay: -1,
+        }
+      )
       .staggerFrom(
         texts,
         0.4,
@@ -42,25 +68,40 @@ export default class Slider {
           ease: Back.easeOut,
         },
         0.2,
-        this.slider_items.length*0.4,
+        this.slider_items.length * 0.4,
         allComplete
       );
   }
 
   out(index, nextIndex, toLeft) {
     const item = this.slider_items[index];
-    const texts = item.querySelectorAll("p");
+    const texts = item.querySelectorAll('p');
     const timeline = gsap.timeline({});
     timeline
       .to(item, 0.5, { scale: 0.9 })
-      .to(item, 0.5, { left: toLeft ? "-100vw" : "100vw"})
-      .to(item.querySelector('.film-card-wrapper'), 0.5, { boxShadow:"0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.24)"},0)
-      .to([item.querySelector('.img-wrap'),item.querySelector('.film-info')],0.5,{boxShadow:"0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.24)",delay:-1})
-      .call(this.in, [nextIndex, toLeft], this, "-=1.5")
+      .to(item, 0.5, { left: toLeft ? '-100vw' : '100vw' })
+      .to(
+        item.querySelector('.film-card-wrapper'),
+        0.5,
+        {
+          boxShadow: smallShadow,
+        },
+        0
+      )
+      .to(
+        [item.querySelector('.img-wrap'), item.querySelector('.film-info')],
+        0.5,
+        {
+          boxShadow: smallShadow,
+          delay: -1,
+        }
+      )
+      .call(this.in, [nextIndex, toLeft], this, '-=1.5')
       .set(texts, {
-        clearProps: "all"
+        clearProps: 'all',
       });
   }
+
   next_slide() {
     if (this.animating === false) {
       this.animating = true;

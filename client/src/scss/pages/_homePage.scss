@@ -1,12 +1,13 @@
 #home {
-	width: 100vw;
-	// max-width:1600px;
-	height: 100vh;
-	margin: 0 auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	// background: url("../../images/background.jpg") no-repeat center center fixed;
+
+	width: 100vw;
+	height: 100vh;
+
+	margin: 0 auto;
+
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
@@ -19,8 +20,10 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+
 		width: 100%;
 		height: 100%;
+
 		background: url("../../images/background_new.jpg") no-repeat center center fixed;
 		-moz-background-size: cover;
 		-o-background-size: cover;
@@ -29,24 +32,32 @@
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
+
 		z-index: -2;
 	}
 	& canvas {
 		position: absolute;
 		top: 0;
 		left: 50%;
+
 		transform: translateX(-50%);
+
 		z-index: -1;
 	}
 	& .home-wrapper {
 		width: 100%;
+
 		margin: 0 auto;
+		padding: 50px 0;
+
 		text-align: center;
+
 		color: $darkWhite;
+
 		background-color: var(--transparent-grey) !important;
+
 		-webkit-backdrop-filter: blur(15px);
 		backdrop-filter: blur(15px);
-		padding: 50px 0;
 		& h1 {
 			text-shadow: $VolumeTextShadow;
 			font-size: 3em;
