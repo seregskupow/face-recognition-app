@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -9,25 +9,37 @@ import linkData from '../data/linkData.json';
 import { ReactComponent as FaceIcon } from '../images/icons/face-recognition.svg';
 import { ReactComponent as HistoryIcon } from '../images/icons/history.svg';
 import { ReactComponent as HomeIcon } from '../images/icons/home.svg';
+import { addFunctionToResize } from '../utils/eventListeners';
 
 const icons = [
   <HomeIcon className="mobile-menu-icon" />,
   <FaceIcon className="mobile-menu-icon" />,
   <HistoryIcon className="mobile-menu-icon" />,
 ];
-const NavBar = ({ isMob }) => {
+const NavBar = () => {
   const history = useHistory();
   const auth = useContext(AuthContext);
   const [toggle, setToggle] = useState(false);
+  const [isMob, setMob] = useState(false);
   const menuHandler = () => {
     setToggle((toggle) => !toggle);
   };
+  const isMobile = () => {
+    if (window.innerWidth > 900) return setMob(false);
+    return setMob(true);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', isMobile);
+    return () => {
+      window.removeEventListener('resize', isMobile);
+    };
+  }, []);
   const clickHandler = (event) => {
     event.preventDefault();
     auth.logOut();
     history.push('/');
   };
-  if (isMob === false) {
+  if (!isMob) {
     return (
       <>
         <Logo className="logo">RecoFun</Logo>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ColorThief from 'colorthief/dist/color-thief.mjs';
 import { AwesomeButton } from 'react-awesome-button';
@@ -29,7 +29,6 @@ const ActorPageComponent = ({
     setFilmData(result);
     if (filmData) initSlider();
   };
-
   const initSlider = () => {
     const slider = new Slider({
       slider: document.querySelector('.slider-init'),
@@ -40,7 +39,7 @@ const ActorPageComponent = ({
   };
   useEffect(() => {
     fetchFilms(knownFor);
-  }, [knownFor]);
+  }, []);
   return (
     <>
 
@@ -88,10 +87,10 @@ const ActorPageComponent = ({
         </div>
         <div className="films-slider-wrap slider-init">
           <div className="slider-track">
-            {filmData
-                && filmData.map((film, index) => (
+            { filmData?.map((film, index) => (
                   <div
                     key={index * Math.random() * (9999 - 1111) * 1000}
+										data-geh={`${Math.random() * (100 - 1 ) + 1}`}
                     className="film-card slide"
                   >
                     <div className="film-card-wrapper">

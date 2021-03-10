@@ -10,26 +10,14 @@ import RecoverEmail from './pages/RecoverEmail';
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 
 export const useRoutes = (isLoggedIn) => {
-  const [isMob, toggleMobile] = useState(true);
-
-  const isMobile = () => {
-    toggleMobile(!(window.innerWidth > 900));
-    window.onresize = () => {
-      toggleMobile(!(window.innerWidth > 900));
-    };
-  };
-  useEffect(() => {
-    isMobile();
-  }, [isMob]);
-
   if (isLoggedIn) {
     return (
       <>
-        <NavBar isMob={isMob} />
+        <NavBar />
         <Switch>
           <Route path="/" exact render={(props) => <Home {...props} isAuth />} />
           <Route path="/match" exact component={FaceMatch} />
-          <Route path="/history" render={(props) => <History {...props} isMob={isMob} />} />
+          <Route path="/history" render={(props) => <History {...props} />} />
           <Route path="/actorinfo/:id" component={ActorPage} />
           <Redirect to="/" />
         </Switch>

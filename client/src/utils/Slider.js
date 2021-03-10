@@ -1,7 +1,8 @@
-import gsap, { Back } from 'gsap';
+import gsap, { Power1 } from 'gsap';
+import { addFunctionToResize } from './eventListeners';
 
 const largeShadow =
-  '0 0px 30px rgba(0, 0, 0, 0.25), 0 0px 10px rgba(0, 0, 0, 0.22)';
+  '0 0px 30px rgba(0, 0, 0, 0.25), 0 0px 10px rgba(0, 0, 0, 0.4)';
 const smallShadow =
   '0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.24)';
 
@@ -20,9 +21,11 @@ export default class Slider {
     this.resize = this.resize.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.prevSlide = this.prevSlide.bind(this);
+    this.appearAnimation = this.appearAnimation.bind(this);
   }
 
   init() {
+    console.log('Inited');
     if (!this.slider_items.length) {
       throw 'Slides are not defined';
     }
@@ -34,14 +37,14 @@ export default class Slider {
     const lastClone = this.slider_items[this.slider_items.length - 1].cloneNode(
       true
     );
-
     this.track.prepend(lastClone);
     this.track.append(firstClone);
 
     this.slider_items.unshift(lastClone);
     this.slider_items.push(firstClone);
 
-    window.addEventListener('resize', this.resize);
+    addFunctionToResize(() => this.resize());
+    // window.addEventListener('resize', this.resize);
 
     this.resize();
 
@@ -67,12 +70,12 @@ export default class Slider {
     this.slider_items.forEach((slide, index) => {
       slide.style.width = `${this.slideWidth}px`;
       slide.style.marginLeft = `${this.slideMargin}px`;
-
+      console.log(slide);
       if (index === this.slider_items.length - 1) {
         slide.style.marginRight = `${this.slideMargin}px`;
       }
     });
-
+    console.log('\n');
     gsap.set(this.track, {
       x: -1 * (this.currentSlide * (this.slideWidth + this.slideMargin)),
     });
@@ -82,6 +85,7 @@ export default class Slider {
     if (this.animating === false) {
       this.animating = true;
       const nextSlide = this.currentSlide + 1;
+      this.appearAnimation(nextSlide);
       gsap.to(this.track, {
         duration: 0.5,
         x: -1 * (nextSlide * (this.slideWidth + this.slideMargin)),
@@ -120,5 +124,13 @@ export default class Slider {
         },
       });
     }
+  }
+
+  appearAnimation(index) {
+    gsap.from(this.slider_items[index].querySelectorAll('.rating'), {
+      duration: 0.6,
+      width: 0,
+      ease: Power1.easeInOut,
+    });
   }
 }
