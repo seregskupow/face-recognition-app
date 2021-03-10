@@ -31,64 +31,68 @@ const ActorPageComponent = ({
   };
 
   const initSlider = () => {
-    const slider = new Slider(document.querySelectorAll('.film-card'));
-    const btn_next = document.querySelector('.slider__arrows--right');
-    const btn_prev = document.querySelector('.slider__arrows--left');
-    btn_next.addEventListener('click', slider.next_slide);
-    btn_prev.addEventListener('click', slider.prev_slide);
+    const slider = new Slider({
+      slider: document.querySelector('.slider-init'),
+      next: document.querySelector('.slider__arrows--right'),
+      prev: document.querySelector('.slider__arrows--left'),
+    });
     slider.init();
   };
   useEffect(() => {
     fetchFilms(knownFor);
   }, [knownFor]);
   return (
-    <section id="actorPage">
-      <div className="actor-info page">
-        <div className="actor-shortinfo-wrapper">
-          <aside className="actor-shortinfo">
-            <div className="actor-data">
-              <div className="actor-data-wrapper">
-                <h1 className="actor-data-name">{name}</h1>
-                <p>
-                  <span>{birthday.split(':')[0]}</span>
-                  :
-                  {' '}
-                  {birthday.split(':')[1]}
-                </p>
-                <p>
-                  <span>{birthPlace.split(':')[0]}</span>
-                  :
-                  {' '}
-                  {birthPlace.split(':')[1]}
-                </p>
-              </div>
-            </div>
+    <>
 
-            <div className="actor-img">
-              <img src={image.url} alt="" />
-            </div>
-          </aside>
-        </div>
-        <div className="actor-bio-wrapper">
-          <div className="actor-bio">
-            <h1 className="actor-bio-title">Biography</h1>
-            <div className="actor-bio-text">
-              <p>{biography}</p>
+      <section id="actorPage">
+        <div className="actor-info page">
+          <div className="actor-shortinfo-wrapper">
+            <aside className="actor-shortinfo">
+              <div className="actor-data">
+                <div className="actor-data-wrapper">
+                  <h1 className="actor-data-name">{name}</h1>
+                  <p>
+                    <span>{birthday.split(':')[0]}</span>
+                    :
+                    {' '}
+                    {birthday.split(':')[1]}
+                  </p>
+                  <p>
+                    <span>{birthPlace.split(':')[0]}</span>
+                    :
+                    {' '}
+                    {birthPlace.split(':')[1]}
+                  </p>
+                </div>
+              </div>
+
+              <div className="actor-img">
+                <img src={image.url} alt="" />
+              </div>
+            </aside>
+          </div>
+          <div className="actor-bio-wrapper">
+            <div className="actor-bio">
+              <h1 className="actor-bio-title">Biography</h1>
+              <div className="actor-bio-text">
+                <p>{biography}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
       {filmData.length > 0 && (
       <div className="actor-films page">
         <div className="actor-films-title-wrapper">
           <h1 className="actor-films-title">Top rated films</h1>
         </div>
-        <div className="actor-films-wrap">
-          {filmData
+        <div className="films-slider-wrap slider-init">
+          <div className="slider-track">
+            {filmData
                 && filmData.map((film, index) => (
                   <div
                     key={index * Math.random() * (9999 - 1111) * 1000}
-                    className="film-card"
+                    className="film-card slide"
                   >
                     <div className="film-card-wrapper">
                       <div className="img-wrap">
@@ -164,6 +168,8 @@ const ActorPageComponent = ({
                     </div>
                   </div>
                 ))}
+          </div>
+
         </div>
         <div className="slider-arrow-wrapper">
           <div className="slider__arrows--left slider__arrow">&#10094;</div>
@@ -174,7 +180,7 @@ const ActorPageComponent = ({
       </div>
       )}
 
-    </section>
+    </>
   );
 };
 

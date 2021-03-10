@@ -160,6 +160,8 @@ section#actorPage {
 
 	overflow-x: hidden;
 
+	color: $darkWhite;
+
 	@include media("sm") {
 		padding-bottom: 0;
 	}
@@ -179,180 +181,40 @@ section#actorPage {
 		}
 	}
 
-	& .actor-films-wrap {
+	& .films-slider-wrap {
+		// position: relative;
+
+		// height: 90vh;
+		// width: 100%;
+
 		position: relative;
 
-		height: 90vh;
-		width: 100%;
+		display: block;
 
-		overflow: hidden;
+		width: 100vw;
 
-		@include media("sm") {
-			min-height: 70vh;
-			max-height: 1000px;
-		}
+		margin: 0 auto;
+		padding: 0;
 
-		& .film-card {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+		overflow-x: hidden;
 
-			position: absolute;
-			left: -100vw;
+		// @include media("sm") {
+		// 	min-height: 70vh;
+		// 	max-height: 1000px;
+		// }
 
-			width: 100%;
-			height: 90%;
+		& .slider-track {
+			position: relative;
+			top: 0;
+			left: 0;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
 
-			padding: 0;
-
-			background-size: cover;
-			background-position: center center;
-
-			@include media("sm") {
-				padding: 5rem 0;
-			}
-
-			& .film-card-wrapper {
-				display: flex;
-				flex-direction: column;
-				justify-content: space-around;
-				align-items: center;
-
-				max-height: 100%;
-				width: 90%;
-
-				padding: 1rem 0;
-
-				background: var(--secondary);
-
-				border-radius: 20px;
-
-				box-shadow: var(--large-shadow);
-
-				@include media("sm") {
-					flex-direction: row;
-
-					padding: 3rem 0;
-				}
-
-				& .img-wrap {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-
-					max-height: 300px;
-
-					padding: none;
-
-					border-radius: 20px;
-
-					object-fit: contain;
-
-					@include media("sm") {
-						height: 100%;
-						width: 20%;
-
-						padding: 0 20px;
-					}
-
-					& img {
-						padding: 20px 0;
-						height: 100%;
-						width: auto;
-						border-radius: 15px;
-
-						@include media("sm") {
-							height: 100%;
-							width: auto;
-
-							border-radius: 20px;
-						}
-					}
-				}
-				& .film-details {
-					width: 95%;
-					height: 100%;
-
-					box-shadow: none !important;
-
-					@include media("sm") {
-						width: 50%;
-					}
-
-					& .film-title {
-						text-align: center;
-						& h1 {
-							font-size: 2rem;
-							text-shadow: $VolumeTextShadow;
-						}
-
-						@include media("sm") {
-							text-align: start;
-
-							font-size: 3rem;
-						}
-					}
-					& .film-info {
-						max-height: 75%;
-
-						padding: 2rem;
-
-						background: var(--secondary);
-
-						border-radius: 15px;
-
-						overflow: auto;
-
-						& .rating-wrapper {
-							width: 100%;
-							height: 10px;
-
-							margin-bottom: 1rem;
-
-							background: var(--primary);
-
-							border-radius: 15px;
-							overflow: hidden;
-
-							@include media("sm") {
-								height: 20px;
-							}
-
-							& .rating {
-								height: 100%;
-
-								background-image: var(--accent-gradient);
-
-								border-radius: 20px;
-
-								box-shadow: var(--large-shadow);
-							}
-						}
-						& p {
-							color: $darkWhite;
-
-							font-size: 1.2rem;
-
-							@include media("sm") {
-								font-size: 1.6rem;
-							}
-
-							& span {
-								color: white;
-
-								font-weight: bold;
-
-								font-size: inherit;
-							}
-						}
-					}
-					& .link-wrapper {
-						display: flex;
-						justify-content: center;
-
-						margin: 50px 0 10px 0;
-					}
-				}
+			& .slide {
+				float: left;
+				height: 100%;
+				min-height: 1px;
 			}
 		}
 	}
@@ -416,6 +278,174 @@ section#actorPage {
 			}
 			&:active {
 				text-shadow: $VolumeTextShadow;
+			}
+		}
+	}
+}
+.film-card {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	// position: absolute;
+	// left: -100vw;
+
+	height: 100%;
+
+	padding: 0;
+
+	background-size: cover;
+	background-position: center center;
+
+	@include media("sm") {
+		padding: 5rem 0;
+	}
+
+	& .film-card-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+
+		max-height: 100%;
+		width: 100%;
+
+		padding: 1rem 0;
+
+		background: var(--secondary);
+
+		border-radius: 20px;
+
+		box-shadow: var(--large-shadow);
+		box-sizing: border-box;
+
+		@include media("sm") {
+			flex-direction: row;
+
+			padding: 3rem 0;
+		}
+
+		& .img-wrap {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			height: 100%;
+
+			padding: none;
+
+			border-radius: 15px;
+
+			object-fit: contain;
+
+			overflow: hidden;
+
+			@include media("sm") {
+				height: 100%;
+				width: 20%;
+			}
+
+			& img {
+				height: 100%;
+				width: auto;
+				border-radius: 15px;
+
+				box-shadow: var(--large-shadow);
+
+				@include media("sm") {
+					height: 100%;
+					width: auto;
+
+					border-radius: 20px;
+				}
+			}
+		}
+		& .film-details {
+			width: 95%;
+			height: 100%;
+
+			padding: 15px;
+
+			border-radius: 15px;
+
+			box-shadow: var(--small-shadow);
+
+			@include media("sm") {
+				width: 50%;
+			}
+
+			& .film-title {
+				text-align: center;
+				& h1 {
+					font-size: 2rem;
+					text-shadow: $VolumeTextShadow;
+				}
+
+				@include media("sm") {
+					text-align: start;
+
+					font-size: 3rem;
+				}
+			}
+			& .film-info {
+				max-height: 75%;
+
+				padding: 2rem;
+
+				background: var(--secondary);
+
+				border-radius: 15px;
+
+				overflow: auto;
+
+				& .rating-wrapper {
+					width: 100%;
+					height: 10px;
+
+					margin-bottom: 1rem;
+
+					background: var(--primary);
+
+					border-radius: 15px;
+					overflow: hidden;
+
+					@include media("sm") {
+						height: 20px;
+					}
+
+					& .rating {
+						height: 100%;
+
+						background-image: var(--accent-gradient);
+
+						border-radius: 20px;
+
+						box-shadow: var(--large-shadow);
+					}
+				}
+				& p {
+					color: $darkWhite;
+
+					font-size: 1.2rem;
+
+					@include media("sm") {
+						font-size: 1.6rem;
+					}
+
+					& span {
+						color: white;
+
+						font-weight: bold;
+
+						font-size: inherit;
+					}
+				}
+			}
+			& .link-wrapper {
+				display: flex;
+				justify-content: center;
+
+				margin: 50px 0 10px 0;
 			}
 		}
 	}

@@ -6,123 +6,119 @@ const smallShadow =
   '0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.24)';
 
 export default class Slider {
-  constructor(slides) {
-    this.currentItem = 0;
-    this.slider_items = slides;
+  constructor(properties) {
+    this.slider = properties.slider || null;
+    this.track = this.slider.querySelector('.slider-track') || null;
+    this.slider_items = [...this.slider.querySelectorAll('.slide')];
+    this.nextBtn = properties.next || null;
+    this.prevBtn = properties.prev || null;
+    this.slideWidth = window.innerWidth * 0.8;
+    this.slideMargin = (window.innerWidth - this.slideWidth) / 2;
+    this.currentSlide = 1;
     this.animating = false;
-    this.in = this.in.bind(this);
-    this.out = this.out.bind(this);
-    this.next_slide = this.next_slide.bind(this);
-    this.prev_slide = this.prev_slide.bind(this);
-    this.resetAnimation = this.resetAnimation.bind(this);
+
+    this.resize = this.resize.bind(this);
+    this.nextSlide = this.nextSlide.bind(this);
+    this.prevSlide = this.prevSlide.bind(this);
   }
 
   init() {
-    this.in(this.currentItem, false, 0);
-  }
+    if (!this.slider_items.length) {
+      throw 'Slides are not defined';
+    }
+    if (!this.track) {
+      throw 'Track is not defined';
+    }
 
-  resetAnimation() {
-    //   this.animating = false;
-  }
-
-  in(index, toLeft, del = 1) {
-    const item = this.slider_items[index];
-    const texts = item.querySelectorAll('.item-appear');
-    const timeline = gsap.timeline({});
-    const allComplete = () => {
-      this.animating = false;
-    };
-    gsap.set(item, { scale: 0.9 });
-    gsap.set(item.querySelector('.film-card-wrapper'), {
-      boxShadow: smallShadow,
-    });
-    gsap.set(
-      [item.querySelector('.img-wrap'), item.querySelector('.film-info')],
-      {
-        boxShadow: smallShadow,
-      }
+    const firstClone = this.slider_items[0].cloneNode(true);
+    const lastClone = this.slider_items[this.slider_items.length - 1].cloneNode(
+      true
     );
-    gsap.set(item, { left: toLeft ? '100vw' : '-100vw' });
-    timeline
-      .to(item, 0.5, { left: 0, delay: del })
-      .to(item, 0.5, { scale: 1 })
-      .to(item.querySelector('.film-card-wrapper'), 0.5, {
-        boxShadow: largeShadow,
-        delay: -0.5,
-      })
-      .from(item.querySelectorAll('.rating'), { width: 0, delay: 0.2 })
-      .to(
-        [item.querySelector('.img-wrap'), item.querySelector('.film-info')],
-        0.5,
-        {
-          boxShadow: largeShadow,
-          delay: -1,
-        }
-      )
-      .staggerFrom(
-        texts,
-        0.4,
-        {
-          y: 200,
-          autoAlpha: 0,
-          ease: Back.easeOut,
-        },
-        0.2,
-        this.slider_items.length * 0.4,
-        allComplete
-      );
+
+    this.track.prepend(lastClone);
+    this.track.append(firstClone);
+
+    this.slider_items.unshift(lastClone);
+    this.slider_items.push(firstClone);
+
+    window.addEventListener('resize', this.resize);
+
+    this.resize();
+
+    gsap.set(this.track, {
+      x: -1 * (this.currentSlide * (this.slideWidth + this.slideMargin)),
+    });
+
+    this.nextBtn.addEventListener('click', this.nextSlide);
+    this.prevBtn.addEventListener('click', this.prevSlide);
+
+    // this.in(this.currentSlide, false, 0);
   }
 
-  out(index, nextIndex, toLeft) {
-    const item = this.slider_items[index];
-    const texts = item.querySelectorAll('p');
-    const timeline = gsap.timeline({});
-    timeline
-      .to(item, 0.5, { scale: 0.9 })
-      .to(item, 0.5, { left: toLeft ? '-100vw' : '100vw' })
-      .to(
-        item.querySelector('.film-card-wrapper'),
-        0.5,
-        {
-          boxShadow: smallShadow,
-        },
-        0
-      )
-      .to(
-        [item.querySelector('.img-wrap'), item.querySelector('.film-info')],
-        0.5,
-        {
-          boxShadow: smallShadow,
-          delay: -1,
-        }
-      )
-      .call(this.in, [nextIndex, toLeft], this, '-=1.5')
-      .set(texts, {
-        clearProps: 'all',
-      });
+  resize() {
+    this.slideWidth = window.innerWidth * 0.8;
+    this.slideMargin = (window.innerWidth - this.slideWidth) / 2;
+
+    this.track.style.width = `${
+      this.slider_items.length * this.slideWidth +
+      this.slideMargin * (this.slider_items.length + 1)
+    }px`;
+
+    this.slider_items.forEach((slide, index) => {
+      slide.style.width = `${this.slideWidth}px`;
+      slide.style.marginLeft = `${this.slideMargin}px`;
+
+      if (index === this.slider_items.length - 1) {
+        slide.style.marginRight = `${this.slideMargin}px`;
+      }
+    });
+
+    gsap.set(this.track, {
+      x: -1 * (this.currentSlide * (this.slideWidth + this.slideMargin)),
+    });
   }
 
-  next_slide() {
+  nextSlide() {
     if (this.animating === false) {
       this.animating = true;
-      const next =
-        this.currentItem !== this.slider_items.length - 1
-          ? this.currentItem + 1
-          : 0;
-      this.out(this.currentItem, next, false);
-      this.currentItem = next;
+      const nextSlide = this.currentSlide + 1;
+      gsap.to(this.track, {
+        duration: 0.5,
+        x: -1 * (nextSlide * (this.slideWidth + this.slideMargin)),
+        onComplete: () => {
+          this.currentSlide = nextSlide;
+          this.animating = false;
+          if (this.currentSlide === this.slider_items.length - 1) {
+            this.currentSlide = 1;
+            gsap.set(this.track, {
+              x:
+                -1 * (this.currentSlide * (this.slideWidth + this.slideMargin)),
+            });
+          }
+        },
+      });
     }
   }
 
-  prev_slide() {
+  prevSlide() {
     if (this.animating === false) {
       this.animating = true;
-      const prev =
-        this.currentItem > 0
-          ? this.currentItem - 1
-          : this.slider_items.length - 1;
-      this.out(this.currentItem, prev, true);
-      this.currentItem = prev;
+      const prevSlide = this.currentSlide - 1;
+      gsap.to(this.track, {
+        duration: 0.5,
+        x: -1 * (prevSlide * (this.slideWidth + this.slideMargin)),
+        onComplete: () => {
+          this.currentSlide = prevSlide;
+          this.animating = false;
+          if (this.currentSlide === 0) {
+            this.currentSlide = this.slider_items.length - 2;
+            gsap.set(this.track, {
+              x:
+                -1 * (this.currentSlide * (this.slideWidth + this.slideMargin)),
+            });
+          }
+        },
+      });
     }
   }
 }

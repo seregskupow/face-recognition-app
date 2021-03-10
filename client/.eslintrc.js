@@ -28,6 +28,7 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/label-has-for': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
+    'import/prefer-default-export': 'off',
   },
   settings: {
     react: {
