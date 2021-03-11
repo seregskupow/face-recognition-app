@@ -319,6 +319,27 @@ section#actorPage {
 		box-shadow: var(--large-shadow);
 		box-sizing: border-box;
 
+		user-select: none;
+		cursor: grab;
+
+		transition: all 0.2s ease-in-out;
+
+		&:active {
+			cursor: grabbing;
+
+			box-shadow: var(--small-shadow);
+
+			transform: scale(0.99);
+
+			& img {
+				box-shadow: var(--small-shadow);
+			}
+
+			& .film-details {
+				box-shadow: var(--small-shadow);
+			}
+		}
+
 		@include media("sm") {
 			flex-direction: row;
 
@@ -352,6 +373,8 @@ section#actorPage {
 
 				box-shadow: var(--large-shadow);
 
+				transition: box-shadow 0.2s ease-in-out;
+
 				@include media("sm") {
 					height: 100%;
 					width: auto;
@@ -369,6 +392,8 @@ section#actorPage {
 			border-radius: 15px;
 
 			box-shadow: var(--large-shadow);
+
+			transition: box-shadow 0.2s ease-in-out;
 
 			@include media("sm") {
 				width: 50%;

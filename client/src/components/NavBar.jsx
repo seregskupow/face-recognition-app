@@ -29,6 +29,7 @@ const NavBar = () => {
     return setMob(true);
   };
   useEffect(() => {
+    isMobile();
     window.addEventListener('resize', isMobile);
     return () => {
       window.removeEventListener('resize', isMobile);

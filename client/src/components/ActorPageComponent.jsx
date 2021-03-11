@@ -12,6 +12,7 @@ const ActorPageComponent = ({
     knownFor, image, name, birthday, birthPlace, biography,
   },
 }) => {
+	let slider;
   const [filmData, setFilmData] = useState([]);
   const { request } = useHttp();
   const fetchFilms = async (filmArr) => {
@@ -30,7 +31,7 @@ const ActorPageComponent = ({
     if (filmData) initSlider();
   };
   const initSlider = () => {
-    const slider = new Slider({
+     slider = new Slider({
       slider: document.querySelector('.slider-init'),
       next: document.querySelector('.slider__arrows--right'),
       prev: document.querySelector('.slider__arrows--left'),
@@ -39,6 +40,9 @@ const ActorPageComponent = ({
   };
   useEffect(() => {
     fetchFilms(knownFor);
+		return ()=>{
+			slider.destroy();
+		}
   }, []);
   return (
     <>
