@@ -2,6 +2,10 @@
 	color: $darkWhite;
 	margin: 10px 15px;
 	display: inline-block;
+
+	&:active {
+		transform: scale(0.98);
+	}
 	& .actor-card-body {
 		width: 100%;
 		transition: all 0.3s ease-in-out;
@@ -69,6 +73,7 @@
 					word-wrap: break-word;
 					hyphens: auto;
 					font-size: 1.5rem;
+
 					& span {
 						font-weight: bold;
 						font-size: 1.5rem;

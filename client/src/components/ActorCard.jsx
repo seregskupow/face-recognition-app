@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 import PropTypes from 'prop-types';
 import Loader from './Loader';
@@ -12,12 +12,12 @@ const ActorCard = ({
   const imageRef = useRef(null);
   const history = useHistory();
   const clickHandler = (e) => {
-    history.push(`/actorinfo/${name.split(' ').join('_')}`);
+    // history.push(`/actorinfo/${name.split(' ').join('_')}`);
   };
   // eslint-disable-next-line
   useEffect(() => () => {}, []);
   return (
-    <div className="actor-card">
+    <NavLink to={`/actorinfo/${name.split(' ').join('_')}`} className="actor-card">
       <div role="button" tabIndex="0" onKeyPress={(event) => clickHandler(event)} className="actor-card-body" onClick={(event) => clickHandler(event)}>
         <div className="img-wrap">
           <LazyLoad placeholder={<Loader background="transparent" />} once>
@@ -49,7 +49,7 @@ const ActorCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 };
 

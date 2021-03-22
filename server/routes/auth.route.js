@@ -1,20 +1,20 @@
-const { Router } = require("express");
-const { check, validationResult } = require("express-validator");
-const nodemailer = require("nodemailer");
-const config = require("config");
+const { Router } = require('express');
+const { check, validationResult } = require('express-validator');
+const nodemailer = require('nodemailer');
+const config = require('config');
 const shortid = require('shortid');
-var jwt = require("jsonwebtoken");
+var jwt = require('jsonwebtoken');
 const router = Router();
-const User = require("../dbmodels/User");
-const Recovery = require("../dbmodels/Recovery");
-var bcrypt = require("bcryptjs");
+const User = require('../dbmodels/User');
+const Recovery = require('../dbmodels/Recovery');
+var bcrypt = require('bcryptjs');
 
 router.post(
-  "/register",
+  '/register',
   [
-    check("name", "Name must be at least 6 characters").isLength({ min: 6 }),
-    check("email", "Incorrect email").normalizeEmail().isEmail(),
-    check("password", "Password must be at least 6 characters").isLength({
+    check('name', 'Name must be at least 6 characters').isLength({ min: 6 }),
+    check('email', 'Incorrect email').normalizeEmail().isEmail(),
+    check('password', 'Password must be at least 6 characters').isLength({
       min: 6,
     }),
   ],
@@ -24,31 +24,31 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(422).json({
           errors: errors.array(),
-          message: "Incorrect email or password",
+          message: 'Incorrect email or password',
         });
       }
       const { name, email, password } = req.body;
 
       const candidate = await User.findOne({ email });
       if (candidate) {
-        return res.status(400).json({ message: "Such user already exists" });
+        return res.status(400).json({ message: 'Such user already exists' });
       }
       const hashedPassword = await bcrypt.hash(password, 15);
       const user = new User({ name, email, password: hashedPassword });
       await user.save();
-      res.status(201).json({ message: "User created", success: true });
+      res.status(201).json({ message: 'User created', success: true });
     } catch (e) {
       res
         .status(500)
-        .json({ message: "Something went wrong, please try again" });
+        .json({ message: 'Something went wrong, please try again' });
     }
   }
 );
 router.post(
-  "/login",
+  '/login',
   [
-    check("email", "Incorrect email").normalizeEmail().isEmail(),
-    check("password", "Password must be at least 6 characters").isLength({
+    check('email', 'Incorrect email').normalizeEmail().isEmail(),
+    check('password', 'Password must be at least 6 characters').isLength({
       min: 6,
     }),
   ],
@@ -58,40 +58,48 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(422).json({
           errors: errors.array(),
-          message: "Incorrect email or password",
+          message: 'Incorrect email or password',
         });
       }
       const { email, password } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: 'User not found' });
       }
       //validate password
       const validPass = await bcrypt.compare(password, user.password);
       if (!validPass)
-        return res.status(401).json({ message: "Incorrect password" });
+        return res.status(401).json({ message: 'Incorrect password' });
       //create token
-      const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"));
+      const token = jwt.sign({ userId: user.id }, config.get('jwtSecret'));
       res.json({ token, userId: user.id, userName: user.name });
     } catch (e) {
       res
         .status(500)
-        .json({ message: "Something went wrong, please try again" });
+        .json({ message: 'Something went wrong, please try again' });
     }
   }
 );
 
-router.post("/checkemail", async (req, res) => {
+router.get('/checkauth', async (req, res) => {
+  if (req.cookies) {
+    if (!req.cookies.auth) {
+      res.json({ message: 'not auth' });
+    }
+    res.json({ message: 'success' });
+  }
+});
+router.post('/checkemail', async (req, res) => {
   try {
     const email = req.body.email;
-    console.log(email)
+    console.log(email);
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "Such user doesn`t exist" });
+      return res.status(404).json({ message: 'Such user doesn`t exist' });
     }
     const code = shortid.generate();
-    const recoveryToken = jwt.sign({ email }, config.get("jwtSecret"));
-    const recovery = new Recovery({code,email,recoveryToken});
+    const recoveryToken = jwt.sign({ email }, config.get('jwtSecret'));
+    const recovery = new Recovery({ code, email, recoveryToken });
     await recovery.save();
     const output = `
     <div style="max-width:600px; margin:0 auto; color:rgba(255, 255, 255, 0.897); padding:10px; border-radius:15px; background:#1a1b1f;">
@@ -104,72 +112,77 @@ router.post("/checkemail", async (req, res) => {
     </div>
   `;
     let transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: 'smtp.gmail.com',
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: config.get("email"),
-        pass: config.get("emailPassword"),
+        user: config.get('email'),
+        pass: config.get('emailPassword'),
       },
       tls: {
         rejectUnauthorized: false,
       },
     });
     let mailOptions = {
-      from: '"RecoFun" <' + config.get("email") + ">",
+      from: '"RecoFun" <' + config.get('email') + '>',
       to: email,
-      subject: "Password recover",
-      text: "",
+      subject: 'Password recover',
+      text: '',
       html: output,
     };
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return console.log(error);
       }
-      res.status(200).json({message:"Email confirmed"})
-      console.log("Message sent: %s", info.messageId);
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      res.status(200).json({ message: 'Email confirmed' });
+      console.log('Message sent: %s', info.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
     });
   } catch (e) {
-    res.status(500).json({ message: "Something went wrong, please try again" });
+    res.status(500).json({ message: 'Something went wrong, please try again' });
   }
 });
-router.get('/:code',async (req, res) => {
+router.get('/:code', async (req, res) => {
   try {
-    const code = await Recovery.findOne({code:req.params.code})
-    if(!code){
-      return res.status(404).json({ message: "Code expired or doesn`t exist" });
+    const code = await Recovery.findOne({ code: req.params.code });
+    if (!code) {
+      return res.status(404).json({ message: 'Code expired or doesn`t exist' });
     }
-    res.status(200).cookie('recoverToken', code.recoveryToken, {
-      maxAge: 86400000,
-      httpOnly: true
-      }).json({message:"Success"});
+    res
+      .status(200)
+      .cookie('recoverToken', code.recoveryToken, {
+        maxAge: 86400000,
+        httpOnly: true,
+      })
+      .json({ message: 'Success' });
   } catch (e) {
     res.status(500).json({ message: 'Server error, something went wrong' });
   }
-})
-router.post('/recoverpassword',async(req,res)=>{
-  try{
-    const {password} = req.body;
-    console.log({password});
-    const {recoverToken} = req.cookies;
+});
+router.post('/recoverpassword', async (req, res) => {
+  try {
+    const { password } = req.body;
+    console.log({ password });
+    const { recoverToken } = req.cookies;
     if (!recoverToken) {
-      return  res.status(401).json({ message: "Failed authorization" });
+      return res.status(401).json({ message: 'Failed authorization' });
     }
-    console.log({recoverToken})
-    const decoded = jwt.verify(recoverToken,config.get('jwtSecret'))
-    console.log({decoded})
-    const user = await User.findOne({ email:decoded.email });
+    console.log({ recoverToken });
+    const decoded = jwt.verify(recoverToken, config.get('jwtSecret'));
+    console.log({ decoded });
+    const user = await User.findOne({ email: decoded.email });
     if (!user) {
-      return res.status(404).json({ message: "Such user doesn`t exist" });
-    }   
+      return res.status(404).json({ message: 'Such user doesn`t exist' });
+    }
     const hashedPassword = await bcrypt.hash(password, 15);
     user.password = hashedPassword;
     await user.save();
-    res.clearCookie('recoverToken').json({message:"Password changed successfuly"})
-  }catch (e){
-    res.status(500).json({ message: 'Server error, something went wrong' })
+    res
+      .clearCookie('recoverToken')
+      .json({ message: 'Password changed successfuly' });
+  } catch (e) {
+    res.status(500).json({ message: 'Server error, something went wrong' });
   }
-})
+});
 
 module.exports = router;

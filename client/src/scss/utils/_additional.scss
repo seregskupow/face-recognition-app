@@ -1,3 +1,18 @@
+a {
+	color: var(--white-text);
+	text-decoration: none !important;
+
+	&:hover {
+		color: var(--light-violet);
+	}
+
+	&:active,
+	&:focus {
+		outline: 0;
+		border: none;
+		-moz-outline-style: none;
+	}
+}
 .file_label {
 	display: block;
 	margin: 50px auto;

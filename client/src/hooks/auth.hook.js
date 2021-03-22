@@ -1,9 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useHttp } from './http.hook';
 
 const userData = 'User';
 export const useAuth = () => {
   const history = useHistory();
+  const { request } = useHttp();
   const [token, setToken] = useState(null);
   const [ready, setReady] = useState(false);
   const [userId, setId] = useState(null);
@@ -27,8 +29,14 @@ export const useAuth = () => {
     sessionStorage.clear();
   }, []);
 
+  const checkCookies = async () => {
+    const res = await request('/api/auth/checkauth');
+    console.log(res);
+  };
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(userData));
+    checkCookies();
     if (data && data.token) {
       logIn(data.token, data.userId, data.userName, history.location);
     }
