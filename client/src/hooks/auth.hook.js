@@ -31,6 +31,7 @@ export const useAuth = () => {
 
   const checkCookies = async () => {
     const res = await request('/api/auth/checkauth');
+    setName(res.name);
     console.log(res);
   };
 
