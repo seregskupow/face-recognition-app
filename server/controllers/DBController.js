@@ -1,21 +1,29 @@
 const config = require('config');
-//mongoDB models
-const userHistory = require('../dbmodels/userHistory');
-const Actor = require('../dbmodels/Actor');
 const { logger } = require('../utils/logger');
 
 //helper modules
 const scrapper = require('../modules/actorParser');
+const ActorRepository = require('../repository/ActorRepository');
+const UserHistoryRepository = require('../repository/UserHistoryRepository');
 
 class DBController {
   constructor() {
+    this.Actor = new ActorRepository();
+    this.History = new UserHistoryRepository();
+
     this.parseActors = this.parseActors.bind(this);
+    this.searchActors = this.searchActors.bind(this);
+    this.parseActors = this.parseActors.bind(this);
+    this.getPageCount = this.getPageCount.bind(this);
+    this.getSingleActor = this.getSingleActor.bind(this);
+    this.loadHistory = this.loadHistory.bind(this);
+    this.parseHistory = this.parseHistory.bind(this);
   }
   async searchActors(labels) {
     let foundActors = [];
     let shouldParse = [];
     for (let i = 0; i < labels.length; i++) {
-      const actor = await Actor.findOne({ name: labels[i] });
+      const actor = await this.Actor.findByName(labels[i]);
       if (actor) {
         foundActors.push(actor);
       } else {
@@ -31,14 +39,14 @@ class DBController {
       let { foundActors, shouldParse } = await this.searchActors(
         req.body.labels
       );
-      logger.success(
-        'Found in db actors: ',
-        foundActors.map((item) => item.name)
-      );
-      logger.pending('Actors to parse: ', shouldParse);
+      logger.success('Found in db actors: ', [
+        ...foundActors.map((item) => item.name),
+      ]);
+      logger.pending('Actors to parse: ', [...shouldParse]);
+      let that = this;
       if (shouldParse.length > 0) {
-        scrapper('https://www.rottentomatoes.com/celebrity/', shouldParse).then(
-          (response) => {
+        scrapper('https://www.rottentomatoes.com/celebrity/', shouldParse)
+          .then(async (response) => {
             if (response === 'error') {
               res.status(404).json({ msg: 'couldn`t find any actordata' });
               return;
@@ -52,11 +60,11 @@ class DBController {
               .status(200)
               .json({ actorData: data.length > 0 ? data : response });
             response.forEach(async (item) => {
-              let find = await Actor.findOne({ name: item.name });
+              let find = await that.Actor.findByName(item.name);
               if (find) {
                 return;
               }
-              let actor = new Actor({
+              await that.Actor.createActor({
                 name: item.name,
                 image: item.image,
                 knownFor: item.knownFor,
@@ -64,30 +72,31 @@ class DBController {
                 birthPlace: item.birthPlace,
                 biography: item.biography,
               });
-              actor.save();
-              console.log(
-                done(item.name, 'Actor has been successfuly saved to db')
+              logger.success(
+                item.name,
+                'Actor has been successfuly saved to db'
               );
             });
-            const history = new userHistory({
+            await that.History.create({
               actors: shouldSave.map((item) => item.name),
               usedImage: req.body.imgUrl.split('/').pop(),
               owner: req.user.userId,
               date: req.body.time,
             });
-            history.save();
             logger.success('User history has been saved successfuly');
-          }
-        );
+          })
+          .catch((e) => {
+            logger.error(e);
+            //return res.status(400).json({ msg: e.message });
+          });
       } else if (shouldParse.length === 0 && foundActors.length > 0) {
         res.status(200).json({ actorData: foundActors });
-        const history = new userHistory({
+        await this.History.create({
           actors: foundActors.map((item) => item.name),
           usedImage: req.body.imgUrl.split('/').pop(),
           owner: req.user.userId,
           date: req.body.time,
         });
-        history.save();
         logger.success('User history has been saved successfuly');
       } else {
         res.status(404).json({ msg: 'coudn`t find any actordata' });
@@ -100,19 +109,8 @@ class DBController {
 
   async getPageCount(req, res) {
     try {
-      userHistory
-        .find({ owner: req.user.userId })
-        .count()
-        .then((data) => {
-          res.status(200).json({
-            count: data,
-          });
-        })
-        .catch((err) => {
-          res.status(400).json({
-            err: err,
-          });
-        });
+      const count = await this.History.count(req.user.userId);
+      res.status(200).json({ count });
     } catch (e) {
       res.status(500).json({ msg: e.msg });
       logger.error(e);
@@ -121,7 +119,7 @@ class DBController {
 
   async getSingleActor(req, res) {
     try {
-      let actor = await Actor.findOne({ name: req.body.name });
+      let actor = await this.Actor.findByName(req.body.name);
       res.status(200).json({ actor });
     } catch (e) {
       res.status(500).json({ msg: e.msg });
@@ -131,48 +129,45 @@ class DBController {
 
   async loadHistory(req, res) {
     try {
-      let pageNum = req.query.page;
       const historyRawData = (
-        await userHistory
-          .find({ owner: req.user.userId })
-          .sort({ $natural: -1 })
-          .skip(pageNum * 10)
-          .limit(10)
+        await this.History.getByPage({
+          owner: req.user.userId,
+          pageNumber: req.query.page || 0,
+          limit: 10,
+        })
       ).reverse();
-      async function parseHistory(historyRaw) {
-        let history = [];
-        for (let i = 0; i < historyRaw.length; i++) {
-          let actors = [];
-          if (historyRaw[i].actors.length > 0) {
-            for (let j = 0; j < historyRaw[i].actors.length; j++) {
-              let actor = await Actor.findOne({
-                name: historyRaw[i].actors[j],
-              });
-              if (actor) {
-                actors.push(actor);
-              }
-            } ///////change in prod
-            history.push({
-              date: historyRaw[i].date,
-              actors,
-              usedImg: historyRaw[i].usedImage
-                ? config.get('adress') +
-                  '/' +
-                  historyRaw[i].usedImage.split('/').pop()
-                : null,
-            });
-          }
-        }
-        return history;
-      }
 
-      let history = await parseHistory(historyRawData);
+      let history = await this.parseHistory(historyRawData);
 
       res.status(200).json({ history });
     } catch (e) {
-      res.status(401).json({ message: 'e' });
+      res.status(500).json({ message: 'e' });
       logger.error(e);
     }
+  }
+  async parseHistory(historyRaw) {
+    let history = [];
+    for (let i = 0; i < historyRaw.length; i++) {
+      let actors = [];
+      if (historyRaw[i].actors.length > 0) {
+        for (let j = 0; j < historyRaw[i].actors.length; j++) {
+          let actor = await this.Actor.findByName(historyRaw[i].actors[j]);
+          if (actor) {
+            actors.push(actor);
+          }
+        } ///////change in prod
+        history.push({
+          date: historyRaw[i].date,
+          actors,
+          usedImg: historyRaw[i].usedImage
+            ? config.get('adress') +
+              '/' +
+              historyRaw[i].usedImage.split('/').pop()
+            : null,
+        });
+      }
+    }
+    return history;
   }
 }
 module.exports.DBController = new DBController();

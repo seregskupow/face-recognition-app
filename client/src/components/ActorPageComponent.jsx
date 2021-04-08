@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import PropTypes from 'prop-types';
-import ColorThief from 'colorthief/dist/color-thief.mjs';
 import { AwesomeButton } from 'react-awesome-button';
 import { useHttp } from '../hooks/http.hook';
 import Slider from '../utils/Slider';
 import PlaceHolder from '../images/film_placeholder.png';
 import 'react-awesome-button/dist/themes/theme-blue.css';
-
+import {AuthContext} from "../context/AuthContext";
 const ActorPageComponent = ({
   actor: {
     knownFor, image, name, birthday, birthPlace, biography,
   },
 }) => {
+	const {token} = useContext(AuthContext);
 	let slider;
   const [filmData, setFilmData] = useState([]);
   const { request } = useHttp();
@@ -25,7 +25,7 @@ const ActorPageComponent = ({
       '/api/thirdparty/imdb',
       'POST',
       { filmNames },
-      {},
+      {Authorization: `Bearer ${token}`},
     );
     setFilmData(result);
     if (filmData) initSlider();
@@ -41,7 +41,7 @@ const ActorPageComponent = ({
   useEffect(() => {
     fetchFilms(knownFor);
 		return ()=>{
-			slider.destroy();
+			slider && slider.destroy();
 		}
   }, []);
   return (

@@ -41,7 +41,7 @@ class RecognitionController {
       await upload(req, res, (err) => {
         if (err || !req.file) {
           logger.error('Error while uploading', err);
-          return res.status(400).json({ message: 'Something went wrong' });
+          return res.status(400).json({ msg: 'Something went wrong' });
         }
         logger.pending('Uploaded filename: ', req.file.filename);
         fs.readFile(

@@ -8,10 +8,12 @@ const shortid = require('shortid');
 const { sendEmail } = require('../utils/sendEmail');
 const { recoveryEmail } = require('../utils/emailTemplates');
 const { logger } = require('../utils/logger');
+const RecoveryRepository = require('../repository/RecoveryRepository');
 
 class AuthController {
   constructor() {
     this.User = new UserRepository();
+    this.Recovery = new RecoveryRepository();
 
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
@@ -84,15 +86,14 @@ class AuthController {
 
   async verifyEmailToRecover(req, res) {
     try {
-      const email = req.body.email;
+      const { email } = req.body;
       const user = await this.User.findByEmail(email);
       if (!user) {
         return res.status(404).json({ message: 'Such user doesn`t exist' });
       }
       const code = shortid.generate();
       const recoveryToken = jwt.sign({ email }, config.get('jwtSecret'));
-      const recovery = new Recovery({ code, email, recoveryToken });
-      await recovery.save();
+      await this.Recovery.createRecovery({ code, email, recoveryToken });
       let mailOptions = {
         emailFrom: '"RecoFun" <' + config.get('email') + '>',
         emailTo: email,
@@ -120,7 +121,7 @@ class AuthController {
 
   async verifyRecoveryCode(req, res) {
     try {
-      const code = await Recovery.findOne({ code: req.params.code });
+      const code = await this.Recovery.findByCode(req.params.code);
       if (!code) {
         return res
           .status(404)

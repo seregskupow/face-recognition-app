@@ -6,7 +6,10 @@ const { logger } = require('../utils/logger');
 class APIController {
   async Imdb(req, res) {
     try {
-      logger.log('filmnames', req.body.filmNames);
+      logger.pending(
+        'Fetching films: \n',
+        ...req.body.filmNames.map((i) => i.filmName.trim() + '\n')
+      );
       let filmsToFetch = req.body.filmNames;
       let filmData = [];
       let itemsProcessed = 0;

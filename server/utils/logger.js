@@ -5,8 +5,8 @@ const action = chalk.bold.hex('#dbab79');
 const pending = chalk.bold.blue;
 
 class Logger {
-  log(msg) {
-    console.log(msg);
+  log() {
+    console.log(...arguments);
   }
   error() {
     console.log(error(...arguments));
@@ -15,7 +15,7 @@ class Logger {
     console.log(success(...arguments));
   }
   pending() {
-    console.log(pending(arguments));
+    console.log(pending(...arguments));
   }
   action() {
     console.log(action(...arguments));

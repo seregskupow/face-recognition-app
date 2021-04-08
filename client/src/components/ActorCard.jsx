@@ -17,7 +17,7 @@ const ActorCard = ({
   // eslint-disable-next-line
   useEffect(() => () => {}, []);
   return (
-    <NavLink to={`/actorinfo/${name.split(' ').join('_')}`} className="actor-card">
+    <NavLink to={`/actorinfo/${name?.split(' ').join('_')}`} className="actor-card">
       <div role="button" tabIndex="0" onKeyPress={(event) => clickHandler(event)} className="actor-card-body" onClick={(event) => clickHandler(event)}>
         <div className="img-wrap">
           <LazyLoad placeholder={<Loader background="transparent" />} once>
