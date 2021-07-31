@@ -9,37 +9,38 @@ export const useAuth = () => {
   const [token, setToken] = useState(null);
   const [ready, setReady] = useState(false);
   const [userId, setId] = useState(null);
+  const [email, setEmail] = useState(null);
   const [userName, setName] = useState(null);
 
-  const logIn = useCallback((jwtToken, id, name, location) => {
+  const logIn = useCallback((jwtToken, id, name, userEmail) => {
     setToken(jwtToken);
     setId(id);
     setName(name);
+    setEmail(userEmail);
     localStorage.setItem(
       userData,
-      JSON.stringify({ token: jwtToken, userId: id, userName: name })
+      JSON.stringify({
+        token: jwtToken,
+        userId: id,
+        userName: name,
+        email: userEmail,
+      })
     );
-    history.push(location);
+    // history.push(location);
   }, []);
   const logOut = useCallback(() => {
     setToken(null);
     setId(null);
     setName(null);
+    setEmail(null);
     localStorage.removeItem(userData);
     sessionStorage.clear();
   }, []);
 
-  const checkCookies = async () => {
-    const res = await request('/api/auth/checkauth');
-    setName(res.name);
-    console.log(res);
-  };
-
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(userData));
-    checkCookies();
     if (data && data.token) {
-      logIn(data.token, data.userId, data.userName, history.location);
+      logIn(data.token, data.userId, data.userName, data.email);
     }
     setReady(true);
   }, [logIn]);
@@ -49,6 +50,7 @@ export const useAuth = () => {
     token,
     userId,
     userName,
+    email,
     ready,
   };
 };

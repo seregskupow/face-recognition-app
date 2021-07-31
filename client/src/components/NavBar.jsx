@@ -1,15 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {
+  useState, useContext, useEffect, useRef,
+} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { MdClose } from 'react-icons/md';
 import { AuthContext } from '../context/AuthContext';
 import linkData from '../data/linkData.json';
 import { ReactComponent as FaceIcon } from '../images/icons/face-recognition.svg';
 import { ReactComponent as HistoryIcon } from '../images/icons/history.svg';
 import { ReactComponent as HomeIcon } from '../images/icons/home.svg';
-import { addFunctionToResize } from '../utils/eventListeners';
+import { ReactComponent as MenuIcon } from '../images/icons/menu.svg';
 
 const icons = [
   <HomeIcon className="mobile-menu-icon" />,
@@ -18,26 +18,40 @@ const icons = [
 ];
 const NavBar = () => {
   const history = useHistory();
-  const auth = useContext(AuthContext);
+  const menu = useRef();
+  const menuBtn = useRef();
+  const { logOut, userName, email } = useContext(AuthContext);
   const [toggle, setToggle] = useState(false);
   const [isMob, setMob] = useState(false);
   const menuHandler = () => {
-    setToggle((toggle) => !toggle);
+    setToggle((disp) => !disp);
   };
+  const getFirstLetters = (str) => str.split(' ')
+    .map((item) => item.charAt(0)).join('');
   const isMobile = () => {
     if (window.innerWidth > 900) return setMob(false);
     return setMob(true);
   };
+  const handleClick = (e) => {
+    if (menu.current && menuBtn.current) {
+      if (menu.current.contains(e.target) || menuBtn.current.contains(e.target)) {
+        return;
+      }
+      setToggle(false);
+	 }
+  };
   useEffect(() => {
     isMobile();
     window.addEventListener('resize', isMobile);
+    document.addEventListener('mousedown', handleClick);
     return () => {
       window.removeEventListener('resize', isMobile);
+      document.removeEventListener('mousedown', handleClick);
     };
   }, []);
   const clickHandler = (event) => {
     event.preventDefault();
-    auth.logOut();
+    logOut();
     history.push('/');
   };
   if (!isMob) {
@@ -45,6 +59,9 @@ const NavBar = () => {
       <>
         <Logo className="logo">RecoFun</Logo>
         <header>
+          <div className="user-name-icon">
+            <span>{userName && getFirstLetters(userName)}</span>
+          </div>
           <nav>
             {linkData.map((link, index) => (
               <li
@@ -74,16 +91,29 @@ const NavBar = () => {
   return (
     <>
       <Logo className="logo">RecoFun</Logo>
-      <Burger onClick={menuHandler}>
-        {toggle === false ? <GiHamburgerMenu /> : <MdClose />}
-      </Burger>
-      <SideMenu display={toggle}>
-        <SideMenuWrapper>
-          <LogoutLink href="/" className="" onClick={clickHandler}>
-            LogOut
-          </LogoutLink>
-        </SideMenuWrapper>
-      </SideMenu>
+      <MobMenu ref={menu} className="side-menu" display={toggle}>
+        <div className="side-menu-wrapper">
+          <div className="user-profile">
+            <div className="user-data">
+              <p className="logged-as">Logged in as:</p>
+              <p>
+                <span className="user-name">{userName}</span>
+                {' '}
+                <br />
+                {' '}
+                <span className="user-email">{email}</span>
+              </p>
+            </div>
+            <div className="logout-wrapper">
+              {' '}
+              <LogoutLink href="/" className="" onClick={clickHandler}>
+                LogOut
+              </LogoutLink>
+
+            </div>
+          </div>
+        </div>
+      </MobMenu>
       <MobileNavigation className="mobile-navigation">
         <div className="mobile-navigation-wrapp">
           {linkData.map((link, index) => (
@@ -97,12 +127,15 @@ const NavBar = () => {
                 className="mobile-menu-link"
                 activeClassName="mobile-activelink"
               >
-                <div className="mobile-link-inside">
-                  {icons[index]}
-                </div>
+                {icons[index]}
               </NavLink>
             </li>
           ))}
+          <li className="mobile-menu-item">
+            <div ref={menuBtn} className="mobile-menu-link menu-btn" onClick={menuHandler}>
+              <MenuIcon className="mobile-menu-icon" />
+            </div>
+          </li>
         </div>
       </MobileNavigation>
     </>
@@ -127,31 +160,8 @@ const MobileNavigation = styled.div`
   bottom: 10px;
   font-size: 12px;
 `;
-const Burger = styled.div`
-  position: fixed;
-  top: 20px;
-  right: 8px;
-  height: 30px;
-  font-size: 40px;
-  color: white;
-  cursor: pointer;
-  z-index: 51;
-`;
-const SideMenu = styled.div`
-  position: fixed;
-  top: 24px;
-  right: ${(props) => (props.display === false ? '-100%' : '0')};
-  width: 50vw;
-  height: 100vh;
-  z-index: 50;
-  background: rgba(0, 0, 0, 0.756);
-  transition: all 0.3s ease-in-out;
-`;
-const SideMenuWrapper = styled.div`
-width:100%;
-display:flex;
-justify-content:center;
-margin-top:70px;
+const MobMenu = styled.div`
+  bottom: ${(props) => (props.display === false ? '-100%' : '0')};
 `;
 const LogoutLink = styled.div`
 background-color: #990000;
@@ -159,6 +169,8 @@ background-image: linear-gradient(147deg, #990000 0%, #ff0000 74%);
 color:white;
 padding:10px 15px;
 border-radius:15px;
+
+font-size:1.5rem;
 cursor:pointer;
 `;
 export default NavBar;

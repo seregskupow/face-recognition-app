@@ -98,7 +98,9 @@ a {
 .aws-btn__content {
 	background: var(--accent-gradient) !important;
 	border-radius: 15px !important;
-	font-size: 1.5em;
+	& span {
+		font-size: 1.5rem;
+	}
 }
 .aws-btn {
 	&:before {

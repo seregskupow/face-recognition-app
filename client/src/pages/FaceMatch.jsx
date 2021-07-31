@@ -183,8 +183,7 @@ export default class FaceMatch extends Component {
       imageToUpload.classList.add('result-img');
       container.append(imageToUpload);
       this.setState({ image: imageToUpload });
-
-      if (shouldRecognize) this.uploadHandler();
+      if (this.state.shouldRecognize) this.uploadHandler();
     });
   }
 
@@ -422,11 +421,11 @@ export default class FaceMatch extends Component {
 
               <div>
                 <div style={{ textAlign: 'center' }}>
-                  <p style={{ color: 'white' }}>OR just Ctr+V</p>
+                  <p className="paste-prompt">OR just Ctr+V</p>
                 </div>
               </div>
               <div className="demo-img-wrapper">
-                <p>No image? try one of these</p>
+                <p className="paste-prompt">No image? try one of these</p>
                 <div className="demo-img-container">
                   <div
                     role="button"

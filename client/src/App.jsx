@@ -8,7 +8,7 @@ import Loader from './components/Loader';
 
 function App() {
   const {
-    logIn, logOut, token, userId, userName, ready,
+    logIn, logOut, token, userId, userName, email, ready,
   } = useAuth();
   const isAuth = !!token;
   const routes = useRoutes(!!token);
@@ -21,6 +21,7 @@ function App() {
         token,
         userId,
         userName,
+        email,
         logIn,
         logOut,
         isAuth,

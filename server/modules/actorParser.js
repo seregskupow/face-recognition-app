@@ -61,7 +61,6 @@ function scrapper(url, names) {
               continue;
             }
           }
-
           const src = await el.getProperty('src');
           const scrTxt = await src.jsonValue();
           let birthday = await getInnerText(
@@ -76,42 +75,82 @@ function scrapper(url, names) {
             page,
             'article>section:nth-child(1)>div>div>div>p:nth-of-type(5)'
           );
-          const featured = await page.$$('.celebrity-highest__list>li>div>a');
-          let featuredURLs = [];
-          if (featured.length > 0) {
-            for (let i = 1; i <= featured.length; i++) {
-              let fu = await page.$(
-                `.celebrity-highest__list>li:nth-child(${i})>div>a>img`
-              );
-              let imgURL = await (await fu.getProperty('src')).jsonValue();
-              let filmU = await page.$(
-                `.celebrity-highest__list>li:nth-child(${i})>div>a`
-              );
-              let filmURL = await (await filmU.getProperty('href')).jsonValue();
-              let filmName = (
-                await getInnerText(
-                  page,
-                  `.celebrity-highest__list>li:nth-child(${i})>div>p>a`
-                )
-              )
-                .trim()
-                .replace(/\s|\n|\s\s/g, '_')
-                .split('<')[0]
-                .split('_')
-                .join(' ');
-              featuredURLs.push({ imgURL, filmURL, filmName });
-            }
-          } else {
-            featuredURLs = [];
-          }
+          // const featured = await page.$$('.celebrity-highest__list>li>div>a');
+          const featuredA = await page.$$('.posters-container>a');
+          const featuredPosters = await page.$$(
+            '.posters-container>tile-poster-video'
+          );
 
+          let featuredURLs = [];
+          if (featuredA.length > 0) {
+            for (let i = 0; i < featuredA.length; i++) {
+              try {
+                let imgUrl = await featuredA[
+                  i
+                ].$eval('tile-poster>tile-poster-image>img', (a) =>
+                  a.getAttribute('data-src')
+                );
+                let filmName = (
+                  await featuredA[i].$eval(
+                    'tile-poster>tile-poster-meta>span',
+                    (a) => a.innerHTML
+                  )
+                )
+                  .trim()
+                  .replace(/\s|\n|\s\s/g, '_')
+                  .split('<')[0]
+                  .split('_')
+                  .join(' ');
+                let filmUrl = await page.$eval(
+                  `.posters-container>a:nth-of-type(${i + 1})`,
+                  (a) => a.getAttribute('href')
+                );
+                featuredURLs.push({ imgUrl, filmUrl, filmName });
+              } catch (e) {
+                console.log(e);
+              }
+            }
+          }
+          if (featuredPosters.length > 0) {
+            for (let i = 0; i < featuredPosters.length; i++) {
+              try {
+                let imgUrl = await featuredPosters[
+                  i
+                ].$eval('button>tile-poster-image>img', (a) =>
+                  a.getAttribute('data-src')
+                );
+                let filmName = (
+                  await featuredPosters[i].$eval(
+                    'a>tile-poster-meta>span',
+                    (a) => a.innerHTML
+                  )
+                )
+                  .trim()
+                  .replace(/\s|\n|\s\s/g, '_')
+                  .split('<')[0]
+                  .split('_')
+                  .join(' ');
+                let filmUrl = await featuredPosters[i].$eval(
+                  'a',
+                  (a) =>
+                    'https://www.rottentomatoes.com' + a.getAttribute('href')
+                );
+                featuredURLs.push({ imgUrl, filmUrl, filmName });
+              } catch (e) {
+                console.log(e);
+              }
+            }
+          }
           let actor = {
             akas: [],
             image: { url: scrTxt },
             name: names[i],
             knownFor: featuredURLs,
             birthday: birthday.trim().replace(/\s|\n|\s\s/g, ''),
-            birthPlace: birthPlace.trim().replace(/\s|\n|\s\s/g, ''),
+            birthPlace: birthPlace
+              .trim()
+              .replace(/\s|\n|\s\s/g, '')
+              .replace('Birthplace:', ''),
             biography: biography.trim(),
           };
 
@@ -120,12 +159,21 @@ function scrapper(url, names) {
 
         browser.close();
         resolve(result);
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     });
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
-// let actors = ['Ashley Graham'];
-// scrapper("https://www.rottentomatoes.com/celebrity/", actors).then((res) =>
-//   console.log(res)
+// let actors = [
+//   'Thora Birch',
+//   'Keisha Castle-Hughes',
+//   'Ellen Page',
+//   'Michael Clarke Duncan',
+// ];
+// scrapper('https://www.rottentomatoes.com/celebrity/', actors).then((res) =>
+//   console.log(res[0].birthPlace)
 // );
 module.exports = scrapper;

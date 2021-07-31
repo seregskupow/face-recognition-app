@@ -1,46 +1,34 @@
-.actors-preloader {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	//For preloader card was used actor-card as base
-	& .actor-preloader-card {
-		height: 170px;
-		width: 30%;
-		@media only screen and (max-width: 1250px) {
-			width: 45%;
-		}
-		@media only screen and (max-width: 675px) {
-			width: 100%;
-		}
-		& .actor-card-body {
+.actor-preloader-card {
+	height: 170px;
+	& .actor-card-body {
+		height: 100%;
+		width: 100%;
+		& .img-wrap {
 			height: 100%;
-			& .img-wrap {
-				height: 100%;
-				width: 100px;
-				animation: shimmer 2s infinite;
-				background: linear-gradient(to right, #1b1e24 4%, #292d36 25%, #1b1e24 36%);
-				box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-				background-size: 1000px 100%;
-				border-radius: 20px;
-			}
-			& .preloader-name {
-				height: 20px;
-			}
-			& .stripe {
-				background: $darkGradient;
-				background-size: 1000px 100%;
-				animation: shimmer 2s infinite;
-			}
-			& .text-preloader-container {
-				height: 60%;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-			}
+			width: 100px;
+			animation: shimmer 2s infinite;
+			background: linear-gradient(to right, #1b1e24 4%, #292d36 25%, #1b1e24 36%);
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+			background-size: 1000px 100%;
+			border-radius: 20px;
+		}
+		& .preloader-name {
+			height: 20px;
+		}
+		& .stripe {
+			background: $darkGradient;
+			background-size: 1000px 100%;
+			animation: shimmer 2s infinite;
+		}
+		& .text-preloader-container {
+			height: 60%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
 		}
 	}
 }
+
 .text-preloader {
 	display: block;
 	height: 10px;

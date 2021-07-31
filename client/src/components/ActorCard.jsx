@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 import PropTypes from 'prop-types';
 import Loader from './Loader';
+import PlaceHolder from '../images/film_placeholder.png';
 
 const ActorCard = ({
   actorData: {
@@ -10,18 +11,17 @@ const ActorCard = ({
   },
 }) => {
   const imageRef = useRef(null);
-  const history = useHistory();
-  const clickHandler = (e) => {
-    // history.push(`/actorinfo/${name.split(' ').join('_')}`);
+  const checkImg = ($this) => {
+    $this.src = PlaceHolder;
   };
   // eslint-disable-next-line
   useEffect(() => () => {}, []);
   return (
     <NavLink to={`/actorinfo/${name?.split(' ').join('_')}`} className="actor-card">
-      <div role="button" tabIndex="0" onKeyPress={(event) => clickHandler(event)} className="actor-card-body" onClick={(event) => clickHandler(event)}>
+      <div className="actor-card-body">
         <div className="img-wrap">
           <LazyLoad placeholder={<Loader background="transparent" />} once>
-            <img ref={imageRef} src={image.url} className="actor-img" alt="" />
+            <img src={PlaceHolder} onLoad={(e) => e.target.src = image.url} onError={(e) => checkImg(e.target)} className="actor-img" alt="" />
           </LazyLoad>
         </div>
         <div className="card-right">
@@ -40,11 +40,11 @@ const ActorCard = ({
             </p>
             <p>
               <span>
-                {birthPlace.split(':')[0]}
+                Birthplace
                 :
               </span>
               {' '}
-              {birthPlace.split(',').join(', ')}
+              {birthPlace.split(',').join(', ').replace('Birthplace:', '')}
             </p>
           </div>
         </div>

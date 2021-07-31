@@ -15,6 +15,7 @@ server/userImages/*
 
 # production
 /build
+config
 
 # misc
 .env

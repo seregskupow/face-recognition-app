@@ -52,13 +52,13 @@ class AuthController {
       if (!validPass)
         return res.status(401).json({ message: 'Incorrect password' });
       //create token
-      const token = jwt.sign({ userId: user.id }, config.get('jwtSecret'));
-      res
-        .cookie('authtoken', token, {
-          maxAge: 86400000,
-          httpOnly: true,
-        })
-        .json({ token, userId: user.id, userName: user.name });
+      const token = jwt.sign({ userId: user._id }, config.get('jwtSecret'));
+      res.json({
+        token,
+        userId: user._id,
+        userName: user.name,
+        email: user.email,
+      });
     } catch (e) {
       logger.error(e);
       res

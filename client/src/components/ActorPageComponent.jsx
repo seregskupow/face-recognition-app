@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext  } from 'react';
+import React, { useState, useEffect, useContext, useRef,useCallback  } from 'react';
 import PropTypes from 'prop-types';
 import { AwesomeButton } from 'react-awesome-button';
 import { useHttp } from '../hooks/http.hook';
@@ -11,11 +11,12 @@ const ActorPageComponent = ({
     knownFor, image, name, birthday, birthPlace, biography,
   },
 }) => {
+	const mountedRef = useRef(true)
 	const {token} = useContext(AuthContext);
 	let slider;
   const [filmData, setFilmData] = useState([]);
   const { request } = useHttp();
-  const fetchFilms = async (filmArr) => {
+  const fetchFilms = useCallback(async (filmArr) => {
     const filmNames = filmArr.map((item) => ({
       // eslint-disable-next-line
         filmName: item.filmName.split(/[-$%^&*()_+|~=`{}\[\]";'<>\/]/)[0],
@@ -27,9 +28,13 @@ const ActorPageComponent = ({
       { filmNames },
       {Authorization: `Bearer ${token}`},
     );
-    setFilmData(result);
-    if (filmData) initSlider();
-  };
+		if (!mountedRef.current) return null
+			setFilmData(result);
+			console.log(result)
+			if (filmData) initSlider();
+		
+
+  },[]);
   const initSlider = () => {
      slider = new Slider({
       slider: document.querySelector('.slider-init'),
@@ -41,6 +46,7 @@ const ActorPageComponent = ({
   useEffect(() => {
     fetchFilms(knownFor);
 		return ()=>{
+			mountedRef.current = false
 			slider && slider.destroy();
 		}
   }, []);

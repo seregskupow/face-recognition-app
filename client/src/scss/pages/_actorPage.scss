@@ -82,11 +82,18 @@ section#actorPage {
 					display: inline-block;
 				}
 				& span {
-					font-size: 1.5em;
+					font-size: 1.5rem;
 					font-weight: bold;
 				}
 				& p {
-					font-size: 1.5em;
+					font-size: 1.5rem;
+				}
+
+				@include media("sm") {
+					& span,
+					& p {
+						font-size: 2rem;
+					}
 				}
 			}
 		}
@@ -162,10 +169,6 @@ section#actorPage {
 
 	color: $darkWhite;
 
-	@include media("sm") {
-		padding-bottom: 0;
-	}
-
 	& .actor-films-title-wrapper {
 		width: 90%;
 
@@ -174,6 +177,8 @@ section#actorPage {
 			font-size: 4em;
 
 			text-shadow: $VolumeTextShadow;
+
+			margin-bottom: 1rem;
 
 			@include media("sm") {
 				font-size: 6em;
@@ -224,8 +229,8 @@ section#actorPage {
 		align-items: center;
 
 		float: none;
-
 		margin: 0 auto;
+		margin-top: 2rem;
 		padding: 5px 10px;
 
 		bottom: 0;
@@ -246,38 +251,46 @@ section#actorPage {
 
 			width: 10%;
 
-			margin: 0;
+			margin-top: 2rem;
 			margin-right: 150px;
 		}
 
 		& .slider__arrow {
 			color: #fbfbfb;
 			text-shadow: $VolumeTextShadow;
-			font-size: 2rem;
+			font-size: 3rem;
 			padding: 0 10px;
-			transition: all 0.3s ease;
+			transition: all 0.1s ease;
 			cursor: pointer;
 
 			@include media("sm") {
-				font-size: 2rem;
+				font-size: 4rem;
 			}
 		}
-		& .slider__arrows--left {
-			&:hover {
-				transform: translateX(-5px);
-				text-shadow: $VolumeTextShadowHover;
-			}
-			&:active {
-				text-shadow: $VolumeTextShadow;
-			}
-		}
+		& .slider__arrows--left,
 		& .slider__arrows--right {
-			&:hover {
-				transform: translateX(5px);
-				text-shadow: $VolumeTextShadowHover;
-			}
 			&:active {
-				text-shadow: $VolumeTextShadow;
+				transform: scale(0.8);
+			}
+		}
+		@include media("sm") {
+			& .slider__arrows--left {
+				&:hover {
+					transform: translateX(-5px);
+					text-shadow: $VolumeTextShadowHover;
+				}
+				&:active {
+					transform: scale(0.8) translateX(-5px);
+				}
+			}
+			& .slider__arrows--right {
+				&:hover {
+					transform: translateX(5px);
+					text-shadow: $VolumeTextShadowHover;
+				}
+				&:active {
+					transform: scale(0.8) translateX(5px);
+				}
 			}
 		}
 	}
@@ -297,11 +310,13 @@ section#actorPage {
 	background-size: cover;
 	background-position: center center;
 
-	@include media("sm") {
-		padding: 5rem 0;
-	}
+	// @include media("sm") {
+	// 	padding: 5rem 0;
+	// }
 
 	& .film-card-wrapper {
+		position: relative;
+
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
@@ -309,8 +324,6 @@ section#actorPage {
 
 		max-height: 100%;
 		width: 100%;
-
-		padding: 1rem 0;
 
 		background: var(--secondary);
 
@@ -350,8 +363,8 @@ section#actorPage {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
-			height: 100%;
+			width: 100%;
+			height: 600px;
 
 			padding: none;
 
@@ -362,18 +375,21 @@ section#actorPage {
 			overflow: hidden;
 
 			@include media("sm") {
-				height: 100%;
+				max-height: 450px;
 				width: 20%;
 			}
 
 			& img {
 				height: 100%;
-				width: auto;
+				width: 100%;
+				object-fit: fill;
 				border-radius: 15px;
 
 				box-shadow: var(--large-shadow);
 
 				transition: box-shadow 0.2s ease-in-out;
+
+				pointer-events: none;
 
 				@include media("sm") {
 					height: 100%;
@@ -384,10 +400,17 @@ section#actorPage {
 			}
 		}
 		& .film-details {
-			width: 95%;
-			height: 100%;
+			position: absolute;
+			bottom: 0px;
+			left: 50%;
+			transform: translateX(-50%);
+
+			width: 100%;
+			max-height: 70%;
 
 			padding: 15px;
+
+			background-color: rgba($color: #131417, $alpha: 0.8);
 
 			border-radius: 15px;
 
@@ -395,8 +418,18 @@ section#actorPage {
 
 			transition: box-shadow 0.2s ease-in-out;
 
+			backdrop-filter: blur(3px);
+
+			overflow: auto;
+
 			@include media("sm") {
+				position: static;
+
+				transform: translateX(0);
+
 				width: 50%;
+
+				background-color: var(--secondary);
 			}
 
 			& .film-title {
@@ -416,12 +449,17 @@ section#actorPage {
 				max-height: 75%;
 
 				padding: 2rem;
+				padding-bottom: 0rem;
 
-				background: var(--secondary);
+				// background-color: rgba($color: #1b1e24, $alpha: 0.8);
 
 				border-radius: 15px;
 
 				overflow: auto;
+
+				@include media("sm") {
+					background-color: var(--secondary);
+				}
 
 				& .rating-wrapper {
 					width: 100%;
@@ -451,7 +489,7 @@ section#actorPage {
 				& p {
 					color: $darkWhite;
 
-					font-size: 1.2rem;
+					font-size: 1.4rem;
 
 					@include media("sm") {
 						font-size: 1.6rem;
@@ -470,7 +508,11 @@ section#actorPage {
 				display: flex;
 				justify-content: center;
 
-				margin: 50px 0 10px 0;
+				margin: 10px 0 10px 0;
+
+				& span {
+					font-size: 1.5rem;
+				}
 			}
 		}
 	}

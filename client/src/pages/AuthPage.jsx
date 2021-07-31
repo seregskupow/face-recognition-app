@@ -55,7 +55,7 @@ export default function AuthPage() {
         );
         setShowA(show(data.message));
         setError(data.message);
-        auth.logIn(data.token, data.userId, data.userName);
+        auth.logIn(data.token, data.userId, data.userName, data.email);
       } catch (e) {
         setShowA(show(e.message));
         setError(e.message);
@@ -105,7 +105,7 @@ export default function AuthPage() {
 
       <div className="auth-form">
         <div className="card text-white bg-dark mb-3">
-          <div className="card-header">Welcome to RecoFun</div>
+          <p className="card-header">Welcome to RecoFun</p>
           <div className="card-body d-flex flex-column justify-content-center">
             <div className="" />
             <div className="d-flex justify-content-center my-2">
@@ -202,6 +202,7 @@ export default function AuthPage() {
             <NavLink
               exact
               to="/recoveremail"
+              className="recover-pass-prompt"
             >
               Forgot password?
             </NavLink>

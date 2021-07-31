@@ -27,7 +27,7 @@
     "@types/prop-types": "^15.7.3",
     "bcryptjs": "^2.4.3",
     "blob": "0.0.5",
-    "canvas": "^2.6.1",
+    "canvas": "^2.8.0",
     "chalk": "^3.0.0",
     "concurrently": "^5.0.2",
     "config": "^3.2.4",

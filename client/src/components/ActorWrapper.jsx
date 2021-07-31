@@ -6,8 +6,10 @@ import PlaceHolder from '../images/film_placeholder.png';
 
 const ActorWrapper = ({ data, date, image }) => {
   const newDate = new Date(date).toString();
+  let img = image;
   const checkImg = ($this) => {
     $this.src = PlaceHolder;
+    img = PlaceHolder;
   };
   return (
     <div className="actor-info-item col-12">
@@ -19,7 +21,7 @@ const ActorWrapper = ({ data, date, image }) => {
           {image !== null && (
           <div className="actor-info-img">
             <div className="actor-info-img-wrapper">
-              <img src={image} onError={(e) => checkImg(e.target)} alt="actor-img" className="" />
+              <img src={PlaceHolder} onLoad={(e) => e.target.src = img} onError={(e) => checkImg(e.target)} alt="actor-img" className="" />
             </div>
           </div>
           )}
