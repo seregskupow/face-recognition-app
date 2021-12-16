@@ -1,0 +1,12 @@
+{
+	"port": "5000",
+	"connectURI": "",
+	"jwtSecret": "",
+	"mongologin": "",
+	"password": "",
+	"imdbAPI": "",
+	"adress": "",
+	"email": "",
+	"emailPassword": "",
+	"corsPort": ""
+}
