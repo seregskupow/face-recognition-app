@@ -1,0 +1,23 @@
+* {
+	font-size: 10px;
+}
+body {
+	margin: 0;
+	padding: 0;
+	//width: 100vw;
+	background: var(--primary);
+	position: relative;
+	font-family: "Prompt", sans-serif;
+}
+#root {
+	position: relative;
+}
+.app {
+	z-index: 5;
+	// overflow-x: hidden;
+	position: relative;
+	& .logo {
+		font-size: 1.2rem;
+		z-index: 10;
+	}
+}

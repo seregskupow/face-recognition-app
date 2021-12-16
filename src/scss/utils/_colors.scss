@@ -1,0 +1,18 @@
+$backgroundGrey: rgb(19, 20, 23);
+$foregroundGrey: rgb(27, 30, 36);
+$transparentGrey: #2528305d;
+$blue: #2876f9;
+$lightBlue: #4a8cfdbe;
+$violet: #6d17cb;
+$lightViolet: #a14efabe;
+$darkWhite: rgba(255, 255, 255, 0.911);
+:root {
+	--primary: #{$backgroundGrey};
+	--secondary: #{$foregroundGrey};
+	--transparent-grey: #{$transparentGrey};
+	--accent-blue: #{$blue};
+	--accent-violet: #{$violet};
+	--light-blue: #{$lightBlue};
+	--light-violet: #{$lightViolet};
+	--white-text: #{$darkWhite};
+}

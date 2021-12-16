@@ -1,0 +1,19 @@
+$mainGradient: linear-gradient(315deg, #2876f9 30%, #6d17cb 74%);
+$mainGradientLight: linear-gradient(315deg, #2875f927 30%, #6e17cb2d 74%);
+$stripeGradient2: linear-gradient(90deg, #2876f9, #6d17cb, #2876f9);
+$darkGradient: linear-gradient(180deg, #6e17cb8e, #2875f93b, #25283000);
+$stripeGradient: linear-gradient(
+	148deg,
+	#2876f9 25%,
+	#6d17cb 25%,
+	#6d17cb 50%,
+	#2876f9 50%,
+	#2876f9 75%,
+	#6d17cb 75%,
+	#6d17cb 100%
+);
+
+:root {
+	--accent-gradient: #{$mainGradient};
+	--accent-gradient-light: #{$mainGradientLight};
+}
