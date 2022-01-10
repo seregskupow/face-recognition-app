@@ -1,0 +1,31 @@
+$screen-xs: 0px;
+$screen-sm: 600px;
+$screen-md: 975px;
+$screen-lg: 1280px;
+$screen-xl: 1920px;
+
+@mixin media($breakpoint) {
+  @if $breakpoint == "xs" {
+    @media (min-width: $screen-xs) {
+      @content;
+    }
+  } @else if $breakpoint == "sm" {
+    @media (min-width: $screen-sm) {
+      @content;
+    }
+  } @else if $breakpoint == "md" {
+    @media (min-width: $screen-md) {
+      @content;
+    }
+  }
+  @else if $breakpoint == "lg" {
+    @media (min-width: $screen-lg) {
+      @content;
+    }
+  }
+  @else if $breakpoint == "xl" {
+    @media (min-width: $screen-xl) {
+      @content;
+    }
+  }
+}

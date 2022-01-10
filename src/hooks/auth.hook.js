@@ -1,10 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useHttp } from './http.hook';
 
 const userData = 'User';
 export const useAuth = () => {
-  const history = useHistory();
   const { request } = useHttp();
   const [token, setToken] = useState(null);
   const [ready, setReady] = useState(false);

@@ -1,0 +1,29 @@
+*,
+body {
+	margin: 0;
+	padding: 0;
+	color: var(--text-color);
+}
+
+html {
+	font-size: 10px;
+}
+
+.aws-btn__content {
+	background: var(--accent-gradient) !important;
+	border-radius: 15px !important;
+	& span {
+		font-size: 1.5rem;
+	}
+}
+.aws-btn {
+	&:before {
+		border-radius: 15px !important;
+	}
+}
+.aws-btn__wrapper {
+	&:before {
+		background: var(--accent-gradient-light) !important;
+		border-radius: 15px !important;
+	}
+}

@@ -1,0 +1,116 @@
+.uploadPhotoWrapper {
+	width: 100%;
+}
+
+.panel {
+	width: 100%;
+	margin: 1rem auto 0 auto;
+	padding: 3rem;
+	border-radius: 30px;
+	background: var(--secondary);
+	box-shadow: var(--large-shadow);
+}
+
+.inner {
+	& .uploadPrompt {
+		margin: 1rem 0;
+
+		text-align: center;
+		font-size: 2rem;
+
+		color: var(--text-color);
+	}
+}
+
+.uploadPhotoPanel {
+	display: flex;
+	flex-direction: column;
+
+	padding: 1.5rem;
+
+	background: var(--accent-gradient-light);
+
+	border-radius: 20px;
+	box-shadow: inset 0 0px 40px rgba(0, 0, 0, 0.25), inset 0 0px 10px rgba(0, 0, 0, 0.22);
+
+	& .uploadFromDiskButtonWrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		margin: 5rem 0;
+
+		& .AwesomeBtnWrapper {
+			width: 100%;
+			max-width: 600px;
+			height: 70px;
+
+			:global {
+				& .aws-btn {
+					width: 100% !important;
+					height: 100% !important;
+
+					& span {
+						font-size: 2.5rem;
+					}
+				}
+			}
+		}
+	}
+
+	& .pastePrompt {
+		margin-bottom: 2rem;
+
+		font-size: 1.5rem;
+
+		text-align: center;
+	}
+}
+
+.demoImagesWrapper {
+	display: flex;
+	justify-content: center;
+
+	& .demoImage {
+		width: 70px;
+		height: 70px;
+		position: relative;
+
+		border-radius: 20px;
+
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+
+		& img {
+			height: 100%;
+			width: 100%;
+			border-radius: 20px;
+
+			object-fit: fit;
+		}
+
+		& .originalImage {
+			position: relative;
+
+			z-index: 1;
+			cursor: pointer;
+
+			&:hover + .blurEffect {
+				opacity: 1;
+			}
+		}
+
+		& .blurEffect {
+			transition: all 0.15s ease-in-out;
+			width: 95%;
+			height: 100%;
+
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			filter: blur(5px) saturate(6);
+			opacity: 0;
+		}
+	}
+}

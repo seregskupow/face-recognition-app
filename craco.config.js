@@ -8,18 +8,19 @@ module.exports = {
       plugin: CracoAlias,
       options: {
         source: 'tsconfig',
-        baseUrl: '.',
-        tsConfigPath: './paths.json',
-      },
+        baseUrl: './',
+        tsConfigPath: './tsconfig.path.json'
+      }
     },
     {
       plugin: sassResourcesLoader,
       options: {
-        // resources: [
-        //   path.join(__dirname, './src/styles/utils/media.scss'),
-        //   path.join(__dirname, './src/styles/utils/mixins.scss'),
-        // ],
-      },
-    },
-  ],
+        resources: [
+          path.join(__dirname, './src/styles/utils/media.scss'),
+          path.join(__dirname, './src/styles/utils/mixins.scss'),
+          path.join(__dirname, './src/styles/utils/preloadColors.scss')
+        ]
+      }
+    }
+  ]
 };
