@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 //@ts-ignore
 import { AwesomeButton } from 'react-awesome-button';
 import styles from './uploadPhoto.module.scss';
@@ -9,6 +9,7 @@ import Trio from './demoImages/trio.png';
 import Harley from './demoImages/harley.jpg';
 import Angelina from './demoImages/angelina.jpg';
 import Stark from './demoImages/stark.png';
+import { useImagePicker } from '@/components/ImagePicker';
 
 type Actor = {
   name: string;
@@ -22,14 +23,15 @@ const actors: Array<Actor> = [
   { name: 'Angelina', photo: Angelina },
   { name: 'Stark', photo: Stark }
 ];
-
 interface UploadPhotoProps {
   onPhotoUpload: (photo: string) => void;
 }
 
 const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
+  const { ImagePicker, triggerInput, urlUpload } = useImagePicker(Harley);
   return (
     <div className={styles.uploadPhotoWrapper}>
+      <ImagePicker getImage={(photo: string) => onPhotoUpload(photo)} />
       <div className={styles.panel}>
         <div className={styles.inner}>
           <h2 className={styles.uploadPrompt}>
@@ -42,7 +44,7 @@ const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
                   type="primary"
                   size="large"
                   onPress={() => {
-                    //document.getElementById('imageUpload').click();
+                    triggerInput();
                   }}
                   button-hover-pressure="3"
                 >
@@ -60,7 +62,10 @@ const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
               {actors.map((actor: Actor) => (
                 <div
                   className={styles.demoImage}
-                  onClick={() => onPhotoUpload(actor.photo)}
+                  onClick={() => {
+                    urlUpload(actor.photo);
+                    //onPhotoUpload(actor.photo)
+                  }}
                 >
                   <img
                     className={styles.originalImage}

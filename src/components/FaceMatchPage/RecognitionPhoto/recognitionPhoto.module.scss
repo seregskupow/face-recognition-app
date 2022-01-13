@@ -1,0 +1,34 @@
+.PhotoBackground {
+	padding: 1rem;
+
+	background-size: 200%;
+	background-image: linear-gradient(315deg, #2876f9, #6d17cb, #2876f9);
+
+	border-radius: 15px;
+
+	box-shadow: var(--small-shadow);
+
+	animation: bg-animation 10s linear infinite;
+
+	& .ImageWrapper {
+		position: relative;
+		display: flex;
+		& img {
+			max-height: 400px;
+			width: auto;
+			border-radius: 15px;
+		}
+	}
+}
+
+@keyframes bg-animation {
+	0% {
+		background-position: left;
+	}
+	50% {
+		background-position: right;
+	}
+	100% {
+		background-position: left;
+	}
+}

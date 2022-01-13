@@ -1,23 +1,24 @@
+import clsx from 'clsx';
 import { CSSProperties, FC } from 'react';
 
 interface LoaderProps {
   position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed';
   border?: string;
   background?: string;
+  blur?: boolean;
 }
 
 const Loader: FC<LoaderProps> = ({
   position = 'absolute',
   border = '0px',
-  background = 'hsla(224, 13%, 17%, 0.719)'
+  blur = false
 }) => {
   return (
     <div
-      className="loader"
+      className={clsx('loader', blur && 'blur')}
       style={{
         position: position,
         borderRadius: border,
-        background: background,
         zIndex: '9'
       }}
     >

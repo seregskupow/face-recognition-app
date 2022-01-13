@@ -95,8 +95,10 @@
 		display: flex;
 		align-items: center;
 		flex-grow: 1;
+
 		& p {
 			font-size: 1.2rem;
+			color: var(--dark-text);
 		}
 	}
 
@@ -115,14 +117,21 @@
 
 			padding: 3px;
 
-			border-radius: 8px;
+			border-radius: 5px;
 
 			cursor: pointer;
 
 			transition: all 0.1s ease;
 
 			&:hover {
-				color: $white;
+				& svg {
+					fill: $white;
+				}
+			}
+
+			& svg {
+				fill: var(--dark-text);
+				font-size: 1.2rem;
 			}
 		}
 	}

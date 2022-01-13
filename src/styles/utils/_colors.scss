@@ -16,4 +16,19 @@ $darkWhite: rgba(255, 255, 255, 0.911);
 	--light-violet: #{$lightViolet};
 	--white-text: #{$darkWhite};
 	--text-color: #{$darkWhite};
+	--dark-text: #222831;
+
+	--color-primary: #{$darkPrimary};
+	--color-hover: #{$darkHover};
+	--color-background: #{$darkBackground};
+	--color-background-rgb: 17, 17, 17;
+	--color-border: #{$darkBorder};
+	--color-field: #{$darkInput};
+	--color-field-rgb: #{$darkInputRGB};
+	--color-contrast: #{$darkContrast};
+	--color-contrast-light: #{$darkContrastLight};
+	--color-contrast-rgb: #{$darkContrastRGB};
+	--color-text: #{$darkText};
+	--dark-text: #222831;
+	--text-light: #{$darkTextLight};
 }

@@ -1,4 +1,30 @@
-.Page {
-	max-width: 90vw;
+.UploaderWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100vw;
+	height: 100vh;
+
 	margin: 0 auto;
+}
+
+.Page {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	margin-top: 14rem;
+}
+
+.RecognitionImageWrapper {
+	display: flex;
+
+	padding: 2rem;
+
+	background-color: var(--secondary);
+
+	border-radius: 8px;
+	border: 1px solid var(--color-border);
+
+	box-shadow: var(--small-shadow);
 }

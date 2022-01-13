@@ -1,0 +1,34 @@
+.btn {
+	padding: 10px;
+
+	//font-size: 1.5rem;
+	font-weight: bold;
+
+	border-radius: 8px;
+
+	box-sizing: border-box;
+
+	cursor: pointer;
+
+	transition: background 0.1s linear;
+}
+.btn-contrast {
+	background-color: var(--color-contrast);
+
+	color: $white;
+
+	&:hover {
+		background: var(--color-contrast-light);
+	}
+}
+.btn-default {
+	background-color: var(--color-field);
+
+	border: 1px solid var(--color-border);
+
+	color: var(--color-text);
+
+	&:hover {
+		background-color: var(--color-hover);
+	}
+}
