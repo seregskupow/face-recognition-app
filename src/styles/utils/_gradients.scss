@@ -18,4 +18,6 @@ $stripeGradient: linear-gradient(
 	--accent-gradient: #{$mainGradient};
 	--accent-gradient-transparent: #{$mainGradientTransparent};
 	--accent-gradient-light: #{$mainGradientLight};
+
+	--stripe-gradient: #{$stripeGradient2};
 }

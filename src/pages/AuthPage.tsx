@@ -10,9 +10,13 @@ import { useMessage } from '../hooks/message.hook';
 import { AuthContext } from '../context/AuthContext';
 import Loader from '../components/Loader';
 import 'react-awesome-button/dist/themes/theme-blue.css';
+import { setToken } from '@/api';
+import { useActions } from '@/store/useActions';
+import axios from 'axios';
 
 export default function AuthPage() {
   const auth = useContext(AuthContext);
+  const { setMessage } = useActions();
   const {
     validateName,
     validateEmail,
@@ -30,20 +34,13 @@ export default function AuthPage() {
     if (el.id === 'in') setAuth(false);
     else setAuth(true);
   };
-  const [showA, setShowA] = useState(false);
-  const { show } = useMessage();
-  const toggleShowA = () => {
-    setShowA(!showA);
-  };
-
   useEffect(() => {
     if (error) {
-      setShowA(show(error) as boolean);
       setError(error);
     }
 
     clearError();
-  }, [error, show, clearError, setShowA]);
+  }, [error, clearError]);
 
   const changeHandler = (event: SyntheticEvent) => {
     const el = event.currentTarget as HTMLInputElement;
@@ -57,17 +54,18 @@ export default function AuthPage() {
           'POST',
           { email: form.email, password: form.password }
         );
-        setShowA(show(data.message) as boolean);
-        setError(data.message);
+        setMessage({ msg: data.message, type: 'success' });
+        //Set global Authorization header for axios
+        setToken(data.token);
+        let test = await axios.get('/api/db/pagecount');
+        console.log({ test });
         // @ts-ignore
         auth.logIn(data.token, data.userId, data.userName, data.email);
       } catch (e) {
-        setShowA(show((e as Error).message) as boolean);
-        setError((e as Error).message);
+        setMessage({ msg: (e as Error).message, type: 'error' });
       }
     } else {
-      setShowA(show('Check form input') as boolean);
-      setError('Check form input');
+      setMessage({ msg: 'Check form input', type: 'warning' });
     }
   };
   const registerHandler = async () => {
@@ -78,38 +76,21 @@ export default function AuthPage() {
           email: form.email,
           password: form.password
         });
-        setShowA(show(data.message) as boolean);
-        setError(data.message);
+        setMessage({ msg: data.message, type: 'success' });
         if (data.success) {
           loginHandler();
         }
       } catch (e) {
-        setShowA(show((e as Error).message) as boolean);
-        setError((e as Error).message);
+        setMessage({ msg: (e as Error).message, type: 'error' });
       }
     } else {
-      setShowA(show('Check form input') as boolean);
-      setError('Check form input');
+      setMessage({ msg: 'Check form input', type: 'warning' });
     }
   };
 
   return (
     <div id="auth-container" className="auth-container">
       {loading && <Loader position="fixed" />}
-      <Toast
-        show={showA}
-        onClose={toggleShowA}
-        delay={2000}
-        autohide
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 20
-        }}
-      >
-        <Toast.Body>{errorL}</Toast.Body>
-      </Toast>
-
       <div className="auth-form">
         <div className="card text-white bg-dark mb-3">
           <p className="card-header">Welcome to RecoFun</p>

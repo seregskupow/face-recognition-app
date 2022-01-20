@@ -6,7 +6,7 @@ import { MdArrowBack } from 'react-icons/md';
 import { AwesomeButton } from 'react-awesome-button';
 import { AuthContext } from '../context/AuthContext';
 import Loader from '../components/Loader';
-import ActorCard from '../components/ActorCard';
+import ActorCard from '../components/ActorCardOld';
 import AlPacino from '../images/demo/al.jpg';
 import Trio from '../images/demo/trio.png';
 import Harley from '../images/demo/harley.jpg';
@@ -15,7 +15,7 @@ import Stark from '../images/demo/stark.png';
 import WikiPreloader from '../components/WikiPreloader';
 import ActorsPreloader from '../components/ActorsPreloader/ActorsPreloader';
 import 'react-awesome-button/dist/themes/theme-blue.css';
-import { Api } from '@/utils/api';
+import { Api } from 'src/api';
 export default class FaceMatch extends Component {
 	static contextType = AuthContext;
 

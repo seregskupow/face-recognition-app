@@ -20,7 +20,8 @@ button:focus {
 }
 div,
 li,
-p {
+p,
+a {
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -85,4 +86,33 @@ input[type="range"] {
 		background: var(--accent-gradient-light) !important;
 		border-radius: 15px !important;
 	}
+}
+
+:root {
+	--primary: #{$backgroundGrey};
+	--secondary: #{$foregroundGrey};
+	--transparent-grey: #{$transparentGrey};
+	--accent-blue: #{$blue};
+	--accent-violet: #{$violet};
+	--light-blue: #{$lightBlue};
+	--light-violet: #{$lightViolet};
+	--white-text: #{$darkWhite};
+	--text-color: #{$darkWhite};
+	--dark-text: #222831;
+
+	--color-primary: #{$darkPrimary};
+	--color-hover: #{$darkHover};
+	--color-background: #{$darkBackground};
+	--color-background-rgb: 17, 17, 17;
+	--color-border: #{$darkBorder};
+	--color-field: #{$darkInput};
+	--color-field-rgb: #{$darkInputRGB};
+	--color-contrast: #{$darkContrast};
+	--color-contrast-light: #{$darkContrastLight};
+	--color-contrast-rgb: #{$darkContrastRGB};
+	--color-text: #{$darkText};
+	--dark-text: #222831;
+	--text-light: #{$darkTextLight};
+
+	--volume-text-shadow: #{$VolumeTextShadow};
 }

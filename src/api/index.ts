@@ -8,11 +8,11 @@ export const Api: AxiosInstance = axios.create({
 });
 
 export const setToken = (token: string): void => {
-  axios.defaults.headers.common['Auth-Token'] = 'Bearer ' + token;
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 };
 
 export const removeToken = (): void => {
-  axios.defaults.headers.common['Auth-Token'] = '';
+  axios.defaults.headers.common['Authorization'] = '';
 };
 
 export { UserService, ActorsService, AuthService };

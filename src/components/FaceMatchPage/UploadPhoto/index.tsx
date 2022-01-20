@@ -10,6 +10,7 @@ import Harley from './demoImages/harley.jpg';
 import Angelina from './demoImages/angelina.jpg';
 import Stark from './demoImages/stark.png';
 import { useImagePicker } from '@/components/ImagePicker';
+import clsx from 'clsx';
 
 type Actor = {
   name: string;
@@ -68,7 +69,7 @@ const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
                   }}
                 >
                   <img
-                    className={styles.originalImage}
+                    className={clsx(styles.originalImage)}
                     src={actor.photo}
                     alt={actor.name}
                   />

@@ -10,6 +10,9 @@
 			"@/store/*": [
 				"src/store/*"
 			],
+			"@/api": [
+				"src/api"
+			],
 			"@/utils/*": [
 				"src/utils/*"
 			],
@@ -24,6 +27,12 @@
 			],
 			"@/data/*": [
 				"src/data/*"
+			],
+			"@/types": [
+				"src/types/"
+			],
+			"@/types/*": [
+				"src/types/*"
 			]
 		}
 	}

@@ -1,14 +1,17 @@
+import FoundActors from '@/components/FaceMatchPage/FoundActors';
 import RecognitionPhoto from '@/components/FaceMatchPage/RecognitionPhoto';
 import UploadPhoto from '@/components/FaceMatchPage/UploadPhoto';
 import WikiResults from '@/components/FaceMatchPage/WikiResults';
+import clsx from 'clsx';
 
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useNavigationType } from 'react-router-dom';
 import styles from './facematch.module.scss';
 import Test from './test.png';
 
 const FaceMatch: FC = () => {
   const [photo, setPhoto] = useState<string | null>(Test);
-  const [showImageUploader, setShowImageUploader] = useState(false);
+  const [showImageUploader, setShowImageUploader] = useState(true);
   const [recognitionLoading, setRecognitionLoading] = useState(true);
   const [actorNames, setActorNames] = useState<string[] | null>(null);
 
@@ -27,13 +30,14 @@ const FaceMatch: FC = () => {
   if (!showImageUploader && photo) {
     return (
       <div className={styles.Page}>
-        <div className={styles.RecognitionImageWrapper}>
+        <div className={clsx(styles.RecognitionImageWrapper, 'mb-20')}>
           <RecognitionPhoto
             displayImage={photo as string}
             loading={recognitionLoading}
           />
           <WikiResults names={actorNames} />
         </div>
+        <FoundActors names={[]} />
       </div>
     );
   }

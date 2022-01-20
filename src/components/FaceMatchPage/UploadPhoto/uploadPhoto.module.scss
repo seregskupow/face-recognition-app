@@ -7,9 +7,11 @@
 	width: 100%;
 	margin: 1rem auto 0 auto;
 	padding: 3rem;
-	border-radius: 30px;
+
+	border: 1px solid var(--color-border);
+	border-radius: 20px;
 	background: var(--secondary);
-	box-shadow: var(--large-shadow);
+	box-shadow: var(--small-shadow);
 }
 
 .inner {

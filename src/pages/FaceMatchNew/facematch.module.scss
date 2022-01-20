@@ -11,19 +11,24 @@
 
 .Page {
 	width: 100%;
-	max-width: 1200px;
+	max-width: 1600px;
 	margin: 0 auto;
 	margin-top: 14rem;
+	margin-bottom: 5rem;
 }
 
 .RecognitionImageWrapper {
 	display: flex;
 
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+
 	padding: 2rem;
 
 	background-color: var(--secondary);
 
-	border-radius: 8px;
+	border-radius: 20px;
 	border: 1px solid var(--color-border);
 
 	box-shadow: var(--small-shadow);
