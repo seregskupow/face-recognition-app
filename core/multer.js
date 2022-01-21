@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 
 const limits = {
   files: 1,
-  fileSize: 1000000 * 90,
+  fileSize: 5242880,
 };
 
 const upload = multer({

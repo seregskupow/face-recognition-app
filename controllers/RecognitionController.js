@@ -51,10 +51,18 @@ class RecognitionController {
               .status(400)
               .json({ message: 'error while reading image' });
           }
-          const canvasSize = JSON.parse(req.body.displaySize);
+          const canvasSize = {
+            width: 1920,
+            height: 1080,
+            imgWidth: 1920,
+            imgHeight: 1080,
+          };
+          //JSON.parse(req.body.displaySize);
+          console.log({ canvasSize });
           let imgProportion = canvasSize.imgWidth / canvasSize.imgHeight;
-          let finalWidth = imgProportion * 760,
-            finalHeight = 760;
+          let finalWidth = 1920,
+            finalHeight = 1080;
+          console.log({ finalWidth });
           logger.action('Start recognition process');
           let canvas2 = canvas.createCanvas(finalWidth, finalHeight);
           let ctx = canvas2.getContext('2d');
@@ -127,9 +135,13 @@ class RecognitionController {
           var buf = new Buffer(data, 'base64');
           let filename = Date.now();
           fs.writeFile(`./userImages/${filename}.jpg`, buf, function () {});
+          let detectedActors = results.reduce((acc, curr) => {
+            curr._label !== 'unknown' && acc.add(curr._label);
+            return acc;
+          }, new Set());
           res.status(200).json({
             results,
-            resizedDetections,
+            detectedActors: [...detectedActors],
             imageSrc: config.get('adress') + '/' + filename + '.jpg',
           });
           fs.unlink(`./uploads/${req.file.filename}`, function (err) {

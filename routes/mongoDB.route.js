@@ -20,5 +20,11 @@ router.post(
 );
 
 router.get('/loadhistory', auth, DBController.loadHistory);
+router.post(
+  '/parsewikiactors',
+
+  requireParams(['actorNames']),
+  DBController.parseWikiActors
+);
 
 module.exports = router;

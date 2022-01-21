@@ -1,6 +1,6 @@
 const config = require('config');
 const { logger } = require('../utils/logger');
-
+const { parseOGMetatags } = require('../utils/parseOG');
 //helper modules
 const scrapper = require('../modules/actorParser');
 const ActorRepository = require('../repository/ActorRepository');
@@ -35,6 +35,7 @@ class DBController {
 
   async parseActors(req, res) {
     try {
+      console.log({ labels: [...req.body.labels] });
       logger.log(req.body.imgUrl);
       let { foundActors, shouldParse } = await this.searchActors(
         req.body.labels
@@ -103,6 +104,28 @@ class DBController {
       }
     } catch (e) {
       res.status(500).json({ msg: e.message });
+      logger.error(e);
+    }
+  }
+
+  async parseWikiActors(req, res) {
+    try {
+      const baseUrl = 'https://en.wikipedia.org/wiki/';
+      const actorNames = req.body.actorNames;
+      let wikiData = [];
+      for (let i = 0; i < actorNames.length; i++) {
+        let link = baseUrl + actorNames[i];
+        let parsed = await parseOGMetatags(link);
+        if (parsed.title && parsed.image)
+          wikiData.push({
+            photo: parsed.image,
+            name: parsed.title.split('-')[0],
+            link,
+          });
+      }
+      res.status(200).json([...wikiData]);
+    } catch (e) {
+      res.status(500).json({ msg: e.msg });
       logger.error(e);
     }
   }

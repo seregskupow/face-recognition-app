@@ -26,6 +26,7 @@
 	"dependencies": {
 		"@tensorflow/tfjs-node": "^3.12.0",
 		"@types/prop-types": "^15.7.3",
+		"axios": "^0.25.0",
 		"bcryptjs": "^2.4.3",
 		"blob": "0.0.5",
 		"canvas": "^2.8.0",
@@ -49,7 +50,9 @@
 		"nodemon": "^2.0.2",
 		"puppeteer": "^2.0.0",
 		"shortid": "^2.2.15",
-		"utf8": "^3.0.0"
+		"utf8": "^3.0.0",
+		"xmldom": "^0.6.0",
+		"xpath": "0.0.32"
 	},
 	"devDependencies": {
 		"cross-env": "^7.0.2"

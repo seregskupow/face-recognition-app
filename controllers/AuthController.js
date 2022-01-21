@@ -53,6 +53,11 @@ class AuthController {
         return res.status(401).json({ message: 'Incorrect password' });
       //create token
       const token = jwt.sign({ userId: user._id }, config.get('jwtSecret'));
+      let options = {
+        maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+        httpOnly: false, // The cookie only accessible by the web server
+      };
+      res.cookie('authToken', token, options);
       res.json({
         token,
         userId: user._id,
