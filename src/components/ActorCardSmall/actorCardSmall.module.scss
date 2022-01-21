@@ -25,6 +25,9 @@
 		padding: 1rem;
 	}
 	& .imgWrap {
+		flex-basis: 40px;
+		flex-grow: 0;
+		flex-shrink: 0;
 		height: 40px;
 		width: 40px;
 
@@ -35,6 +38,8 @@
 	& .name {
 		flex-grow: 1;
 		margin-left: 1rem;
+
+		overflow: hidden;
 	}
 }
 

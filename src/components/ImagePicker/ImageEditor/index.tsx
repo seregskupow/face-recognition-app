@@ -243,10 +243,10 @@ const ImageEditor: FC<IImageEditor> = ({
                 text="Apply"
                 color="contrast"
                 event={() => {
-                  setMessage({
-                    type: 'success',
-                    msg: 'Changes applied successfully'
-                  });
+                  // setMessage({
+                  //   type: 'success',
+                  //   msg: 'Changes applied successfully'
+                  // });
                   getImage(Editor.getImageScaledToCanvas().toDataURL());
                   getOptions({ rotate, scale, position });
                   closePicker();

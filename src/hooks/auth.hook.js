@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useHttp } from './http.hook';
-
+import { setToken as setAxiosToken, removeToken } from '@/api';
 const userData = 'User';
 export const useAuth = () => {
   const { request } = useHttp();
@@ -21,7 +21,7 @@ export const useAuth = () => {
         token: jwtToken,
         userId: id,
         userName: name,
-        email: userEmail,
+        email: userEmail
       })
     );
     // history.push(location);
@@ -31,6 +31,7 @@ export const useAuth = () => {
     setId(null);
     setName(null);
     setEmail(null);
+    removeToken();
     localStorage.removeItem(userData);
     sessionStorage.clear();
   }, []);
@@ -39,6 +40,7 @@ export const useAuth = () => {
     const data = JSON.parse(localStorage.getItem(userData));
     if (data && data.token) {
       logIn(data.token, data.userId, data.userName, data.email);
+      setAxiosToken(data.token);
     }
     setReady(true);
   }, [logIn]);
@@ -49,6 +51,6 @@ export const useAuth = () => {
     userId,
     userName,
     email,
-    ready,
+    ready
   };
 };

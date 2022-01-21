@@ -9,7 +9,7 @@ interface ActorCardProps extends ActorInfo {}
 const ActorCard: FC<ActorCardProps> = ({
   photo,
   name,
-  link,
+  id,
   birthDay,
   birthPlace
 }) => {

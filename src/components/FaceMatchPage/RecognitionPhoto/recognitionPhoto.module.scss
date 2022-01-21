@@ -17,6 +17,14 @@
 			max-height: 400px;
 			width: auto;
 			border-radius: 15px;
+
+			@supports (backdrop-filter: blur()) {
+				background-color: rgba(var(--color-background-rgb), 0.1);
+				backdrop-filter: blur(4px);
+			}
+			@supports not (backdrop-filter: blur()) {
+				background-color: rgba(var(--color-background-rgb), 0.1);
+			}
 		}
 	}
 }

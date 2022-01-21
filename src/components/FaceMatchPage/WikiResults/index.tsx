@@ -1,11 +1,14 @@
+import { ActorsService } from '@/api';
 import WikiCard, { WikiLoaderCard } from '@/components/ActorCardSmall';
+import { useActions } from '@/store/useActions';
 import { WikiActorInfo } from '@/types';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './wikiResults.module.scss';
 
 interface WikiResultsProps {
-  names: Array<string> | null;
+  names: Array<string>;
   preloadersNumber?: number;
+  recognitionFailed: boolean;
 }
 
 const testActors: Array<WikiActorInfo> = [
@@ -30,22 +33,46 @@ const testActors: Array<WikiActorInfo> = [
 ];
 
 const WikiResults: FC<WikiResultsProps> = ({
-  names = null,
-  preloadersNumber = 5
+  names,
+  preloadersNumber = 5,
+  recognitionFailed
 }) => {
+  const { setMessage } = useActions();
   const [loading, setLoading] = useState(true);
   const [wikiActors, setWikiActors] = useState(testActors);
+
+  const fetchWikiActors = async (names: string[]) => {
+    try {
+      setLoading(true);
+      const data = await ActorsService.parseWikiActors(names);
+      setLoading(false);
+      setWikiActors(data);
+    } catch (e) {
+      setLoading(false);
+      setMessage({ msg: 'Couldn`t find actor info', type: 'error' });
+    }
+  };
+
+  useEffect(() => {
+    if (names.length && !recognitionFailed) {
+      fetchWikiActors(names);
+    }
+  }, [names, recognitionFailed]);
 
   return (
     <div className={styles.WikiResultsWrapper}>
       <h2>Wikipedia results:</h2>
-      {loading ? (
+      {recognitionFailed ? (
+        <div className={styles.NotFoundWrapper}>
+          <p>Could not find wiki links</p>
+        </div>
+      ) : loading ? (
         <div className={styles.WikiResultsInner}>
           {[...Array(preloadersNumber)].map(() => (
             <WikiLoaderCard />
           ))}
         </div>
-      ) : wikiActors.length ? (
+      ) : wikiActors.length > 0 ? (
         <div className={styles.WikiResultsInner}>
           {wikiActors.map((actor) => (
             <WikiCard {...actor} />

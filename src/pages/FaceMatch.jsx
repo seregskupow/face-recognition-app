@@ -245,7 +245,8 @@ export default class FaceMatch extends Component {
 			body: formData,
 		})
 			.then((res) => res.json())
-			.then(async ({ results, imageSrc }) => {
+			.then(async ({ results, imageSrc, detectedActors }) => {
+				console.log({ detectedActors })
 				document.querySelector('.result-img').src = imageSrc;
 				this.setState({ image: imageSrc });
 				sessionStorage.setItem('image', JSON.stringify(imageSrc));
