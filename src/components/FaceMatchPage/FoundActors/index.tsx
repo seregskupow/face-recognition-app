@@ -5,6 +5,7 @@ import { ActorInfo } from '@/types';
 import clsx from 'clsx';
 import { FC, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import useLoadersAmount from '@/hooks/useLoadersAmount';
 import styles from './foundActors.module.scss';
 
 interface FoundActorsProps {
@@ -19,6 +20,7 @@ const FoundActors: FC<FoundActorsProps> = ({
   photo
 }) => {
   const { setMessage } = useActions();
+  const loadersAmount = useLoadersAmount('ActorCard');
   const [loading, setLoading] = useState(true);
   const [foundActors, setFoundActors] = useState<ActorInfo[]>([]);
   const fetchActors = async (names: string[]) => {
@@ -51,7 +53,7 @@ const FoundActors: FC<FoundActorsProps> = ({
         </div>
       ) : loading ? (
         <div className={styles.FoundActorsWrapper}>
-          {Array(6).fill(<ActorLoaderCard />)}
+          {Array(loadersAmount).fill(<ActorLoaderCard />)}
         </div>
       ) : foundActors.length > 0 ? (
         <div className={styles.FoundActorsWrapper}>

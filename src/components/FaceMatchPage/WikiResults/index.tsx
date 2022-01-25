@@ -1,5 +1,6 @@
 import { ActorsService } from '@/api';
 import WikiCard, { WikiLoaderCard } from '@/components/ActorCardSmall';
+import useLoadersAmount from '@/hooks/useLoadersAmount';
 import { useActions } from '@/store/useActions';
 import { WikiActorInfo } from '@/types';
 import { FC, useEffect, useState } from 'react';
@@ -7,39 +8,14 @@ import styles from './wikiResults.module.scss';
 
 interface WikiResultsProps {
   names: Array<string>;
-  preloadersNumber?: number;
   recognitionFailed: boolean;
 }
 
-const testActors: Array<WikiActorInfo> = [
-  {
-    photo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg/800px-Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg',
-    name: 'Chris Hemsworth',
-    link: 'https://en.wikipedia.org/wiki/Chris_Hemsworth'
-  },
-  {
-    photo:
-      'https://upload.wikimedia.org/wikipedia/commons/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg',
-    name: 'Dwayne Johnson',
-    link: 'https://en.wikipedia.org/wiki/Dwayne_Johnson'
-  },
-  {
-    photo:
-      'https://upload.wikimedia.org/wikipedia/commons/5/5f/Mark_Wahlberg_2017.jpg',
-    name: 'Mark Wahlberg',
-    link: 'https://en.wikipedia.org/wiki/Mark_Wahlberg'
-  }
-];
-
-const WikiResults: FC<WikiResultsProps> = ({
-  names,
-  preloadersNumber = 5,
-  recognitionFailed
-}) => {
+const WikiResults: FC<WikiResultsProps> = ({ names, recognitionFailed }) => {
   const { setMessage } = useActions();
+  const loadersAmount = useLoadersAmount('WikiCard');
   const [loading, setLoading] = useState(true);
-  const [wikiActors, setWikiActors] = useState(testActors);
+  const [wikiActors, setWikiActors] = useState<WikiActorInfo[]>([]);
 
   const fetchWikiActors = async (names: string[]) => {
     try {
@@ -68,7 +44,7 @@ const WikiResults: FC<WikiResultsProps> = ({
         </div>
       ) : loading ? (
         <div className={styles.WikiResultsInner}>
-          {[...Array(preloadersNumber)].map(() => (
+          {[...Array(loadersAmount)].map(() => (
             <WikiLoaderCard />
           ))}
         </div>

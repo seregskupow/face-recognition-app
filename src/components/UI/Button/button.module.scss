@@ -1,7 +1,6 @@
 .btn {
 	padding: 10px;
 
-	//font-size: 1.5rem;
 	font-weight: bold;
 
 	border-radius: 8px;
@@ -11,15 +10,16 @@
 	cursor: pointer;
 
 	transition: background 0.1s linear;
+
+	& span {
+		font-size: 1.4rem;
+		line-height: 1.4rem;
+	}
 }
 .btn-contrast {
-	background-color: var(--color-contrast);
+	background: var(--accent-gradient);
 
 	color: $white;
-
-	&:hover {
-		background: var(--color-contrast-light);
-	}
 }
 .btn-default {
 	background-color: var(--color-field);

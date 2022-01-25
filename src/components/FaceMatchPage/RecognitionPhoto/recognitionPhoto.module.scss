@@ -1,4 +1,8 @@
 .PhotoBackground {
+	align-self: center;
+
+	display: inline-block;
+
 	padding: 1rem;
 
 	background-size: 200%;
@@ -14,8 +18,11 @@
 		position: relative;
 		display: flex;
 		& img {
-			max-height: 400px;
 			width: auto;
+			max-width: 100%;
+			height: auto;
+			max-height: 400px;
+
 			border-radius: 15px;
 
 			@supports (backdrop-filter: blur()) {

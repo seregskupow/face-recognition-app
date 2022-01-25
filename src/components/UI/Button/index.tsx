@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styles from './button.module.scss';
 
 type ButtonProps = {
@@ -19,16 +20,20 @@ const Button = ({
   fontSize = 1.5,
   text,
   event = () => {},
-  color = 'default',
+  color = 'default'
 }: ButtonProps) => {
   return (
     <button
-      type='button'
+      type="button"
       onClick={event}
-      style={{ fontSize: `${fontSize}rem` }}
-      className={`${styles.btn} ${
-        styles[`btn-${color}`]
-      } btn__click ${className}`}
+      //style={{ fontSize: `${fontSize}rem`, lineHeight: `${fontSize}rem` }}
+      className={clsx(
+        styles.btn,
+        styles[`btn-${color}`],
+        'btn__click',
+        'hover__border',
+        className
+      )}
     >
       <span>{text}</span>
     </button>

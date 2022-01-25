@@ -55,7 +55,7 @@ const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
             </div>
 
             <p className={styles.pastePrompt}>
-              OR just Ctr+V
+              Drag-n-drop OR just Ctrl+V
               <br />
               No image? try one of these
             </p>

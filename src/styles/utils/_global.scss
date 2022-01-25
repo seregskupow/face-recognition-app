@@ -35,13 +35,13 @@ input[type="range"] {
 	appearance: none;
 	width: 100%;
 	height: 5px;
-	background: var(--color-field);
+	background: var(--primary);
 	border: 1px solid var(--color-border);
 	border-radius: 999px;
 	transition: all 0.3s;
 
 	&:hover {
-		background: var(--color-contrast-light);
+		background: var(--accent-gradient);
 	}
 
 	&::-webkit-slider-thumb {
@@ -49,8 +49,8 @@ input[type="range"] {
 		-webkit-appearance: none;
 		width: 20px;
 		height: 20px;
-		background: var(--color-contrast);
-		border: 1px solid var(--color-contrast-light);
+		background: var(--accent-gradient);
+		border: 1px solid var(--light-violet);
 		border-radius: 999px;
 
 		cursor: pointer;
@@ -61,8 +61,8 @@ input[type="range"] {
 		appearance: none;
 		width: 20px;
 		height: 20px;
-		background: var(--color-contrast);
-		border: 1px solid var(--color-contrast-light);
+		background: var(--accent-violet);
+		border: 1px solid var(--light-violet);
 		border-radius: 999px;
 
 		cursor: pointer;
