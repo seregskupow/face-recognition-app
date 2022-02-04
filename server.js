@@ -1,3 +1,5 @@
+require('@tensorflow/tfjs-node');
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -27,6 +29,7 @@ async function start() {
       useCreateIndex: true,
     });
     app.use('/api/db', require('./routes/mongoDB.route'));
+
     app.use('/api/recognition', require('./routes/recognition.route'));
     if (process.env.NODE_ENV === 'production') {
       app.use('/', express.static(path.join(__dirname, 'client', 'build')));

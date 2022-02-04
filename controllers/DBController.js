@@ -5,6 +5,7 @@ const { parseOGMetatags } = require('../utils/parseOG');
 const scrapper = require('../modules/actorParser');
 const ActorRepository = require('../repository/ActorRepository');
 const UserHistoryRepository = require('../repository/UserHistoryRepository');
+const { clamp } = require('../utils/helpers');
 
 class DBController {
   constructor() {
@@ -16,8 +17,8 @@ class DBController {
     this.parseActors = this.parseActors.bind(this);
     this.getPageCount = this.getPageCount.bind(this);
     this.getSingleActor = this.getSingleActor.bind(this);
+    this.getSingleActorNew = this.getSingleActorNew.bind(this);
     this.loadHistory = this.loadHistory.bind(this);
-    this.parseHistory = this.parseHistory.bind(this);
   }
   async searchActors(labels) {
     let foundActors = [];
@@ -130,10 +131,9 @@ class DBController {
     }
   }
 
-  async getPageCount(req, res) {
+  async getPageCount(userId) {
     try {
-      const count = await this.History.count(req.user.userId);
-      res.status(200).json({ count });
+      return await this.History.count(userId);
     } catch (e) {
       res.status(500).json({ msg: e.msg });
       logger.error(e);
@@ -143,7 +143,17 @@ class DBController {
   async getSingleActor(req, res) {
     try {
       let actor = await this.Actor.findByName(req.body.name);
-      res.status(200).json({ actor });
+      res.status(200).json(actor);
+    } catch (e) {
+      res.status(500).json({ msg: e.msg });
+      logger.error(e);
+    }
+  }
+
+  async getSingleActorNew(req, res) {
+    try {
+      let actor = await this.Actor.findByNameNew(req.body.name);
+      res.status(200).json(actor);
     } catch (e) {
       res.status(500).json({ msg: e.msg });
       logger.error(e);
@@ -152,45 +162,28 @@ class DBController {
 
   async loadHistory(req, res) {
     try {
-      const historyRawData = (
-        await this.History.getByPage({
-          owner: req.user.userId,
-          pageNumber: req.query.page || 0,
-          limit: 10,
-        })
-      ).reverse();
-
-      let history = await this.parseHistory(historyRawData);
-
-      res.status(200).json({ history });
+      const { userId } = req.user;
+      const { page: pageNumber = 0 } = req.query;
+      const offset = 10;
+      const totalCount = await this.getPageCount(userId);
+      const totalPages = Math.floor(totalCount / offset);
+      const currentPage = clamp(pageNumber, 0, totalPages);
+      const history = await this.History.loadHistory(
+        userId,
+        currentPage,
+        offset
+      );
+      res.status(200).json({
+        totalCount,
+        totalPages,
+        currentPage,
+        offset,
+        data: history,
+      });
     } catch (e) {
       res.status(500).json({ message: 'e' });
       logger.error(e);
     }
-  }
-  async parseHistory(historyRaw) {
-    let history = [];
-    for (let i = 0; i < historyRaw.length; i++) {
-      let actors = [];
-      if (historyRaw[i].actors.length > 0) {
-        for (let j = 0; j < historyRaw[i].actors.length; j++) {
-          let actor = await this.Actor.findByName(historyRaw[i].actors[j]);
-          if (actor) {
-            actors.push(actor);
-          }
-        } ///////change in prod
-        history.push({
-          date: historyRaw[i].date,
-          actors,
-          usedImg: historyRaw[i].usedImage
-            ? config.get('adress') +
-              '/' +
-              historyRaw[i].usedImage.split('/').pop()
-            : null,
-        });
-      }
-    }
-    return history;
   }
 }
 module.exports.DBController = new DBController();
