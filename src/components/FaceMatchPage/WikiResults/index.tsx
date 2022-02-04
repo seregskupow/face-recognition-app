@@ -51,7 +51,9 @@ const WikiResults: FC<WikiResultsProps> = ({ names, recognitionFailed }) => {
       ) : wikiActors.length > 0 ? (
         <div className={styles.WikiResultsInner}>
           {wikiActors.map((actor) => (
-            <WikiCard {...actor} />
+            <a href={actor.link} target="_blank noreferrer" tabIndex={0}>
+              <WikiCard {...actor} />
+            </a>
           ))}
         </div>
       ) : (

@@ -19,3 +19,13 @@
 		@content;
 	}
 }
+
+@mixin blurBackground($color, $blurAmount) {
+	@supports (backdrop-filter: blur()) {
+		background-color: rgba($color, 0.4);
+		backdrop-filter: blur($blurAmount);
+	}
+	@supports not (backdrop-filter: blur()) {
+		background-color: rgba($color, 0.8);
+	}
+}

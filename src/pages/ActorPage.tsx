@@ -27,7 +27,6 @@ const ActorPage = () => {
   useEffect(() => {
     fetchActor();
   }, [fetchActor]);
-
   if (loading) {
     return <Loader position="fixed" />;
   }

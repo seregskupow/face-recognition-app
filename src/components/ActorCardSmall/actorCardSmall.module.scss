@@ -1,5 +1,7 @@
 .WikiCard,
 .WikiPreloaderCard {
+	display: block;
+
 	height: 60px;
 	width: 300px;
 
@@ -9,10 +11,6 @@
 	border: 1px solid var(--color-border);
 
 	box-shadow: var(--small-shadow);
-
-	&:not(:last-child) {
-		margin-bottom: 1rem;
-	}
 
 	& .body {
 		display: flex;

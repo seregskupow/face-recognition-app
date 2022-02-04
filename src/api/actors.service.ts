@@ -1,8 +1,18 @@
-import { ActorInfo, WikiActorInfo } from '@/types';
+import { ActorInfo, ActorInfoFull, WikiActorInfo } from '@/types';
 import { Api } from './index';
 
 export const ActorsService = {
-  async getOne() {},
+  async getActorinfo(name: string) {
+    const data: ActorInfoFull = await Api.post('/api/db/getsingleactornew', {
+      name
+    });
+    //TODO: fix this crap on Backend
+    data.birthDay = data.birthDay.split(':')[1];
+    data.birthPlace = data.birthPlace.split(':')[1];
+    return data;
+  },
+
+  async getActorFilms(filmNames: string[]) {},
 
   async searchInfo(
     actorNames: string[],

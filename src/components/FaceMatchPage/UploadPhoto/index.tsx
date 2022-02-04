@@ -36,7 +36,7 @@ const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
       <div className={styles.panel}>
         <div className={styles.inner}>
           <h2 className={styles.uploadPrompt}>
-            Upload file to recognize an actor
+            Upload photo to recognize an actor
           </h2>
           <div className={styles.uploadPhotoPanel}>
             <div className={styles.uploadFromDiskButtonWrapper}>

@@ -1,3 +1,4 @@
+import { LoadHistoryResponse } from '@/types';
 import { Api } from './index';
 
 export const UserService = {
@@ -15,6 +16,14 @@ export const UserService = {
   },
   async getMe() {
     const { data } = await Api.get('/users/me');
+    return data;
+  },
+  async loadHistory(page: number = 0) {
+    console.log({ page });
+    const data: LoadHistoryResponse = await Api.get(
+      `/api/db/loadhistory?page=${page}`
+    );
+    console.log({ axios: data });
     return data;
   }
 };

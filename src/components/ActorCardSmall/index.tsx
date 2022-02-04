@@ -1,14 +1,12 @@
-import { WikiActorInfo } from "@/types";
-import clsx from "clsx";
-import { FC } from "react";
-import styles from "./actorCardSmall.module.scss";
+import { WikiActorInfo } from '@/types';
+import clsx from 'clsx';
+import { FC } from 'react';
+import styles from './actorCardSmall.module.scss';
 
 interface WikiCardProps extends WikiActorInfo {}
 
-const WikiCard: FC<WikiCardProps> = ({ name, photo, link }) => (
-  <a
-    href={link}
-    target="_blank noreferrer"
+const WikiCard: FC<WikiCardProps> = ({ name, photo }) => (
+  <div
     onClick={(e) => e.currentTarget.blur()}
     className={clsx(
       styles.WikiCard,
@@ -26,7 +24,7 @@ const WikiCard: FC<WikiCardProps> = ({ name, photo, link }) => (
         <p>{name}</p>
       </div>
     </div>
-  </a>
+  </div>
 );
 
 export default WikiCard;
