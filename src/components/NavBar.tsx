@@ -4,10 +4,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthContext } from '../context/AuthContext';
 import linkData from '../data/linkData.json';
-import {ReactComponent as FaceIcon} from '../images/icons/face-recognition.svg';
-import {ReactComponent as HistoryIcon} from '../images/icons/history.svg';
-import {ReactComponent as HomeIcon} from '../images/icons/home.svg';
-import {ReactComponent as MenuIcon} from '../images/icons/menu.svg';
+import { ReactComponent as FaceIcon } from '../images/icons/face-recognition.svg';
+import { ReactComponent as HistoryIcon } from '../images/icons/history.svg';
+import { ReactComponent as HomeIcon } from '../images/icons/home.svg';
+import { ReactComponent as MenuIcon } from '../images/icons/menu.svg';
 
 const icons = [
   <HomeIcon className="mobile-menu-icon" />,
@@ -123,7 +123,7 @@ const NavBar = () => {
                 end
                 to={link.to}
                 className={({ isActive }) =>
-                  'mobile-menu-link' + (isActive ? ' mobile-menu-link' : '')
+                  'mobile-menu-link' + (isActive ? ' mobile-activelink' : '')
                 }
               >
                 {icons[index]}

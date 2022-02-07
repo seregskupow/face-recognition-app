@@ -1,7 +1,6 @@
 import { ActorInfo } from '@/types';
 import clsx from 'clsx';
 import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
 import styles from './actorCard.module.scss';
 
 interface ActorCardProps extends ActorInfo {}
@@ -14,8 +13,7 @@ const ActorCard: FC<ActorCardProps> = ({
   birthPlace
 }) => {
   return (
-    <NavLink
-      to={`/actorinfo/${name?.split(' ').join('_')}`}
+    <div
       className={clsx(
         styles.ActorCard,
         'btn__click',
@@ -44,7 +42,7 @@ const ActorCard: FC<ActorCardProps> = ({
           </p>
         </div>
       </div>
-    </NavLink>
+    </div>
   );
 };
 export default ActorCard;

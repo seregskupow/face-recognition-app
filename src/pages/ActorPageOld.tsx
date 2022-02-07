@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import Loader from '../components/Loader';
 import { useHttp } from '../hooks/http.hook';
-import ActorPageComponent from '../components/ActorPageComponent';
+import ActorPageComponent from '../components/ActorPageComponentOld';
 
 const ActorPage = () => {
   const { token } = useContext(AuthContext);

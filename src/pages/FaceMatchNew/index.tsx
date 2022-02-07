@@ -2,6 +2,7 @@ import FoundActors from '@/components/FaceMatchPage/FoundActors';
 import RecognitionPhoto from '@/components/FaceMatchPage/RecognitionPhoto';
 import UploadPhoto from '@/components/FaceMatchPage/UploadPhoto';
 import WikiResults from '@/components/FaceMatchPage/WikiResults';
+import Button from '@/components/UI/Button';
 import { useActions } from '@/store/useActions';
 import { RecognitionResponse } from '@/types';
 import clsx from 'clsx';
@@ -57,6 +58,15 @@ const FaceMatch: FC = () => {
     return (
       <div className={styles.Page}>
         <div className={clsx(styles.RecognitionImageWrapper, 'mb-20')}>
+          {!recognitionLoading && (
+            <div
+              className={styles.BackBtn}
+              onClick={() => setShowImageUploader(true)}
+            >
+              <Button text="&#x27F5; Back" />
+            </div>
+          )}
+
           <RecognitionPhoto
             displayImage={photo as string}
             loading={recognitionLoading}

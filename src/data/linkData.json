@@ -1,15 +1,14 @@
 [
-    {
-        "to":"/",
-        "link":"Home"
-    },
-    {
-        "to":"/match",
-        "link":"Facematch"
-    },
-    {
-        "to":"/history?page=0",
-        "link":"History"
-    }
-  
+	{
+		"to": "/",
+		"link": "Home"
+	},
+	{
+		"to": "/match_new",
+		"link": "Facematch"
+	},
+	{
+		"to": "/history_new",
+		"link": "History"
+	}
 ]

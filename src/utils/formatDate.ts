@@ -4,7 +4,9 @@ export const formatDate = (date: string) => {
   const mo = new Intl.DateTimeFormat('en', {
     month: 'long'
   }).format(d);
-  const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+  const da = new Intl.DateTimeFormat('en', { day: '2-digit' })
+    .format(d)
+    .replace(/^0/g, '');
 
   return `${da} ${mo} ${ye}`;
 };

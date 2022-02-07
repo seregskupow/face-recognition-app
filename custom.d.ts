@@ -13,3 +13,5 @@ declare module '*.png';
 declare module '*.scss';
 
 declare module 'react-avatar-editor';
+
+declare module 'googlemaps';

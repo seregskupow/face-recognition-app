@@ -5,7 +5,7 @@ import History from './pages/History';
 import FaceMatch from './pages/FaceMatch';
 import AuthPage from './pages/AuthPage';
 import NavBar from './components/NavBar';
-import ActorPage from './pages/ActorPage';
+import ActorPage from './pages/ActorPageOld';
 import RecoverEmail from './pages/RecoverEmail';
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 import FaceMatchNew from './pages/FaceMatchNew';

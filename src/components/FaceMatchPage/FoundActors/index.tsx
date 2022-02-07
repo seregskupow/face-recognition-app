@@ -4,7 +4,7 @@ import { useActions } from '@/store/useActions';
 import { ActorInfo } from '@/types';
 import clsx from 'clsx';
 import { FC, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useLoadersAmount from '@/hooks/useLoadersAmount';
 import styles from './foundActors.module.scss';
 
@@ -19,6 +19,7 @@ const FoundActors: FC<FoundActorsProps> = ({
   recognitionFailed,
   photo
 }) => {
+  const location = useLocation();
   const { setMessage } = useActions();
   const loadersAmount = useLoadersAmount('ActorCard');
   const [loading, setLoading] = useState(true);
@@ -58,7 +59,13 @@ const FoundActors: FC<FoundActorsProps> = ({
       ) : foundActors.length > 0 ? (
         <div className={styles.FoundActorsWrapper}>
           {foundActors.map((actor) => (
-            <ActorCard {...actor} />
+            <Link
+              id={actor.id}
+              to={`/actorinfo/${actor.name?.split(' ').join('_')}`}
+              state={{ backgroundLocation: location }}
+            >
+              <ActorCard {...actor} />
+            </Link>
           ))}
         </div>
       ) : (

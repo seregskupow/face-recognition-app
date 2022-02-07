@@ -1,0 +1,100 @@
+.ActorMainInfo {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	width: 100%;
+	max-width: 1000px;
+	margin: 0 auto;
+
+	@include media("md") {
+		flex-direction: row;
+	}
+
+	& .ActorPhoto {
+		width: 100%;
+		@include media("md") {
+			width: 40%;
+		}
+	}
+
+	& .Shortinfo {
+		flex-grow: 1;
+	}
+}
+
+.ActorName {
+	font-size: 5rem;
+
+	text-shadow: var(--volume-text-shadow);
+
+	text-align: center;
+}
+
+.ActorPhoto {
+	display: flex;
+	justify-content: center;
+}
+
+.Shortinfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	& .text {
+		font-size: 2rem;
+
+		& span {
+			font-size: 2rem;
+			font-weight: bold;
+			//text-shadow: var(--volume-text-shadow);
+		}
+	}
+}
+
+.PhotoBackground {
+	// width: 100%;
+
+	// display: flex;
+	// justify-content: center;
+
+	align-self: start;
+
+	display: inline-block;
+
+	padding: 1rem;
+
+	background-size: 200%;
+	background-image: linear-gradient(315deg, #2876f9, #6d17cb, #2876f9);
+
+	border-radius: 15px;
+
+	box-shadow: var(--small-shadow);
+
+	animation: bg-animation 10s linear infinite;
+
+	& .ImageWrapper {
+		position: relative;
+		display: flex;
+		& img {
+			width: auto;
+			max-width: 100%;
+			height: auto;
+			height: 400px;
+
+			border-radius: 15px;
+
+			@include blurBackground(var(--color-background-rgb), 0.1);
+		}
+	}
+}
+
+.Biography {
+	& .title {
+		font-size: 4rem;
+		text-shadow: var(--volume-text-shadow);
+	}
+
+	& .bio {
+		font-size: 2rem;
+	}
+}

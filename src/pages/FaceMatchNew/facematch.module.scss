@@ -13,7 +13,7 @@
 	width: 95%;
 	max-width: 1600px;
 	margin: 0 auto;
-	margin-top: 5rem;
+	margin-top: 8rem;
 	margin-bottom: 10rem;
 
 	@include media("md") {
@@ -23,6 +23,8 @@
 }
 
 .RecognitionImageWrapper {
+	position: relative;
+
 	display: flex;
 
 	flex-direction: column;
@@ -46,5 +48,11 @@
 		flex-direction: row;
 
 		padding: 2rem;
+	}
+
+	& .BackBtn {
+		position: absolute;
+		top: -10%;
+		left: 0;
 	}
 }

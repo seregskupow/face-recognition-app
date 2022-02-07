@@ -1,0 +1,56 @@
+.MapWrapper {
+	height: 300px;
+	width: 100%;
+
+	border: 1px solid var(--color-border);
+	border-radius: 15px;
+	overflow: hidden;
+
+	box-shadow: var(--small-shadow);
+}
+
+.MapPlaceholder {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: var(--accent-gradient-dark);
+
+	& .icon {
+		position: relative;
+
+		height: 40px;
+		width: 40px;
+		& svg {
+			height: 100%;
+			width: auto;
+		}
+
+		&:after {
+			display: block;
+
+			content: "";
+
+			position: absolute;
+			top: -2px;
+			right: 2px;
+
+			height: 135%;
+			width: 3px;
+
+			background-color: #fff;
+
+			transform-origin: top;
+			transform: rotate(37deg);
+
+			box-shadow: var(--large-shadow);
+		}
+	}
+
+	& .placeholderTitle {
+		font-size: 3rem;
+	}
+}

@@ -59,6 +59,8 @@
 	width: 100%;
 	height: 100%;
 
+	padding: 1rem;
+
 	border-radius: 20px;
 
 	@include blurBackground(var(--color-background-rgb), 5px);
@@ -69,8 +71,6 @@
 
 		width: 100%;
 		height: 100%;
-
-		padding: 1rem;
 
 		overflow-y: auto;
 

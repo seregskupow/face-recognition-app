@@ -19,7 +19,6 @@ export const UserService = {
     return data;
   },
   async loadHistory(page: number = 0) {
-    console.log({ page });
     const data: LoadHistoryResponse = await Api.get(
       `/api/db/loadhistory?page=${page}`
     );

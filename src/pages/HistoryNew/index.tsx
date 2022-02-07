@@ -16,7 +16,7 @@ import styles from './history.module.scss';
 
 const History: FC = () => {
   const { setMessage } = useActions();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const { data, isValidating, error } = useSWR(
     ['userHistory', page],
     (key, page) => UserService.loadHistory(page),

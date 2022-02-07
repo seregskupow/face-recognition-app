@@ -4,22 +4,14 @@ import React, { FC, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
+import GoogleMap from '@/components/GoogleMap';
 import styles from './actorInfoModal.module.scss';
+import ActorPageComponent from '@/components/ActorPageComponent';
+import Button from '@/components/UI/Button';
 
 const ActorInfoModal: FC = () => {
   const overlayID = 'actor-modal-bg;';
   const navigate = useNavigate();
-  const { id } = useParams<'id'>();
-  const actorName = (id as string).split('_').join(' ');
-  const {
-    data: actorInfo,
-    isValidating,
-    error
-  } = useSWR(
-    ['actorInfo', actorName],
-    (key, actorName) => ActorsService.getActorinfo(actorName),
-    { revalidateOnFocus: false }
-  );
   const closeModalBGHandler = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).id === overlayID) {
       navigate(-1);
@@ -39,30 +31,10 @@ const ActorInfoModal: FC = () => {
       onClick={closeModalBGHandler}
     >
       <div className={styles.ModalBody}>
-        <div className={clsx(styles.ActorName, 'mb-20')}>{actorInfo?.name}</div>
-        <div className={styles.ActorMainInfo}>
-          <div className={styles.ActorPhoto}>
-            <div className={styles.PhotoBackground}>
-              <div className={styles.ImageWrapper}>
-                <img src={actorInfo?.photo} alt="recognition" />
-              </div>
-            </div>
-          </div>
-          <div className={styles.Shortinfo}>
-            <p className={styles.text}>
-              <span>BirthDate: </span>
-              {actorInfo?.birthDay || 'unavailable'}
-            </p>
-            <p className={styles.text}>
-              <span>BirthPlace: </span>
-              {actorInfo?.birthPlace || 'unavailable'}
-            </p>
-          </div>
+        <div className={styles.BackBtn} onClick={() => navigate(-1)}>
+          <Button text="&#x27F5; Back" />
         </div>
-        <div className={clsx(styles.Biography, 'mt-20')}>
-          <h2 className={clsx(styles.title, 'mb-10')}>Biography:</h2>
-          <p className={styles.bio}>{actorInfo?.biography}</p>
-        </div>
+        <ActorPageComponent />
       </div>
     </div>,
     document.body
