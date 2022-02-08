@@ -1,6 +1,7 @@
 import { WikiActorInfo } from '@/types';
 import clsx from 'clsx';
 import { FC } from 'react';
+import Image from '@/components/UI/Image';
 import styles from './actorCardSmall.module.scss';
 
 interface WikiCardProps extends WikiActorInfo {}
@@ -18,7 +19,8 @@ const WikiCard: FC<WikiCardProps> = ({ name, photo }) => (
   >
     <div className={styles.body}>
       <div className={styles.imgWrap}>
-        <img src={photo} alt={name} />
+        <Image src={photo} />
+        {/* <img src={photo} alt={name} /> */}
       </div>
       <div className={styles.name}>
         <p>{name}</p>

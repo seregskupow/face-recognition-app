@@ -11,6 +11,7 @@ import Angelina from './demoImages/angelina.jpg';
 import Stark from './demoImages/stark.png';
 import { useImagePicker } from '@/components/ImagePicker';
 import clsx from 'clsx';
+import ImageComponent from '@/components/UI/Image';
 
 type Actor = {
   name: string;
@@ -68,11 +69,14 @@ const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
                     //onPhotoUpload(actor.photo)
                   }}
                 >
-                  <img
+                  <ImageComponent
                     className={clsx(styles.originalImage)}
                     src={actor.photo}
                     alt={actor.name}
                   />
+                  {/* <img
+                    
+                  /> */}
                   <img
                     className={styles.blurEffect}
                     src={actor.photo}

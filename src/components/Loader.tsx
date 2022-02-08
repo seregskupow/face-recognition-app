@@ -6,12 +6,14 @@ interface LoaderProps {
   border?: string;
   background?: string;
   blur?: boolean;
+  scale?: number;
 }
 
 const Loader: FC<LoaderProps> = ({
   position = 'absolute',
-  border = '0px',
-  blur = false
+  border = 'inherit',
+  blur = false,
+  scale = 1
 }) => {
   return (
     <div
@@ -38,7 +40,7 @@ const Loader: FC<LoaderProps> = ({
             />
           </filter>
         </svg>
-        <div className="black-hole">
+        <div className="black-hole" style={{ transform: `scale(${scale})` }}>
           <ul className="gooey-container">
             <li className="bubble"></li>
             <li className="bubble"></li>

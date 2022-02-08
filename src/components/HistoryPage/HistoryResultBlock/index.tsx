@@ -6,9 +6,11 @@ import { MdOutlineClose } from 'react-icons/md';
 import ActorCardSmall from '@/components/ActorCardSmall';
 import Button from '@/components/UI/Button';
 import { ActorInfo } from '@/types/index';
+import PlaceHolder from '../../../images/film_placeholder.png';
 
 import styles from './historyResultBlock.module.scss';
 import { Link, useLocation } from 'react-router-dom';
+import Image from '@/components/UI/Image';
 
 interface HistoryResultBlockProps {
   actors: ActorInfo[];
@@ -32,10 +34,15 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
     <div className={clsx(styles.ResultBlock)}>
       <div className={styles.inner}>
         <div style={{ textAlign: 'center' }}>
-          <img
+          {/* <img
             src={`${process.env.REACT_APP_BACKEND_ADRESS}/${usedImage}`}
             className={styles.ResultImage}
             alt=""
+            onError={(e) => (e.currentTarget.src = PlaceHolder)}
+          /> */}
+          <Image
+            src={`${process.env.REACT_APP_BACKEND_ADRESS}/${usedImage}`}
+            className={styles.ResultImage}
           />
         </div>
         <div className={clsx('mt-10')}>

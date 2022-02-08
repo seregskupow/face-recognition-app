@@ -1,6 +1,7 @@
 import { ActorInfo } from '@/types';
 import clsx from 'clsx';
 import { FC } from 'react';
+import ImageComponent from '../UI/Image';
 import styles from './actorCard.module.scss';
 
 interface ActorCardProps extends ActorInfo {}
@@ -24,7 +25,8 @@ const ActorCard: FC<ActorCardProps> = ({
       tabIndex={0}
     >
       <div className={clsx(styles.imgWrap, 'mr-15')}>
-        <img src={photo} alt={name} />
+        {/* <img src={photo} alt={name} /> */}
+        <ImageComponent src={photo} />
       </div>
       <div className={styles.cardRight}>
         <div className={styles.nameWrapper}>
