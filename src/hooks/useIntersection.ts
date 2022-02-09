@@ -1,13 +1,13 @@
-import { ArrowFunction } from 'typescript';
+import { RefObject, useEffect } from 'react';
 
-let listenerCallbacks = new WeakMap();
+let listenerCallbacks = new WeakMap<Element, () => void>();
 
 let observer: IntersectionObserver;
 
 const observerCallback: IntersectionObserverCallback = (entries, observer) => {
   entries.forEach((entry) => {
     if (listenerCallbacks.has(entry.target)) {
-      let cb = listenerCallbacks.get(entry.target);
+      let cb = listenerCallbacks.get(entry.target) as () => void;
 
       if (entry.isIntersecting || entry.intersectionRatio > 0) {
         observer.unobserve(entry.target);
@@ -31,15 +31,21 @@ const getObserver = (): IntersectionObserver => {
 };
 
 export const useIntersection = (
-  target: HTMLElement,
+  imgRef: RefObject<HTMLDivElement>,
   callback: () => void
-)=> {
- useEffect(() => {
-	let observer = 
-
-
-	 return () => {
-		 effect
-	 };
- }, []);
+) => {
+  useEffect(() => {
+    let target = imgRef?.current;
+    if (target !== null) {
+      let observer = getObserver();
+      listenerCallbacks.set(target, callback);
+      observer.observe(target);
+    }
+    return () => {
+      if (target !== null) {
+        listenerCallbacks.delete(target);
+        observer.unobserve(target);
+      }
+    };
+  }, []);
 };

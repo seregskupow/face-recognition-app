@@ -25,7 +25,11 @@ const FaceMatch: FC = () => {
     try {
       setPhoto(photo);
       setRecognitionLoading(true);
-      setShowImageUploader(false);
+      //Allow ImagePicker to close before <UploadPhoto /> unmounts
+      setTimeout(() => {
+        setShowImageUploader(false);
+      });
+
       const { detectedActors, imageSrc }: RecognitionResponse =
         await RecognitionService.uploadPhoto(photo);
       setRecognitionLoading(false);

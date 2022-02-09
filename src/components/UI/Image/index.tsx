@@ -1,4 +1,5 @@
 import Loader from '@/components/Loader';
+import { useIntersection } from '@/hooks/useIntersection';
 import { FC, Fragment, ReactElement, useEffect, useRef, useState } from 'react';
 import { isConditionalExpression } from 'typescript';
 import styles from './image.module.scss';
@@ -16,7 +17,14 @@ const ImageComponent: FC<ImageProps> = ({ src, className, alt }) => {
   const [imageLoading, setImageLoading] = useState(true);
   const [image, setImage] = useState<any>(placeholserSrc);
   const [loaderScale, setLoaderScale] = useState(0);
-  const heightRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  const imgRef = useRef<HTMLDivElement>(null);
+
+  useIntersection(imgRef, () => {
+    setIsInView(true);
+  });
+
   const loadImage = (src: string) => {
     const image = new Image();
     image.src = src;
@@ -38,14 +46,17 @@ const ImageComponent: FC<ImageProps> = ({ src, className, alt }) => {
     return loaderScale;
   };
   useEffect(() => {
-    loadImage(src);
-    const imageHeight = heightRef.current?.clientHeight;
+    if (isInView) loadImage(src);
+  }, [isInView, src]);
+
+  useEffect(() => {
+    const imageHeight = imgRef.current?.clientHeight;
     imageHeight && setLoaderScale(calcLoaderScale(imageHeight));
   }, []);
 
   const renderImage = (): ReactElement => {
     return (
-      <div ref={heightRef} className={styles.ImageWrapper}>
+      <div ref={imgRef} className={styles.ImageWrapper}>
         <img src={image} className={className} alt={alt} />
         {imageLoading && (
           <Loader position="absolute" scale={loaderScale} blur />

@@ -33,7 +33,7 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
   return (
     <div className={clsx(styles.ResultBlock)}>
       <div className={styles.inner}>
-        <div style={{ textAlign: 'center' }}>
+        <div className={styles.ReasultImageWrapper}>
           {/* <img
             src={`${process.env.REACT_APP_BACKEND_ADRESS}/${usedImage}`}
             className={styles.ResultImage}

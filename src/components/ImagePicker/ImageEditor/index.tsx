@@ -1,11 +1,19 @@
 import styles from './imageEditor.module.scss';
-import React, { FC, Fragment, useEffect, useRef, useState } from 'react';
+import React, {
+  FC,
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import Button from '@/components/UI/Button';
 import { motion } from 'framer-motion';
 import Panel from '@/components/UI/Panel';
 import { disableScrolling, enableScrolling } from '@/utils/windowScroll';
 import { useActions } from '@/store/useActions';
+import useKeyPressed from '@/hooks/useKeyPressed';
 
 type Position = {
   x: number;
@@ -52,16 +60,31 @@ const ImageEditor: FC<IImageEditor> = ({
   imgOptions = defaultImgOptions
 }) => {
   const { setMessage } = useActions();
-  let Editor: any;
   const [scale, setScale] = useState<number>(imgOptions.scale);
   const [rotate, setRotate] = useState<number>(imgOptions.rotate);
   const [position, setPosition] = useState(imgOptions.position);
+  let editorRef = useRef<any>(null);
+
+  const returnImage = useCallback(() => {
+    console.log(editorRef);
+    let editor = editorRef.current;
+    if (editor) {
+      getImage(editor.getImageScaledToCanvas().toDataURL());
+      getOptions({ rotate, scale, position });
+      closePicker();
+    }
+  }, [editorRef]);
+
   const scrollZoom = (e: React.WheelEvent) => {
     let scaleVal: number = scale + (e.deltaY > 0 ? -0.1 : 0.1);
     if (scaleVal > 10 || scaleVal < 0.5) return;
     scaleVal = parseFloat(Math.min(Math.max(scaleVal, 0.5), 10).toFixed(2));
     setScale(scaleVal);
   };
+
+  useKeyPressed('Enter', returnImage);
+  useKeyPressed('Escape', closePicker);
+
   useEffect(() => {
     scale === 1 && setPosition({ x: 0.5, y: 0.5 });
   }, [scale]);
@@ -93,7 +116,7 @@ const ImageEditor: FC<IImageEditor> = ({
         <div className={styles.avatar__picker__inner}>
           <div className={styles.editor__wrapper} onWheel={scrollZoom}>
             <AvatarEditor
-              ref={(editor: any) => (Editor = editor)}
+              ref={editorRef}
               image={image}
               width={1920}
               height={1080}
@@ -242,15 +265,7 @@ const ImageEditor: FC<IImageEditor> = ({
                 fontSize={1.5}
                 text="Apply"
                 color="contrast"
-                event={() => {
-                  // setMessage({
-                  //   type: 'success',
-                  //   msg: 'Changes applied successfully'
-                  // });
-                  getImage(Editor.getImageScaledToCanvas().toDataURL());
-                  getOptions({ rotate, scale, position });
-                  closePicker();
-                }}
+                event={returnImage}
               />
               <Button
                 className="ml-5"
