@@ -147,7 +147,7 @@ const NavBar = () => {
 const Logo = styled.h1`
   position: fixed;
   top: 0px;
-  left: 0px;
+  right: 0px;
   width: 100%;
   font-size: 0.75em;
   background-color: #2876f9;

@@ -10,6 +10,7 @@ $padding: 2rem;
 
 	@include blurBackground(var(--color-background-rgb), 5px);
 	z-index: 99;
+
 }
 
 .ModalBody {

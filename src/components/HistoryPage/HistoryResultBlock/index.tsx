@@ -11,6 +11,7 @@ import PlaceHolder from '../../../images/film_placeholder.png';
 import styles from './historyResultBlock.module.scss';
 import { Link, useLocation } from 'react-router-dom';
 import Image from '@/components/UI/Image';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface HistoryResultBlockProps {
   actors: ActorInfo[];
@@ -50,9 +51,17 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
           <Button text="share" color="contrast" />
         </div>
       </div>
-      {showActors && (
-        <Fragment>
-          <div className={styles.ActorsContainer} onClick={onBGClickHandler}>
+      <AnimatePresence>
+        {showActors && (
+          <motion.div
+            className={clsx(styles.ActorsContainer)}
+            onClick={onBGClickHandler}
+            key={usedImage}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <div ref={bgRef} className={styles.inner}>
               <div className={styles.actorsWrapper}>
                 {actors.map((actor) => (
@@ -68,19 +77,19 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
                 ))}
               </div>
             </div>
-          </div>
-          <button
-            className={clsx(
-              styles.HideActorsBtn,
-              'btn__click',
-              'hover__border'
-            )}
-            onClick={() => setShowActors(false)}
-          >
-            <MdOutlineClose />
-          </button>
-        </Fragment>
-      )}
+            <button
+              className={clsx(
+                styles.HideActorsBtn,
+                'btn__click',
+                'hover__border'
+              )}
+              onClick={() => setShowActors(false)}
+            >
+              <MdOutlineClose />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

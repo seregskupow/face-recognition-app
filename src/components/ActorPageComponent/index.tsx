@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import GoogleMap from '@/components/GoogleMap';
 import styles from './actorPageComponent.module.scss';
+import ImageComponent from '../UI/Image';
 
 const ActorPageComponent: FC = () => {
   const navigate = useNavigate();
@@ -34,7 +35,13 @@ const ActorPageComponent: FC = () => {
         <div className={styles.ActorPhoto}>
           <div className={styles.PhotoBackground}>
             <div className={styles.ImageWrapper}>
-              <img src={actorInfo?.photo} alt="recognition" />
+              {actorInfo?.photo && (
+                <ImageComponent
+                  src={actorInfo.photo as string}
+                  alt="recognition"
+                />
+              )}
+              {/* <img src={actorInfo?.photo} alt="recognition" /> */}
             </div>
           </div>
         </div>

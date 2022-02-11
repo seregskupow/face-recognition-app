@@ -4,16 +4,23 @@ import { FC, Fragment, ReactElement, useEffect, useRef, useState } from 'react';
 import { isConditionalExpression } from 'typescript';
 import styles from './image.module.scss';
 import PlaceHolder from './placeholder.jpg';
+import clsx from 'clsx';
 interface ImageProps {
   src: string;
   className?: string;
   alt?: string;
+  animate?: boolean;
 }
 
 const placeholserSrc: string =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920px' height='1080px'%3E%3C/svg%3E";
 
-const ImageComponent: FC<ImageProps> = ({ src, className, alt }) => {
+const ImageComponent: FC<ImageProps> = ({
+  src,
+  className,
+  alt,
+  animate = true
+}) => {
   const [imageLoading, setImageLoading] = useState(true);
   const [image, setImage] = useState<any>(placeholserSrc);
   const [loaderScale, setLoaderScale] = useState(0);
@@ -57,7 +64,13 @@ const ImageComponent: FC<ImageProps> = ({ src, className, alt }) => {
   const renderImage = (): ReactElement => {
     return (
       <div ref={imgRef} className={styles.ImageWrapper}>
-        <img src={image} className={className} alt={alt} />
+        <img
+          src={image}
+          className={clsx(className, animate && styles.transitionOn)}
+          alt={alt}
+          style={{ opacity: imageLoading ? '0' : '1' }}
+        />
+
         {imageLoading && (
           <Loader position="absolute" scale={loaderScale} blur />
         )}

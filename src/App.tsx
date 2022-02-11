@@ -18,6 +18,7 @@ import HistoryNew from './pages/HistoryNew';
 import Home from './pages/Home';
 import RecoverEmail from './pages/RecoverEmail';
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function App() {
   const { logIn, logOut, token, userId, userName, email, ready } = useAuth();

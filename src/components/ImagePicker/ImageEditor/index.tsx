@@ -95,13 +95,17 @@ const ImageEditor: FC<IImageEditor> = ({
     };
   }, []);
   return (
-    <div className={styles.avatar__picker__container}>
+    <motion.div
+      key="picker_bg"
+      variants={variantsBg}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className={styles.avatar__picker__container}
+    >
       <motion.div
-        key="picker_bg"
-        variants={variantsBg}
         initial="initial"
         animate="animate"
-        exit="exit"
         className={styles.avatar__picker__bg}
         onClick={() => closePicker()}
       ></motion.div>
@@ -277,7 +281,7 @@ const ImageEditor: FC<IImageEditor> = ({
           </div>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

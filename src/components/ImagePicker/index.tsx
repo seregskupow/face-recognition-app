@@ -173,7 +173,7 @@ export const useImagePicker = (initialImage: string = AvatarPlaceholder) => {
               }
             }}
           />
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence>
             {showAvatarPicker && (
               <ImageEditor
                 image={originalImage as string}

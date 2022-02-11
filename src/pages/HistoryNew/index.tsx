@@ -13,6 +13,7 @@ import { useActions } from '@/store/useActions';
 import HistoryItem from '@/components/HistoryPage/HistoryItem';
 
 import styles from './history.module.scss';
+import { motion } from 'framer-motion';
 
 const History: FC = () => {
   const { setMessage } = useActions();
@@ -38,14 +39,16 @@ const History: FC = () => {
       return (
         <div className={clsx('mt-40')}>
           {data?.data?.map((item) => (
-            <HistoryItem {...item} />
+            <motion.div animate={{ opacity: [0, 1] }}>
+              <HistoryItem {...item} />
+            </motion.div>
           ))}
         </div>
       );
     }
     return (
       <>
-        <h1>No history</h1>
+        <motion.h1 animate={{ opacity: [0, 1] }}>No history</motion.h1>
       </>
     );
   };
