@@ -1,0 +1,46 @@
+#text {
+    margin-top:48px;
+    text-align:center;
+}
+#dropzone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: visibility 175ms, opacity 175ms;
+    display: table;
+    text-shadow: 1px 1px 2px #000;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.45);
+}
+#textnode {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    transition: font-size 175ms;
+}
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: #29d;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+}

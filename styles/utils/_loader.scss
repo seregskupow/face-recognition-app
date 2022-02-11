@@ -1,0 +1,96 @@
+@keyframes black-hole {
+	0% {
+		transform: scale(1) translate3d(75px, 0, 0);
+	}
+	50% {
+		transform: scale(4) translate3d(55px, 0, 0);
+	}
+	100% {
+		transform: scale(1) translate3d(75px, 0, 0);
+	}
+}
+@keyframes black-hole-rotate {
+	0% {
+		transform: translate(-50%, -50%) rotate(0deg) skew(3deg);
+	}
+	50% {
+		transform: translate(-50%, -50%) rotate(180deg) skew(0deg);
+	}
+	100% {
+		transform: translate(-50%, -50%) rotate(360deg) skew(3deg);
+	}
+}
+.loader {
+	background-color: rgba(var(--color-background-rgb), 0.8);
+
+	&.blur {
+		@supports (backdrop-filter: blur()) {
+			background-color: rgba(var(--color-background-rgb), 0.4);
+			backdrop-filter: blur(4px);
+		}
+		@supports not (backdrop-filter: blur()) {
+			background-color: rgba(var(--color-background-rgb), 0.8);
+		}
+	}
+}
+.loader-wrapper {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0.3);
+}
+.black-hole {
+	backface-visibility: hidden;
+	z-index: 20;
+	position: relative;
+	overflow: hidden;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	padding: 0;
+	box-shadow: 0 0 30px 0 $violet inset;
+
+	.gooey-container {
+		overflow: hidden;
+		border-radius: 50%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(0deg) skew(5deg);
+		filter: url(#gooey-black-hole);
+		width: 300px;
+		height: 300px;
+		padding: 0;
+		margin: 0;
+		box-shadow: 0 0 0 22px $blue inset;
+		animation: black-hole-rotate 5s ease infinite;
+
+		.bubble {
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 100%;
+			text-align: right;
+
+			&:before {
+				content: "";
+				display: inline-block;
+				background: $violet;
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				transform: scale(1) translate3d(75px, 0, 0);
+				box-shadow: 0 0 10px 0 $violet inset, 0 0 10px 0 $violet inset;
+			}
+		}
+		@for $i from 1 through 6 {
+			.bubble:nth-child(#{$i}) {
+				transform: translate(-50%, -50%) rotate(60deg * $i);
+			}
+			.bubble:nth-child(#{$i}):before {
+				animation: black-hole 1s * ($i) ease 0.5s * $i infinite;
+			}
+		}
+	}
+}

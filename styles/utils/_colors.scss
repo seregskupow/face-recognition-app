@@ -1,0 +1,45 @@
+$backgroundGrey: #131417;
+$foregroundGrey: #1b1e24;
+$transparentGrey: #2528305d;
+$blue: #2876f9;
+$lightBlue: #4a8cfdbe;
+$violet: #6d17cb;
+$lightViolet: #a14efabe;
+$darkWhite: rgba(255, 255, 255, 0.911);
+
+// #dab8ff
+$lightGrey: #adadad;
+$white: #ffffff;
+$darkWhite: #f9f9f9;
+$black: #030303;
+$lightBlack: #1d1d1d;
+$blueDdark: #006be1;
+$lightBlue: #cde2ff;
+$red: #ec4e2c;
+$lightRed: #ffcfcb;
+$red-rgb: 235, 87, 87;
+$lightRed: #ffebeb;
+$darkGrey: #8a8a8a;
+$yellow: #ffd369;
+$lightYellow: #ffe8c3;
+$green: #3dbd61;
+$lightGreen: #c5f7dc;
+//gradients
+$blackGradient: linear-gradient(315deg, #000000 0%, #414141 74%);
+$blackRadialGradient: radial-gradient(#414141 0%, #000000 74%);
+//ordered by components
+$primary: $black;
+$secondary: $darkGrey;
+
+//dark theme
+$darkPrimary: #1a1a1b;
+$darkHover: #1b1c20;
+$darkInput: #131417;
+$darkInputRGB: 37, 37, 37;
+$darkBackground: rgb(17, 17, 17);
+$darkBorder: #343536;
+$darkContrast: #6050dc;
+$darkContrastLight: #786ae1;
+$darkContrastRGB: 96, 80, 220;
+$darkText: #eeeeee;
+$darkTextLight: #939393;

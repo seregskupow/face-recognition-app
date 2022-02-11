@@ -1,0 +1,92 @@
+.ResultBlock {
+	width: auto;
+	// display: inline-block;
+	position: relative;
+
+	background-color: var(--secondary);
+
+	border: 1px solid var(--color-border);
+	border-radius: 20px;
+
+	box-shadow: var(--small-shadow);
+
+	@include media("md") {
+		width: 100%;
+	}
+
+	& .inner {
+		padding: 1rem;
+	}
+}
+.ReasultImageWrapper {
+	text-align: center;
+	border-radius: 15px;
+}
+.ResultImage {
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	max-height: 300px;
+
+	margin: 0 auto;
+
+	border-radius: 15px;
+	box-shadow: var(--small-shadow);
+	background: var(--accent-gradient-light);
+}
+.HideActorsBtn {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+
+	padding: 1rem;
+
+	background: var(--primary);
+
+	border: 1px solid var(--color-border);
+	border-radius: 99999999px;
+
+	cursor: pointer;
+
+	& svg {
+		vertical-align: middle;
+		font-size: 2rem;
+		line-height: 2rem;
+	}
+}
+
+.ActorsContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	padding: 1rem;
+
+	border-radius: 20px;
+
+	@include blurBackground(var(--color-background-rgb), 5px);
+
+	& .inner {
+		display: flex;
+		justify-content: center;
+
+		width: 100%;
+		height: 100%;
+
+		overflow-y: auto;
+
+		& .actorsWrapper {
+			margin: auto;
+
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		// & .item {
+		// 	margin: auto;
+		// }
+	}
+}

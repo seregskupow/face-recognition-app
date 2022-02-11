@@ -1,0 +1,34 @@
+.Date {
+	display: inline-block;
+
+	padding: 1rem 2rem;
+
+	background-color: var(--secondary);
+
+	border: 1px solid var(--color-border);
+	border-radius: 20px;
+
+	font-size: 3rem;
+
+	text-shadow: var(--volume-text-shadow);
+	box-shadow: var(--small-shadow);
+}
+.ResultsContainer {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 1rem;
+
+	@include media("md") {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@include media("lg") {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	& .ResultGridItem {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

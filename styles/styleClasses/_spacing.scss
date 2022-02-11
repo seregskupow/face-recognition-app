@@ -1,0 +1,76 @@
+//Margins
+.m-10 {
+	margin: 1rem;
+}
+.m-15 {
+	margin: 1.5rem;
+}
+.m-20 {
+	margin: 2rem;
+}
+.mx-10 {
+	margin: 0 1rem;
+}
+.mx-15 {
+	margin: 0 1.5rem;
+}
+.mx-20 {
+	margin: 0 2rem;
+}
+.my-10 {
+	margin: 1rem 0;
+}
+.my-15 {
+	margin: 1.5rem 0;
+}
+.my-20 {
+	margin: 2rem 0;
+}
+
+.p-10 {
+	padding: 1rem;
+}
+.p-15 {
+	padding: 1.5rem;
+}
+.p-20 {
+	padding: 2rem;
+}
+
+.px-10 {
+	padding: 0 1rem;
+}
+.px-15 {
+	padding: 0 1.5rem;
+}
+.px-20 {
+	padding: 0 2rem;
+}
+.py-10 {
+	padding: 1rem 0;
+}
+.py-15 {
+	padding: 1.5rem 0;
+}
+.py-20 {
+	padding: 2rem 0;
+}
+
+$sides: (
+	"top": "t",
+	"right": "r",
+	"bottom": "b",
+	"left": "l",
+);
+
+@each $side, $letter in $sides {
+	@for $px from 0 through 10 {
+		.m#{$letter}-#{$px * 5} {
+			margin-#{$side}: #{$px * 5}px !important;
+		}
+
+		.p#{$letter}-#{$px * 5} {
+			padding-#{$side}: #{$px * 5}px !important;
+		}
+	}
+}

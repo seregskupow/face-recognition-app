@@ -1,0 +1,169 @@
+.uploadPhotoWrapper {
+	width: 100%;
+	max-width: 1200px;
+}
+
+.panel {
+	width: 95%;
+	margin: 0 auto;
+	padding: 3px;
+
+	border: 1px solid var(--color-border);
+	border-radius: 20px;
+	background: var(--secondary);
+	box-shadow: var(--small-shadow);
+
+	@include media("sm") {
+		padding: 3rem;
+		padding-top: 1rem;
+	}
+
+	@include media("lg") {
+		width: 100%;
+	}
+}
+
+.inner {
+	& .uploadPrompt {
+		margin: 1rem 0;
+
+		text-align: center;
+		font-size: 1.2rem;
+
+		color: var(--text-color);
+
+		text-shadow: var(--volume-text-shadow);
+		text-transform: uppercase;
+
+		@include media("xs") {
+			font-size: 1.5rem;
+		}
+
+		@include media("sm") {
+			font-size: 2.5rem;
+		}
+
+		@include media("md") {
+			font-size: 4rem;
+		}
+	}
+}
+
+.uploadPhotoPanel {
+	display: flex;
+	flex-direction: column;
+
+	padding: 1.5rem;
+
+	background: var(--accent-gradient-light);
+
+	border-radius: 20px;
+	box-shadow: inset 0 0px 40px rgba(0, 0, 0, 0.25), inset 0 0px 10px rgba(0, 0, 0, 0.22);
+
+	& .uploadFromDiskButtonWrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		margin: 2rem 0;
+
+		& .AwesomeBtnWrapper {
+			width: 100%;
+			max-width: 600px;
+			height: 70px;
+
+			:global {
+				& .aws-btn {
+					width: 100% !important;
+					height: 100% !important;
+
+					& span {
+						font-size: 2rem;
+
+						@include media("xs") {
+							font-size: 2.5rem;
+						}
+					}
+				}
+			}
+		}
+
+		@include media("sm") {
+			margin: 5rem 0;
+		}
+	}
+
+	& .pastePrompt {
+		margin-bottom: 2rem;
+
+		font-size: 1.5rem;
+
+		text-align: center;
+	}
+}
+
+.demoImagesWrapper {
+	display: flex;
+	justify-content: center;
+
+	& .demoImage {
+		flex: 0 0 40px;
+
+		width: 40px;
+		height: 40px;
+		position: relative;
+
+		border-radius: 8px;
+
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+
+		& img {
+			height: 100%;
+			width: 100%;
+			border-radius: inherit;
+
+			object-fit: cover;
+		}
+
+		@include media("xs") {
+			flex-basis: 50px;
+			width: 50px;
+			height: 50px;
+
+			border-radius: 10px;
+		}
+
+		@include media("sm") {
+			flex-basis: 70px;
+			width: 70px;
+			height: 70px;
+
+			border-radius: 20px;
+		}
+
+		& .originalImage {
+			position: relative;
+
+			z-index: 1;
+			cursor: pointer;
+
+			&:hover + .blurEffect {
+				opacity: 1;
+			}
+		}
+
+		& .blurEffect {
+			transition: all 0.15s ease-in-out;
+			width: 95%;
+			height: 100%;
+
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			filter: blur(5px) saturate(6);
+			opacity: 0;
+		}
+	}
+}

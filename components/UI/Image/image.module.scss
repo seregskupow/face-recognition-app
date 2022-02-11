@@ -1,0 +1,11 @@
+.ImageWrapper {
+	position: relative;
+	height: inherit;
+	width: inherit;
+
+	border-radius: inherit;
+}
+
+.transitionOn {
+	transition: opacity 0.4s ease;
+}

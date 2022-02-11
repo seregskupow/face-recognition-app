@@ -1,0 +1,14 @@
+[
+	{
+		"to": "/",
+		"link": "Home"
+	},
+	{
+		"to": "/facematch",
+		"link": "Facematch"
+	},
+	{
+		"to": "/history",
+		"link": "History"
+	}
+]

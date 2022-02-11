@@ -1,0 +1,18 @@
+$mainGradient: linear-gradient(315deg, #2876f9 30%, #6d17cb 74%);
+$mainGradientDark: linear-gradient(315deg, #0f326d 30%, #330b5e 74%);
+$mainGradientHover: linear-gradient(315deg, #4186fd 30%, #8544ca 74%);
+$mainGradientTransparent: linear-gradient(315deg, rgba(40, 117, 249, 0.685) 30%, rgba(110, 23, 203, 0.678) 74%);
+$mainGradientLight: linear-gradient(315deg, #2875f927 30%, #6e17cb2d 74%);
+$stripeGradient2: linear-gradient(90deg, #2876f9, #6d17cb, #2876f9);
+$darkGradient: linear-gradient(180deg, #6e17cb8e, #2875f93b, #25283000);
+$stripeGradient: linear-gradient(
+	148deg,
+	#2876f9 25%,
+	#6d17cb 25%,
+	#6d17cb 50%,
+	#2876f9 50%,
+	#2876f9 75%,
+	#6d17cb 75%,
+	#6d17cb 100%
+);
+

@@ -1,0 +1,56 @@
+.card {
+	& .card-header {
+		font-size: 2rem;
+	}
+
+	& .input-group {
+		& span,
+		input {
+			font-size: 1.5rem;
+		}
+	}
+	& .signType {
+		font-size: 3rem;
+		padding: 0.5rem;
+		cursor: pointer;
+		border-radius: 10px;
+	}
+	& button {
+		width: 150px !important;
+	}
+	& .btn-in {
+		background: var(--accent-gradient);
+		outline: none;
+		border: none;
+	}
+	& .recover-pass-prompt {
+		font-size: 1.5rem;
+	}
+}
+.auth-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: url("../../images/background_new.jpg") no-repeat center center fixed;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
+	& .auth-form {
+		width: 90%;
+		max-width: 800px;
+		& .card {
+			background-color: var(--transparent-grey) !important;
+
+			border-radius: 20px;
+
+			backdrop-filter: blur(15px);
+		}
+	}
+}

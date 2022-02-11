@@ -1,0 +1,37 @@
+.FoundActors {
+	width: 100%;
+
+	& .foundActorsTitle {
+		font-size: 3rem;
+		text-shadow: var(--volume-text-shadow);
+
+		text-align: center;
+	}
+	& .NotFoundWrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		height: 100%;
+		width: 100%;
+
+		& h2 {
+			font-size: 2.5rem;
+		}
+	}
+}
+.FoundActorsWrapper {
+	width: 100%;
+	display: grid;
+	grid-gap: 2rem;
+	grid-template-columns: repeat(1, 1fr);
+
+	@include media("md") {
+		padding: 2rem;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@include media("lg") {
+		padding: 0rem;
+		grid-template-columns: repeat(3, 1fr);
+	}
+}

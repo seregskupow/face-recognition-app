@@ -1,0 +1,118 @@
+[
+    {
+        "akas":["Albert L. Roker"],
+        "image":{
+            "url":"https://upload.wikimedia.org/wikipedia/commons/4/41/Al_Roker_October_2014_%28cropped%29.jpg"
+        },
+        "name":"Al Roker",
+        "knownFor":[
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2010"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2011"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2012"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2013"
+            }
+        ]
+    },
+    {
+        "akas":["Margot Robbie"],
+        "image":{
+            "url":"https://upload.wikimedia.org/wikipedia/commons/5/57/SYDNEY%2C_AUSTRALIA_-_JANUARY_23_Margot_Robbie_arrives_at_the_Australian_Premiere_of_%27I%2C_Tonya%27_on_January_23%2C_2018_in_Sydney%2C_Australia_%2828074883999%29_%28cropped_2%29.jpg"
+        },
+        "name":"Margot Robbie",
+        "knownFor":[
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2010"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2011"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2012"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2013"
+            }
+        ]
+    },
+    {
+        "akas":["Albert L. Roker"],
+        "image":{
+            "url":"https://upload.wikimedia.org/wikipedia/commons/a/a2/Robert_Downey%2C_Jr._SDCC_2014_%28cropped%29.jpg"
+        },
+        "name":"Al Roker",
+        "knownFor":[
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2010"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2011"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2012"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2013"
+            }
+        ]
+    },
+    {
+        "akas":["Alexandra Daddario"],
+        "image":{
+            "url":"https://i2.wp.com/enemy.org.ua/wp-content/uploads/2018/12/alexandra-daddario-nomis-2018-05.jpg"
+        },
+        "name":"Alexandra Daddario",
+        "knownFor":[
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2010"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2011"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2012"
+            },
+            {
+                "title":"Cloudy with a chance of meatball",
+                "characters":["Patrick Patrickson"],
+                "year":"2013"
+            }
+        ]
+    }
+]

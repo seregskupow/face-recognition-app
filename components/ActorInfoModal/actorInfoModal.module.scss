@@ -1,0 +1,40 @@
+$padding: 2rem;
+
+.ActorInfoModalOverlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+
+	@include blurBackground(var(--color-background-rgb), 5px);
+	z-index: 99;
+
+}
+
+.ModalBody {
+	position: relative;
+	z-index: 9999999;
+	width: 95%;
+	max-width: 1200px;
+
+	margin: 10vh auto;
+	margin-top: 15vh;
+	padding: $padding;
+
+	background: var(--secondary);
+
+	border: 1px solid var(--color-border);
+	border-radius: 20px;
+
+	@include media("md") {
+		width: 90%;
+	}
+
+	& .BackBtn {
+		position: absolute;
+		top: $padding;
+		left: $padding;
+	}
+}

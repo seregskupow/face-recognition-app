@@ -1,0 +1,12 @@
+.Page {
+	width: 95%;
+	max-width: 1700px;
+	margin: 0 auto;
+	margin-top: 5rem;
+	margin-bottom: 10rem;
+
+	@include media("md") {
+		margin-top: 14rem;
+		margin-bottom: 5rem;
+	}
+}

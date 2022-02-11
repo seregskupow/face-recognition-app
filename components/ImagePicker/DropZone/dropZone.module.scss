@@ -1,0 +1,48 @@
+.dropZoneContainer {
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	//background-color: rgba(0, 0, 0, 0.5);
+
+	@supports (backdrop-filter: blur()) {
+		background-color: rgba(var(--color-background-rgb), 0.4);
+		backdrop-filter: blur(5px);
+	}
+	@supports not (backdrop-filter: blur()) {
+		background-color: rgba(var(--color-background-rgb), 0.8);
+	}
+
+	transition: visibility 0.2s, opacity 0.2s;
+
+	z-index: 9999999999;
+
+	visibility: hidden;
+	opacity: 0;
+
+	& p {
+		color: white;
+		text-shadow: 0 1px 0 #4a8cfdbe, 0 2px 0 #4a8cfdbe, 0 3px 0 #4a8cfdbe, 0 4px 0 var(--light-violet),
+			0 5px 0 var(--light-violet), 0 6px 0 var(--light-violet);
+
+		font-size: 7rem;
+
+		transition: transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+	}
+
+	&.show {
+		visibility: visible;
+		opacity: 1;
+
+		& p {
+			transform: scale(1.5);
+		}
+	}
+}
