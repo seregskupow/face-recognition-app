@@ -1,7 +1,15 @@
 import { Module } from '@nestjs/common';
 import { FaceapiService } from './faceapi.service';
+import { FaceapiController } from './faceapi.controller';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  providers: [FaceapiService]
+  imports: [
+    MulterModule.register({
+      dest: './uploadFiles',
+    }),
+  ],
+  providers: [FaceapiService],
+  controllers: [FaceapiController],
 })
 export class FaceapiModule {}
