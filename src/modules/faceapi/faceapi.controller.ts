@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Header,
   HttpException,
@@ -9,7 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { FaceapiService } from './faceapi.service';
+import { FaceapiService } from './services/faceapi.service';
 
 @Controller('faceapi')
 export class FaceapiController {
@@ -17,20 +18,24 @@ export class FaceapiController {
 
   @Post('reco')
   @UseInterceptors(FileInterceptor('file'))
-  async recogniseFaces(@UploadedFile() file: Express.Multer.File, @Res() res) {
-    try {
-      console.log(file);
-      const result: any = await this.faceApiService.recogniseFaces(file.path);
-      res.writeHead(200, {
-        'Content-Type': 'image/jpeg',
-        'Content-Length': result.length,
-      });
-      res.end(result);
-    } catch (e) {
-      throw new HttpException(
-        { message: e.message },
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
+  async recogniseFaces(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body,
+  ) {
+    const result: any = await this.faceApiService.recogniseFaces(file.path);
+    return result;
+    // try {
+    //   // const result: any = await this.faceApiService.recogniseFaces(file.path);
+    //   // res.writeHead(200, {
+    //   //   'Content-Type': 'image/jpeg',
+    //   //   'Content-Length': result.length,
+    //   // });
+    //   // res.end(result);
+    // } catch (e) {
+    //   throw new HttpException(
+    //     { message: e.message },
+    //     HttpStatus.UNPROCESSABLE_ENTITY,
+    //   );
+    // }
   }
 }

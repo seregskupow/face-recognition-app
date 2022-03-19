@@ -8,7 +8,7 @@ import {
 import * as multer from 'multer';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { UserService } from '@modules/user/user.service';
+import { UserService } from '@modules/user/services/user.service';
 
 @Injectable()
 export class DoesUserExist implements CanActivate {

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { FaceapiService } from './faceapi.service';
+import { FaceapiService } from './services/faceapi.service';
 import { FaceapiController } from './faceapi.controller';
 import { MulterModule } from '@nestjs/platform-express';
 

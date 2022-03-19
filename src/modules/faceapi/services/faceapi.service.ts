@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { promisify } from 'util';
 import { unlink } from 'fs';
 
-import * as descriptorsJson from './descriptors/descriptors.json';
+import * as descriptorsJson from '../descriptors/descriptors.json';
 
 import {
   Box,
@@ -82,7 +82,25 @@ export class FaceapiService {
     const recognisedFaces = detections.map((res) =>
       this.faceMatcher.findBestMatch(res.descriptor),
     );
-    return this.drawFaces(detections, recognisedFaces, image);
+
+    const recognisedNames = recognisedFaces.reduce(
+      (faces: string[], currentFace) => {
+        currentFace.label !== 'unknown' && faces.push(currentFace.label);
+        return faces;
+      },
+      [],
+    );
+
+    const facesRender = await this.drawFaces(
+      detections,
+      recognisedFaces,
+      image,
+    );
+
+    return {
+      names: recognisedNames,
+      image: facesRender,
+    };
   }
 
   private detectFaces(image: any) {
@@ -97,7 +115,7 @@ export class FaceapiService {
     recognisedFaces: FaceMatch[],
     image: any,
   ) {
-    const out = faceapi.createCanvasFromMedia(image) as any;
+    const out: HTMLCanvasElement = faceapi.createCanvasFromMedia(image) as any;
     for (let i = 0; i < detections.length; i++) {
       if (recognisedFaces[i].label === 'unknown') continue;
       const box: Box = new Box(detections[i].detection.box);
@@ -109,7 +127,7 @@ export class FaceapiService {
       });
       drawBox.draw(out);
     }
-    return out.toBuffer('image/jpeg');
+    return out.toDataURL('image/jpeg');
   }
 
   async fetchDescriptors(descriptors) {

@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 
 import { User } from '@modules/user/schemas/user.schema';
-import { UserService } from '@modules/user/user.service';
+import { UserService } from '@modules/user/services/user.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { googlePayload } from './types';

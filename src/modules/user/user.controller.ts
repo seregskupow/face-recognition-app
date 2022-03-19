@@ -10,7 +10,7 @@ import { plainToClass } from 'class-transformer';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './schemas/user.schema';
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
 
 @Controller('users')
 export class UserController {

@@ -7,6 +7,8 @@ import { DatabaseModule } from './core/database/database.module';
 import { GlobalModule } from '@core/globalModules/global.module';
 import { ImgUploadModule } from '@core/imageUploader/img-upload.module';
 import { FaceapiModule } from './modules/faceapi/faceapi.module';
+import { ActorsModule } from './modules/actors/actors.module';
+import { RecognitionModule } from './modules/recognition/recognition.module';
 
 @Module({
   imports: [
@@ -15,7 +17,9 @@ import { FaceapiModule } from './modules/faceapi/faceapi.module';
     DatabaseModule,
     GlobalModule,
     ImgUploadModule,
-    FaceapiModule,
+    //FaceapiModule,
+    ActorsModule,
+    RecognitionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
