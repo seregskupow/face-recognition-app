@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { chromiumProvider } from './providers/chromium.provider';
 //import * as dotenv from 'dotenv';
 
 //dotenv.config();
@@ -11,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET,
     }),
   ],
-  exports: [JwtModule],
+  providers: [chromiumProvider],
+  exports: [JwtModule, chromiumProvider],
 })
 export class GlobalModule {}

@@ -29,7 +29,7 @@ export class UserController {
       _id: 'sadasd',
       name: 'asdasd',
       email: 'asdasd',
-      password: 'sadasd',
+      password: 'sadasd2',
     };
     return plainToClass(User, user);
   }

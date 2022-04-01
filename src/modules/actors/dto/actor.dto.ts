@@ -1,21 +1,37 @@
 export class FilmDto {
-  readonly poster: string;
+  poster: string;
 
-  readonly link: string;
+  link: string;
 
-  readonly title: string;
+  title: string;
 }
 
 export class ActorDto {
-  readonly name: string;
+  constructor(
+    name: string,
+    photo: string,
+    birthDay: string,
+    birthPlace: string,
+    biography: string,
+    films: FilmDto[],
+  ) {
+    this.name = name;
+    this.photo = photo;
+    this.birthDay = birthDay;
+    this.birthPlace = birthPlace;
+    this.biography = biography;
+    this.films = films;
+  }
 
-  readonly photo: string;
+  name: string;
 
-  readonly birthDay: string;
+  photo: string;
 
-  readonly birthPlace: string;
+  birthDay: string;
 
-  readonly biography: string;
+  birthPlace: string;
 
-  readonly films: FilmDto[];
+  biography: string;
+
+  films: FilmDto[];
 }

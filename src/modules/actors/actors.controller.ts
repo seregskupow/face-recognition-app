@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { parseActor } from '@utils/parseActor';
 import mongoose, { Types } from 'mongoose';
 import { ActorService } from './services/actors.service';
 
@@ -8,27 +9,39 @@ export class ActorsController {
 
   @Get('create')
   async create() {
-    // const actor = await this.actorService.create({
-    //   name: 'Serega2',
-    //   photo: null,
-    //   biography: 'sadasdasdsad',
-    //   birthDay: '27.12.2001',
-    //   birthPlace: 'Kyiv',
-    //   films: [
-    //     {
-    //       link: 'http://asdasd.com',
-    //       poster: 'sadasdsad',
-    //       title: 'james bond',
-    //     },
-    //     {
-    //       link: 'http://asdasasdasdd.com',
-    //       poster: 'sadasdsad',
-    //       title: 'james bond2',
-    //     },
-    //   ],
-    // });
-    // return actor;
-    const res = await this.actorService.findOneById('5e3338ba80f8cf1300aa430f');
-    return res;
+    const actor = await this.actorService.create({
+      name: 'Serega2',
+      photo: null,
+      biography: 'sadasdasdsad',
+      birthDay: '27.12.2001',
+      birthPlace: 'Kyiv',
+      films: [
+        {
+          link: 'http://asdasd.com',
+          poster: 'sadasdsad',
+          title: 'james bond',
+        },
+        {
+          link: 'http://asdasasdasdd.com',
+          poster: 'sadasdsad',
+          title: 'james bond2',
+        },
+      ],
+    });
+    return actor;
+    // const res = await this.actorService.findOneById('5e3338ba80f8cf1300aa430f');
+    // return res;
+  }
+
+  @Get('parse')
+  async parse() {
+    return await this.actorService.parseSingleActor('Robert Downey Jr.');
+  }
+
+  @Get('update')
+  async update() {
+    return await this.actorService.update('623602ea5e07f7887d47e416', {
+      name: 'Huilo',
+    });
   }
 }

@@ -2,7 +2,7 @@ import xpath from 'xpath';
 import { DOMParser } from 'xmldom';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import puppeteer from 'puppeteer';
+import * as puppeteer from 'puppeteer';
 const ROTTEN_URL = 'https://www.rottentomatoes.com/celebrity/robert_downey_jr';
 
 const BIRTHDAY_PATH =
@@ -15,7 +15,7 @@ const FILMS_PATH = '//*[@id="dynamic-poster-list"]/tiles-carousel-responsive';
 
 const convertBodyToDocument = (body) => new DOMParser().parseFromString(body);
 
-const parseActor = async (name) => {
+export const parseActor = async (name) => {
   const actorName = name.split(' ').join('_');
   // const { data: page } = await axios.request({
   //   url: ROTTEN_URL,
@@ -35,8 +35,7 @@ const parseActor = async (name) => {
     '#dynamic-poster-list > tiles-carousel-responsive > tiles-carousel-responsive-item.tile-first.visible > a > tile-dynamic > img',
     (e) => e.getAttribute('src'),
   );
-  console.log(bday);
-  await browser.close();
-};
 
-parseActor('Robert Downey Jr');
+  await browser.close();
+  return bday;
+};

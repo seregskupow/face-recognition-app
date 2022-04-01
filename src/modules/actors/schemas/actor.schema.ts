@@ -19,7 +19,10 @@ export type FilmDocument = Film & Document;
 
 export const FilmSchema = SchemaFactory.createForClass(Film);
 
-@Schema({ collection: 'actors' })
+@Schema({
+  collection: 'actors',
+  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+})
 export class Actor {
   @Exclude()
   _id: string;
