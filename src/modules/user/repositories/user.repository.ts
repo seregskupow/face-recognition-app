@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { plainToClass } from 'class-transformer';
 import { Model, Types } from 'mongoose';
 import { CreateUserDto } from '../dto/createUser.dto';
+import { UpdateUserDto } from '../dto/updateUser.dto';
 import { User, UserDocument } from '../schemas/user.schema';
 
 @Injectable()
@@ -10,11 +12,12 @@ export class UserRepository {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const newUser = new this.userModel(createUserDto);
-    return newUser.save();
+    const user = await newUser.save();
+    return plainToClass(User, user.toObject());
   }
 
-  async update(oldUser: User): Promise<User> {
-    return this.userModel
+  async update(oldUser: UpdateUserDto): Promise<User> {
+    const user = await this.userModel
       .findByIdAndUpdate(
         oldUser._id,
         {
@@ -23,13 +26,16 @@ export class UserRepository {
         { new: true },
       )
       .exec();
+    return plainToClass(User, user);
   }
 
   async findOneById(id: Types.ObjectId): Promise<User> {
-    return this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id).lean().exec();
+    return plainToClass(User, user);
   }
 
   async findOneByEmail(email: string): Promise<User> {
-    return this.userModel.findOne({ email }).exec();
+    const user = await this.userModel.findOne({ email }).lean().exec();
+    return plainToClass(User, user);
   }
 }

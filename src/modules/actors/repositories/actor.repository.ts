@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { plainToClass } from 'class-transformer';
 import { isValidObjectId, Model, Types } from 'mongoose';
 import { ActorDto } from '../dto/actor.dto';
 import { UpdateActorDto } from '../dto/update-actor.dto';
@@ -13,21 +14,40 @@ export class ActorRepository {
 
   async create(actor: ActorDto): Promise<Actor> {
     const newActor = await this.actorModel.create(actor);
-    return newActor;
+    return plainToClass(Actor, newActor.toObject());
   }
 
-  async update(id: string, oldActor: UpdateActorDto): Promise<Actor> {
+  async updateById(
+    id: string,
+    oldActor: UpdateActorDto,
+    upsert?: false,
+  ): Promise<Actor> {
     if (!isValidObjectId(id)) {
       throw new BadRequestException('Provided id is invalid');
     }
 
-    return this.actorModel
+    const actor = await this.actorModel
       .findByIdAndUpdate(
         new Types.ObjectId(id),
         {
           ...oldActor,
         },
-        { new: true },
+        { new: true, upsert: upsert },
+      )
+      .lean()
+      .exec();
+    return plainToClass(Actor, actor);
+  }
+
+  async updateIfNotCreate(actor: UpdateActorDto): Promise<Actor> {
+    return this.actorModel
+      .findOneAndUpdate(
+        { name: actor.name },
+        {
+          ...actor,
+          updated_at: new Date().toISOString(),
+        },
+        { new: true, upsert: true },
       )
       .exec();
   }

@@ -17,7 +17,7 @@ import { RecognitionModule } from './modules/recognition/recognition.module';
     DatabaseModule,
     GlobalModule,
     ImgUploadModule,
-    //FaceapiModule,
+    FaceapiModule,
     ActorsModule,
     RecognitionModule,
   ],

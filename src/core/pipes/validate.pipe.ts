@@ -5,6 +5,7 @@ import {
   ValidationPipe,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { ValidationError } from 'class-validator';
 
 @Injectable()
 export class ValidateInputPipe extends ValidationPipe {
@@ -13,7 +14,6 @@ export class ValidateInputPipe extends ValidationPipe {
       return await super.transform(value, metadata);
     } catch (e) {
       if (e instanceof BadRequestException) {
-        console.log(e.getResponse());
         throw new UnprocessableEntityException(
           this.handleError(JSON.parse(JSON.stringify(e.getResponse())).message),
         );
@@ -22,6 +22,11 @@ export class ValidateInputPipe extends ValidationPipe {
   }
 
   private handleError(errors) {
-    return errors.map((error) => error.constraints);
+    console.log(errors);
+    return errors.map((target: ValidationError) => ({
+      [target.property]: {
+        errors: Object.values(target.constraints),
+      },
+    }));
   }
 }

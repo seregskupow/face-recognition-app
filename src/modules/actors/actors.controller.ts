@@ -1,47 +1,48 @@
-import { Controller, Get } from '@nestjs/common';
-import { parseActor } from '@utils/parseActor';
-import mongoose, { Types } from 'mongoose';
+import { FaceapiService } from '@modules/faceapi/services/faceapi.service';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ParseActorsDto } from './dto/parseActors.dto';
+import { ParseWikiActorsDto } from './dto/parseWikiActors.dto';
 import { ActorService } from './services/actors.service';
 
 @Controller('actors')
 export class ActorsController {
-  constructor(private actorService: ActorService) {}
+  constructor(private readonly actorService: ActorService) {}
 
-  @Get('create')
-  async create() {
-    const actor = await this.actorService.create({
-      name: 'Serega2',
-      photo: null,
-      biography: 'sadasdasdsad',
-      birthDay: '27.12.2001',
-      birthPlace: 'Kyiv',
-      films: [
-        {
-          link: 'http://asdasd.com',
-          poster: 'sadasdsad',
-          title: 'james bond',
-        },
-        {
-          link: 'http://asdasasdasdd.com',
-          poster: 'sadasdsad',
-          title: 'james bond2',
-        },
-      ],
-    });
-    return actor;
-    // const res = await this.actorService.findOneById('5e3338ba80f8cf1300aa430f');
-    // return res;
+  @Get('/id/:id')
+  async getActorById(@Param('id') id: string) {
+    return await this.actorService.findOneById(id);
   }
 
-  @Get('parse')
-  async parse() {
-    return await this.actorService.parseSingleActor('Robert Downey Jr.');
+  @Get('/name/:name')
+  async getActorByName(@Param('name') name: string) {
+    return await this.actorService.findOneByName(name);
   }
 
-  @Get('update')
-  async update() {
-    return await this.actorService.update('623602ea5e07f7887d47e416', {
-      name: 'Huilo',
-    });
+  @Post('getactors')
+  async getActors(@Body() parseActorsDto: ParseActorsDto) {
+    return await this.actorService.getActors(parseActorsDto.actorNames);
+  }
+
+  @Post('parsewikiactors')
+  async parseWikiActors(@Body() parseWikiActorsDto: ParseWikiActorsDto) {
+    return await this.actorService.parseWikiActors(
+      parseWikiActorsDto.actorNames,
+    );
+  }
+
+  //TODO: add authentication && save user history
+  @Post('recognise')
+  @UseInterceptors(FileInterceptor('file'))
+  async recogniseFaces(@UploadedFile() file: Express.Multer.File) {
+    return await this.actorService.recogniseActors(file.path);
   }
 }

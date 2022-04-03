@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { UploadApiResponse } from 'cloudinary';
 import { IMG_UPLOADER } from '../constants';
 import { UploaderType } from './types';
 
@@ -13,7 +14,7 @@ export class ImgUploadService {
     folder: string,
     width = 384,
     height = 384,
-  ) {
+  ): Promise<UploadApiResponse> {
     return new Promise((resolve, reject) => {
       this.uploader.upload(
         dataUri,
@@ -47,8 +48,8 @@ export class ImgUploadService {
     return this.uploadImg(
       dataUri,
       process.env.CLOUDINARY_HISTORY_FOLDER,
-      1920,
-      1080,
+      1280,
+      720,
     );
   }
 }

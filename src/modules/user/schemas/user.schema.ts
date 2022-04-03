@@ -30,6 +30,9 @@ export class User {
   @Prop({ default: false })
   @Exclude()
   activated?: boolean;
+
+  @Exclude()
+  __v?: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

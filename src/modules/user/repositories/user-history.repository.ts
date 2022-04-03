@@ -53,7 +53,7 @@ export class UserHistoryRepository {
       .lookup({
         from: 'actors',
         localField: 'actors',
-        foreignField: '_id',
+        foreignField: 'name',
         as: 'actorData',
       })
       .project({

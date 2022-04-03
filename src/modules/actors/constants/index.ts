@@ -1,4 +1,6 @@
-export const ROTTEN_TOMATOES_URL = 'https://www.rottentomatoes.com/celebrity/';
+export const ROTTEN_TOMATOES_URL = 'https://www.rottentomatoes.com';
+export const ROTTEN_TOMATOES_CELEB_URL =
+  'https://www.rottentomatoes.com/celebrity/';
 export const TEST_ELEM =
   '#main-page-content > div > article > section:nth-child(1) > div > div > h1';
 export const PHOTO =

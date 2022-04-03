@@ -11,5 +11,6 @@ import { MulterModule } from '@nestjs/platform-express';
   ],
   providers: [FaceapiService],
   controllers: [FaceapiController],
+  exports: [FaceapiService],
 })
 export class FaceapiModule {}

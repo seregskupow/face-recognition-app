@@ -8,6 +8,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { parseOGMetatags } from '@utils/parseOG';
 import { Model, Types } from 'mongoose';
 import { Browser, Page } from 'puppeteer';
+import { of } from 'rxjs';
+import * as moment from 'moment';
+
 import {
   BIOGRAPHY,
   BIRTHDAY,
@@ -17,6 +20,7 @@ import {
   FILM_POSTER,
   FILM_TITLE,
   PHOTO,
+  ROTTEN_TOMATOES_CELEB_URL,
   ROTTEN_TOMATOES_URL,
   TEST_ELEM,
   UNAVAILABLE,
@@ -25,6 +29,13 @@ import { ActorDto, FilmDto } from '../dto/actor.dto';
 import { UpdateActorDto } from '../dto/update-actor.dto';
 import { ActorRepository } from '../repositories/actor.repository';
 import { Actor, ActorDocument } from '../schemas/actor.schema';
+import { FaceapiService } from '@modules/faceapi/services/faceapi.service';
+import { ImgUploadService } from '@core/imageUploader/img-upload.service';
+
+type recogniseActorsType = {
+  names: string[];
+  image: string;
+};
 
 @Injectable()
 export class ActorService {
@@ -32,6 +43,8 @@ export class ActorService {
 
   constructor(
     private readonly actorRepository: ActorRepository,
+    private readonly faceapiService: FaceapiService,
+    private readonly imgUploadService: ImgUploadService,
     @Inject('CHROMIUM_BROWSER') private browser: Browser,
   ) {}
 
@@ -40,7 +53,7 @@ export class ActorService {
   }
 
   async update(id: string, oldActor: UpdateActorDto): Promise<Actor> {
-    return this.actorRepository.update(id, oldActor);
+    return this.actorRepository.updateById(id, oldActor);
   }
 
   delete(id: string) {
@@ -79,10 +92,39 @@ export class ActorService {
     }
   }
   async getActors(names: string[]) {
-    const actors: ActorDto[] = [];
+    let actorsToParse = names;
+
+    const actors: Actor[] = [];
     for (let i = 0; i < names.length; i++) {
-      const actor = await this.parseSingleActor(names[i]);
+      const actorInDB = await this.actorRepository.findOneByName(names[i]);
+      if (!actorInDB) continue;
+      //check document age
+      //if too old - then reparse it
+      const today = moment().startOf('day');
+      const documentLastUpdated = moment(actorInDB.updated_at);
+      const diff = moment.duration(documentLastUpdated.diff(today)).asDays();
+      this.logger.log(`Document age is: ${diff} days`);
+
+      if (diff <= 5) {
+        actors.push(actorInDB);
+        actorsToParse = actorsToParse.filter((name) => name !== names[i]);
+      }
     }
+    this.logger.log(`Found actors in db: ${actors.map((a) => a.name)}`);
+
+    if (actorsToParse.length) {
+      this.logger.log(`Actors to parse: ${actorsToParse}`);
+      for (let i = 0; i < actorsToParse.length; i++) {
+        const parsedActor = await this.parseSingleActor(actorsToParse[i]);
+        if (parsedActor) {
+          const newActor = await this.actorRepository.updateIfNotCreate(
+            parsedActor,
+          );
+          actors.push(newActor);
+        }
+      }
+    }
+    return actors;
   }
   async parseSingleActor(nameToParse: string) {
     try {
@@ -104,18 +146,25 @@ export class ActorService {
       const nameDash = nameBase.join('-').replace('.', '').toLowerCase();
 
       const links: string[] = [nameUnderlines, nameDash];
+      let successLink = false;
 
       const page = await this.browser.newPage();
 
       for (let i = 0; i < links.length; i++) {
-        const link = ROTTEN_TOMATOES_URL + links[i];
+        const link = ROTTEN_TOMATOES_CELEB_URL + links[i];
         await page.goto(link);
         this.logger.log('Navigating to: ' + link);
 
         const testElement = await page.$(TEST_ELEM);
-        if (testElement) break;
-        else this.logger.log('Link failed: ' + link);
+        if (testElement) {
+          successLink = true;
+          break;
+        } else {
+          this.logger.log('Link failed: ' + links);
+        }
       }
+
+      if (!successLink) return null;
 
       const photoElement = await page.$(PHOTO);
       if (photoElement)
@@ -173,9 +222,12 @@ export class ActorService {
 
           const linkElement = await filmsParent[i].$(FILM_LINK);
           if (!linkElement) continue;
-          film.link = await linkElement.evaluate(
+          const href = await linkElement.evaluate(
             (e) => e.getAttribute('href') || null,
           );
+          if (href) {
+            film.link = ROTTEN_TOMATOES_URL + href;
+          }
 
           films.push(film);
         } catch (e) {}
@@ -188,5 +240,17 @@ export class ActorService {
       //Bad practice, but parsing is unreliable and I cant be sure in 100% success rate
       return null;
     }
+  }
+
+  async recogniseActors(imagePath: string): Promise<recogniseActorsType> {
+    const { image, names } = await this.faceapiService.recogniseFaces(
+      imagePath,
+    );
+    if (!names.length) return null;
+    const imgUrl = await this.imgUploadService.uploadUserHistory(image);
+    return {
+      names,
+      image: imgUrl.secure_url,
+    };
   }
 }

@@ -30,6 +30,11 @@ type FaceDetectionWithLandmarks = faceapi.WithFaceDescriptor<
   >
 >;
 
+type recogniseFacesType = {
+  names: string[];
+  image: string;
+};
+
 @Injectable()
 export class FaceapiService {
   private _canvas: any;
@@ -71,8 +76,7 @@ export class FaceapiService {
   get canvas() {
     return this._canvas;
   }
-
-  async recogniseFaces(imagePath: string) {
+  async recogniseFaces(imagePath: string): Promise<recogniseFacesType> {
     const image = await this.canvas.loadImage(imagePath);
 
     await this.removeFile(imagePath);

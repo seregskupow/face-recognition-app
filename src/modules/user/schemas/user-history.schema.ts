@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { Exclude } from 'class-transformer';
-import { Actor } from '@modules/actors/schemas/actor.schema';
 import { User } from './user.schema';
 
 export type UserHistoryDocument = UserHistory & Document;
@@ -12,8 +11,8 @@ export class UserHistory {
   @Exclude()
   _id: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Actor' }] })
-  actors: Actor[];
+  @Prop({ type: [String] })
+  actors: string[];
 
   @Prop()
   usedImage: string;

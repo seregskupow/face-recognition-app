@@ -22,20 +22,6 @@ export class FaceapiController {
     @UploadedFile() file: Express.Multer.File,
     @Body() body,
   ) {
-    const result: any = await this.faceApiService.recogniseFaces(file.path);
-    return result;
-    // try {
-    //   // const result: any = await this.faceApiService.recogniseFaces(file.path);
-    //   // res.writeHead(200, {
-    //   //   'Content-Type': 'image/jpeg',
-    //   //   'Content-Length': result.length,
-    //   // });
-    //   // res.end(result);
-    // } catch (e) {
-    //   throw new HttpException(
-    //     { message: e.message },
-    //     HttpStatus.UNPROCESSABLE_ENTITY,
-    //   );
-    // }
+    return await this.faceApiService.recogniseFaces(file.path);
   }
 }

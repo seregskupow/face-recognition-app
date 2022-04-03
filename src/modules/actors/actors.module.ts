@@ -4,10 +4,18 @@ import { ActorsController } from './actors.controller';
 import { ActorService } from './services/actors.service';
 import { Actor, ActorSchema } from './schemas/actor.schema';
 import { ActorRepository } from './repositories/actor.repository';
+import { FaceapiModule } from '@modules/faceapi/faceapi.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { ImgUploadModule } from '@core/imageUploader/img-upload.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Actor.name, schema: ActorSchema }]),
+    MulterModule.register({
+      dest: './uploadFiles',
+    }),
+    FaceapiModule,
+    ImgUploadModule,
   ],
   controllers: [ActorsController],
   providers: [ActorService, ActorRepository],

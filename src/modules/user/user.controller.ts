@@ -3,11 +3,14 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
+  Param,
+  Patch,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './schemas/user.schema';
 import { UserService } from './services/user.service';
@@ -32,5 +35,23 @@ export class UserController {
       password: 'sadasd2',
     };
     return plainToClass(User, user);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('/id/:id')
+  async getUserById(@Param('id') id: string) {
+    return await this.userService.findOneById(id);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('/email/:email')
+  async getUserByEmail(@Param('email') email: string): Promise<User> {
+    return await this.userService.findOneByEmail(email);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Patch('update')
+  async update(@Body() updateUserDto: UpdateUserDto) {
+    return await this.update(updateUserDto);
   }
 }
