@@ -37,8 +37,7 @@ export class AuthService {
 
     const user = await this.userService.findOneByEmail(email);
     if (user)
-      return await this.userService.update({
-        _id: user._id,
+      return await this.userService.update(user._id, {
         email,
         name,
         avatar,

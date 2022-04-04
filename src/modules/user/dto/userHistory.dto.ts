@@ -1,9 +1,9 @@
 import { Types } from 'mongoose';
 
 export class UserHistoryDto {
-  readonly actors: Types.ObjectId[];
+  readonly actors: string[];
 
-  readonly owner: Types.ObjectId;
+  readonly owner: string;
 
   readonly createdAt?: Date;
 }

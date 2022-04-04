@@ -54,6 +54,7 @@
 		"reflect-metadata": "^0.1.13",
 		"rimraf": "^3.0.2",
 		"rxjs": "^7.2.0",
+		"utf8": "^3.0.0",
 		"xmldom": "^0.6.0",
 		"xpath": "^0.0.32"
 	},
@@ -67,6 +68,7 @@
 		"@types/node": "^16.0.0",
 		"@types/puppeteer": "^5.4.5",
 		"@types/supertest": "^2.0.11",
+		"@types/utf8": "^3.0.1",
 		"@types/xmldom": "^0.1.31",
 		"@typescript-eslint/eslint-plugin": "^5.0.0",
 		"@typescript-eslint/parser": "^5.0.0",

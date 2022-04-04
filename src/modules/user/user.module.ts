@@ -7,6 +7,8 @@ import { UserHistoryService } from './services/user-history.service';
 import { UserHistory, UserHistorySchema } from './schemas/user-history.schema';
 import { UserRepository } from './repositories/user.repository';
 import { UserHistoryRepository } from './repositories/user-history.repository';
+import { MulterModule } from '@nestjs/platform-express';
+import { ImgUploadModule } from '@core/imageUploader/img-upload.module';
 
 @Module({
   imports: [
@@ -14,6 +16,10 @@ import { UserHistoryRepository } from './repositories/user-history.repository';
       { name: User.name, schema: UserSchema },
       { name: UserHistory.name, schema: UserHistorySchema },
     ]),
+    MulterModule.register({
+      dest: './uploadFiles',
+    }),
+    ImgUploadModule,
   ],
   providers: [
     UserService,
@@ -22,6 +28,6 @@ import { UserHistoryRepository } from './repositories/user-history.repository';
     UserHistoryRepository,
   ],
   controllers: [UserController],
-  exports: [UserService],
+  exports: [UserService, UserHistoryService],
 })
 export class UserModule {}

@@ -9,6 +9,7 @@ import { ImgUploadModule } from '@core/imageUploader/img-upload.module';
 import { FaceapiModule } from './modules/faceapi/faceapi.module';
 import { ActorsModule } from './modules/actors/actors.module';
 import { RecognitionModule } from './modules/recognition/recognition.module';
+import { ExternalApisModule } from './modules/external-apis/external-apis.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { RecognitionModule } from './modules/recognition/recognition.module';
     ImgUploadModule,
     FaceapiModule,
     ActorsModule,
-    RecognitionModule,
+    //RecognitionModule,
+    ExternalApisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

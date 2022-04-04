@@ -7,6 +7,7 @@ import { ActorRepository } from './repositories/actor.repository';
 import { FaceapiModule } from '@modules/faceapi/faceapi.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { ImgUploadModule } from '@core/imageUploader/img-upload.module';
+import { UserModule } from '@modules/user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ImgUploadModule } from '@core/imageUploader/img-upload.module';
     }),
     FaceapiModule,
     ImgUploadModule,
+    UserModule,
   ],
   controllers: [ActorsController],
   providers: [ActorService, ActorRepository],

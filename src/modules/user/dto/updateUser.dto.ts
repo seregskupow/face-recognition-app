@@ -9,11 +9,6 @@ import {
 } from 'class-validator';
 
 export class UpdateUserDto {
-  @IsNotEmpty()
-  @IsString()
-  @Length(24, 24)
-  _id: string;
-
   @IsOptional()
   @IsString({ message: 'Name should be STRING type' })
   @MinLength(3)
