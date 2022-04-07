@@ -10,10 +10,18 @@ import { Home } from '../images/icons/home.js';
 import MenuIcon from '../images/icons/menu.svg';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
-
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/store/slices/user.slice';
 const icons = [FaceReco, History, Home];
 const NavBar = () => {
   const router = useRouter();
+  const { avatar, name } = useSelector(userSelector);
+  console.log({
+    user: {
+      name,
+      avatar,
+    },
+  });
   const menu = useRef<HTMLHeadingElement>(null);
   const menuBtn = useRef<HTMLHeadingElement>(null);
   const { logOut, userName, email } = useContext(AuthContext);
@@ -62,6 +70,7 @@ const NavBar = () => {
       <>
         <Logo className='logo'>RecoFun</Logo>
         <header className='header'>
+          <img src={avatar} width='80' height='80' alt='' />
           <div className='user-name-icon'>
             <span>{userName && getFirstLetters(userName)}</span>
           </div>

@@ -1,7 +1,7 @@
-import FoundActors from '@/components/FaceMatchPage/FoundActors';
-import RecognitionPhoto from '@/components/FaceMatchPage/RecognitionPhoto';
-import UploadPhoto from '@/components/FaceMatchPage/UploadPhoto';
-import WikiResults from '@/components/FaceMatchPage/WikiResults';
+import FoundActors from '@/components/Pages/FaceMatchPage/FoundActors';
+import RecognitionPhoto from '@/components/Pages/FaceMatchPage/RecognitionPhoto';
+import UploadPhoto from '@/components/Pages/FaceMatchPage/UploadPhoto';
+import WikiResults from '@/components/Pages/FaceMatchPage/WikiResults';
 import Button from '@/components/UI/Button';
 import { useActions } from '@/store/useActions';
 import { RecognitionResponse } from '@/types';
@@ -13,6 +13,7 @@ import { RecognitionService } from '@/api';
 import styles from './facematch.module.scss';
 import Test from './test.png';
 import WithActorModal from '@/components/Layouts/WithActorModal';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 const FaceMatch = () => {
   const { setMessage } = useActions();
@@ -93,7 +94,11 @@ const FaceMatch = () => {
 };
 
 FaceMatch.getLayout = (page: ReactElement) => {
-  return <WithActorModal>{page}</WithActorModal>;
+  return (
+    <MainLayout>
+      <WithActorModal>{page}</WithActorModal>
+    </MainLayout>
+  );
 };
 
 export default FaceMatch;

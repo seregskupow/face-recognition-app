@@ -15,7 +15,8 @@ export const injectStore = (_store: EnhancedStore) => {
 };
 
 export const Api: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: '/api/v1',
+  withCredentials: true,
 });
 
 Api.interceptors.response.use(function (response) {

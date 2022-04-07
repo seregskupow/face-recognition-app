@@ -1,0 +1,84 @@
+.checkbox {
+	display: flex;
+	align-items: center;
+	position: relative;
+
+	height: 25px;
+
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	font-size: 1.5rem;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	transition: all 0.1s ease;
+
+	&:active {
+		& .checkmark {
+			transform: scale(0.9);
+		}
+	}
+
+	&:hover {
+		& input ~ &.checkmark {
+			background-color: #ccc;
+		}
+	}
+
+	& input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+		height: 0;
+		width: 0;
+	}
+
+	& .checkmark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 25px;
+		width: 25px;
+
+		border-radius: 8px;
+		border: 1px solid var(--color-border);
+
+		background-color: var(--color-field);
+
+		transition: inherit;
+
+		&::after {
+			left: 9px;
+			top: 5px;
+			width: 5px;
+			height: 10px;
+			border: solid var(--accent-violet);
+			border-width: 0 3px 3px 0;
+			-webkit-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+	}
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox input:checked ~ .checkmark {
+	background-color: var(--color-hover);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark::after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox input:checked ~ .checkmark {
+	&::after {
+		display: block;
+	}
+}

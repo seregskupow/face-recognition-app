@@ -10,12 +10,13 @@ import { LoadHistoryResponse } from '@/types/index';
 
 import { useActions } from '@/store/useActions';
 
-import HistoryItem from '@/components/HistoryPage/HistoryItem';
+import HistoryItem from '@/components/Pages/HistoryPage/HistoryItem';
 
 import styles from './history.module.scss';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import WithActorModal from '@/components/Layouts/WithActorModal';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 const History = () => {
   let router = useRouter();
@@ -59,7 +60,11 @@ const History = () => {
 };
 
 History.getLayout = (page: ReactElement) => {
-  return <WithActorModal>{page}</WithActorModal>;
+  return (
+    <MainLayout>
+      <WithActorModal>{page}</WithActorModal>
+    </MainLayout>
+  );
 };
 
 export default History;

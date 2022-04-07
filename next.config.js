@@ -2,24 +2,26 @@ const withPlugins = require('next-compose-plugins');
 const withSvgr = require('next-svgr');
 const path = require('path');
 /** @type {import('next').NextConfig} */
-module.exports = withPlugins([], {
+module.exports = withPlugins([withSvgr], {
   reactStrictMode: true,
   webpack: (config, options) => {
-    config.module.rules.push({
-      test: /\.(glb|gltf)$/,
-      use: [
-        {
-          loader: 'url-loader',
-        },
-      ],
-    });
-    config.module.push({
-      test: /\.svg$/,
-      loader: 'svg-inline-loader',
-      options: {
-        removeTags: false,
-      },
-    });
+    config.module.rules.push(
+      {
+        test: /\.(glb|gltf)$/,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
+      }
+      // {
+      //   test: /\.svg$/,
+      //   loader: 'svg-inline-loader',
+      //   options: {
+      //     removeTags: false,
+      //   },
+      // }
+    );
 
     return config;
   },
@@ -35,5 +37,13 @@ module.exports = withPlugins([], {
       'res.cloudinary.com',
       'localhost',
     ],
+  },
+  rewrites: async () => {
+    return [
+      {
+        source: '/api/v1/:path*',
+        destination: 'http://localhost:1337/api/v1/:path*', // Proxy to Backend
+      },
+    ];
   },
 });

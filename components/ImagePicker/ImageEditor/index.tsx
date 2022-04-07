@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useEffect,
   useRef,
-  useState
+  useState,
 } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import Button from '@/components/UI/Button';
@@ -14,6 +14,7 @@ import Panel from '@/components/UI/Panel';
 import { disableScrolling, enableScrolling } from '@/utils/windowScroll';
 import { useActions } from '@/store/useActions';
 import useKeyPressed from '@/hooks/useKeyPressed';
+import clsx from 'clsx';
 
 type Position = {
   x: number;
@@ -30,12 +31,14 @@ export const defaultImgOptions = {
   rotate: 0,
   position: {
     x: 0.5,
-    y: 0.5
-  }
+    y: 0.5,
+  },
 };
 
 interface IImageEditor {
   image: string;
+  width: number;
+  height: number;
   getImage: (image: string) => void;
   getOptions?: (imgOptions: IimgOptions) => void;
   closePicker?: () => void;
@@ -44,21 +47,24 @@ interface IImageEditor {
 const variantsPicker = {
   initial: { opacity: 0, scale: 0.9 },
   animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.9 }
+  exit: { opacity: 0, scale: 0.9 },
 };
 const variantsBg = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
-  exit: { opacity: 0 }
+  exit: { opacity: 0 },
 };
 
 const ImageEditor: FC<IImageEditor> = ({
   image,
+  width,
+  height,
   getImage,
   getOptions = () => {},
   closePicker = () => {},
-  imgOptions = defaultImgOptions
+  imgOptions = defaultImgOptions,
 }) => {
+  const isVertical = width > height ? false : true;
   const { setMessage } = useActions();
   const [scale, setScale] = useState<number>(imgOptions.scale);
   const [rotate, setRotate] = useState<number>(imgOptions.rotate);
@@ -96,34 +102,40 @@ const ImageEditor: FC<IImageEditor> = ({
   }, []);
   return (
     <motion.div
-      key="picker_bg"
+      key='picker_bg'
       variants={variantsBg}
-      initial="initial"
-      animate="animate"
-      exit="exit"
+      initial='initial'
+      animate='animate'
+      exit='exit'
       className={styles.avatar__picker__container}
     >
       <motion.div
-        initial="initial"
-        animate="animate"
+        initial='initial'
+        animate='animate'
         className={styles.avatar__picker__bg}
         onClick={() => closePicker()}
       ></motion.div>
       <motion.div
-        key="picker"
+        key='picker'
         variants={variantsPicker}
-        initial="initial"
-        animate="animate"
-        exit="exit"
+        initial='initial'
+        animate='animate'
+        exit='exit'
         className={styles.avatar__picker}
       >
         <div className={styles.avatar__picker__inner}>
-          <div className={styles.editor__wrapper} onWheel={scrollZoom}>
+          <div
+            className={clsx(
+              styles.editor__wrapper,
+              isVertical && styles.isVertical
+            )}
+            onWheel={scrollZoom}
+          >
             <AvatarEditor
               ref={editorRef}
               image={image}
-              width={1920}
-              height={1080}
+              width={width}
+              height={height}
               border={10}
               scale={scale}
               rotate={rotate}
@@ -141,8 +153,8 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <span className={`${styles.control__label}`}>Scale:</span>
                   <Button
-                    text="Reset"
-                    color="contrast"
+                    text='Reset'
+                    color='contrast'
                     event={() => {
                       setScale(defaultImgOptions.scale);
                     }}
@@ -151,7 +163,7 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <div className={styles.slider}>
                     <input
-                      type="range"
+                      type='range'
                       min={0.5}
                       max={10}
                       step={0.1}
@@ -169,8 +181,8 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <span className={`${styles.control__label}`}>Rotation:</span>
                   <Button
-                    text="Reset"
-                    color="contrast"
+                    text='Reset'
+                    color='contrast'
                     event={() => {
                       setRotate(defaultImgOptions.rotate);
                     }}
@@ -179,7 +191,7 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <div className={styles.slider}>
                     <input
-                      type="range"
+                      type='range'
                       min={-180}
                       max={180}
                       step={1}
@@ -197,12 +209,12 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <span className={`${styles.control__label}`}>X:</span>
                   <Button
-                    text="Reset"
-                    color="contrast"
+                    text='Reset'
+                    color='contrast'
                     event={() => {
                       setPosition({
                         ...position,
-                        x: defaultImgOptions.position.x
+                        x: defaultImgOptions.position.x,
                       });
                     }}
                   />
@@ -210,7 +222,7 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <div className={styles.slider}>
                     <input
-                      type="range"
+                      type='range'
                       min={0}
                       max={1}
                       step={0.01}
@@ -232,12 +244,12 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <span className={`${styles.control__label}`}>Y:</span>
                   <Button
-                    text="Reset"
-                    color="contrast"
+                    text='Reset'
+                    color='contrast'
                     event={() => {
                       setPosition({
                         ...position,
-                        y: defaultImgOptions.position.y
+                        y: defaultImgOptions.position.y,
                       });
                     }}
                   />
@@ -245,7 +257,7 @@ const ImageEditor: FC<IImageEditor> = ({
                 <div className={styles.avatar__picker__control}>
                   <div className={styles.slider}>
                     <input
-                      type="range"
+                      type='range'
                       min={0}
                       max={1}
                       step={0.01}
@@ -265,16 +277,16 @@ const ImageEditor: FC<IImageEditor> = ({
             </div>
             <div className={styles.form__controls}>
               <Button
-                className="mr-5"
+                className='mr-5'
                 fontSize={1.5}
-                text="Apply"
-                color="contrast"
+                text='Apply'
+                color='contrast'
                 event={returnImage}
               />
               <Button
-                className="ml-5"
+                className='ml-5'
                 fontSize={1.5}
-                text="Close"
+                text='Close'
                 event={closePicker}
               />
             </div>

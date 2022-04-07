@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 
 import Link from 'next/link';
@@ -6,12 +6,13 @@ import Link from 'next/link';
 import { AwesomeButton } from 'react-awesome-button';
 import Background from '@/utils/Background';
 import 'react-awesome-button/dist/themes/theme-blue.css';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 interface HomeProps {
   isAuth: boolean;
 }
 interface State {}
-export default class Home extends Component<HomeProps, State> {
+class Home extends Component<HomeProps, State> {
   constructor(props: HomeProps) {
     super(props);
     this.state = {};
@@ -51,3 +52,8 @@ export default class Home extends Component<HomeProps, State> {
     );
   }
 }
+
+(Home as any).getLayout = (page: ReactElement) => {
+  return <MainLayout>{page}</MainLayout>;
+};
+export default Home;

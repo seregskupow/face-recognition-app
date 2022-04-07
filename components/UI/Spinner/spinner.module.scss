@@ -1,0 +1,24 @@
+.loader {
+	height: 100%;
+	width: auto;
+	text-align: center;
+	margin: 0 auto;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.spinner__loader {
+	width: auto;
+}
+.spinner__loader_white {
+	& path,
+	rect {
+		fill: $white;
+	}
+}
+.spinner__loader_black {
+	& path,
+	rect {
+		fill: $black;
+	}
+}

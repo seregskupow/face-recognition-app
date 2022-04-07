@@ -1,0 +1,82 @@
+.form__field__wrapper {
+	position: relative;
+
+	padding-bottom: 2rem;
+}
+.form__field__container {
+	position: relative;
+	width: 100%;
+	border-radius: 15px;
+	box-shadow: $smallShadow;
+	box-sizing: border-box;
+
+	&:focus-within {
+		& .form__field {
+			border-color: var(--accent-violet);
+			box-shadow: 0 0 1px 4px rgba(var(--color-contrast-rgb), 0.3);
+		}
+	}
+
+	& .show__password__btn {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 1rem;
+
+		display: flex;
+		align-items: center;
+
+		& svg {
+			font-size: 20px;
+			fill: var(--accent-violet);
+
+			cursor: pointer;
+		}
+	}
+}
+.field__error {
+	& .form__field {
+		background: $darkRed;
+		border-color: $red;
+		box-shadow: 0 0 2px 2px rgba($red, 0.3);
+	}
+	&::after,
+	&::before {
+		background: $red;
+	}
+}
+.form__field {
+	width: 100%;
+	height: 50px;
+	color: var(--text-color);
+	background-color: var(--primary);
+	border: 1px solid var(--color-border);
+	padding: 0 15px;
+
+	border-radius: 15px;
+
+	font-size: 2rem;
+
+	box-sizing: border-box;
+	transition: background 0.3s ease;
+
+	&[data-type="password"] {
+		padding-right: calc(1rem + 20px);
+	}
+
+	&:invalid {
+		color: $red;
+	}
+
+	&:disabled {
+		background-color: var(--color-field);
+	}
+}
+.form__input__error {
+	position: absolute;
+	top: calc(100% - 2rem);
+	left: 5px;
+
+	color: $red;
+	font-size: 1.5rem;
+}

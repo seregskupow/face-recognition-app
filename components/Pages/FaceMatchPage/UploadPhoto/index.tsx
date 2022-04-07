@@ -30,7 +30,11 @@ interface UploadPhotoProps {
 }
 
 const UploadPhoto: FC<UploadPhotoProps> = ({ onPhotoUpload }) => {
-  const { ImagePicker, triggerInput, urlUpload } = useImagePicker(Harley.src);
+  const { ImagePicker, triggerInput, urlUpload } = useImagePicker(
+    Harley.src,
+    1920,
+    1080
+  );
   return (
     <div className={styles.uploadPhotoWrapper}>
       <ImagePicker getImage={(photo: string) => onPhotoUpload(photo)} />

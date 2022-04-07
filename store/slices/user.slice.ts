@@ -2,22 +2,22 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '..';
 
 export type User = {
-  id: number;
+  _id: string;
   name: string;
   email: string;
   avatar: string;
 };
 export interface IUserState {
-  id: number;
+  _id: string;
   name: string;
   email: string;
   avatar: string;
 }
 export const initialUserState: IUserState = {
-  id: 0,
+  _id: '',
   name: '',
   email: '',
-  avatar: ''
+  avatar: '',
 };
 
 export const userSlice = createSlice({
@@ -26,13 +26,13 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state: IUserState, action: PayloadAction<User>) => {
       return { ...state, ...action.payload };
-    }
+    },
   },
-  extraReducers: {}
+  extraReducers: {},
 });
 
 export const userActions = userSlice.actions;
 
-//export const userSelector = (state: AppState) => state.user;
+export const userSelector = (state: AppState) => state.user;
 
 export default userSlice;

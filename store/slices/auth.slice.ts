@@ -5,22 +5,26 @@ import { initialUserState, User } from './user.slice';
 import { userActions } from './user.slice';
 import axios, { AxiosError } from 'axios';
 import { dataURItoBlob } from '@/utils/dataUriToBlob';
+import { LoginDto } from 'api/dto/login.dto';
+import { UserDto } from 'api/dto/user.dto';
+import { AuthService } from 'api/auth.service';
+import { RegisterDto } from 'api/dto/register.dto';
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:5000'
+  baseURL: 'http://localhost:5000',
 });
 
-export interface LoginDTO {
-  email: string;
-  password: string;
-}
+// export interface LoginDTO {
+//   email: string;
+//   password: string;
+// }
 
-export interface RegisterDTO {
-  email: string;
-  password: string;
-  name: string;
-  avatar: string;
-}
+// export interface RegisterDTO {
+//   email: string;
+//   password: string;
+//   name: string;
+//   avatar: string;
+// }
 
 export interface IAuthState {
   authenticationLoading: boolean;
@@ -30,7 +34,7 @@ export interface IAuthState {
 const initialState: IAuthState = {
   authenticationLoading: true,
   loading: false,
-  loggedIn: false
+  loggedIn: false,
 };
 
 export const authSlice = createSlice({
@@ -45,17 +49,17 @@ export const authSlice = createSlice({
     },
     setLoggedIn: (state: IAuthState, action: PayloadAction<boolean>) => {
       state.loggedIn = action.payload;
-    }
+    },
   },
-  extraReducers: {}
+  extraReducers: {},
 });
 const { setLoading, setLoggedIn, setAuthLoading } = authSlice.actions;
 
-const loginUser = (user: LoginDTO) => {
+const loginUser = (user: LoginDto) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true));
-      const data: User = await axiosClient.post('/auth/login', user);
+      const data: UserDto = await AuthService.login(user);
       dispatch(userActions.setUser(data));
       dispatch(setLoggedIn(true));
       dispatch(setMessage({ type: 'success', msg: 'Successful login' }));
@@ -68,27 +72,18 @@ const loginUser = (user: LoginDTO) => {
           type: 'error',
           msg:
             (error as AxiosError).response?.data.message ||
-            (error as AxiosError).message
+            (error as AxiosError).message,
         })
       );
     }
   };
 };
 
-const registerUser = (user: RegisterDTO) => {
+const registerUser = (user: RegisterDto) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true));
-      const bodyFormData = new FormData();
-      const blob = dataURItoBlob(user.avatar);
-      const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
-      bodyFormData.append('avatar', file);
-      bodyFormData.append('name', user.name);
-      bodyFormData.append('email', user.email);
-      bodyFormData.append('password', user.password);
-      const data: User = await axiosClient.post('/auth/signup', bodyFormData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const data: UserDto = await AuthService.register(user);
       dispatch(userActions.setUser(data));
       dispatch(setLoggedIn(true));
       dispatch(setMessage({ type: 'success', msg: 'Successful register' }));
@@ -101,7 +96,7 @@ const registerUser = (user: RegisterDTO) => {
           type: 'error',
           msg:
             (error as AxiosError).response?.data.message ||
-            (error as AxiosError).message
+            (error as AxiosError).message,
         })
       );
     }
@@ -112,7 +107,7 @@ const authenticateUser = () => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setAuthLoading(true));
-      const user: User = await axiosClient.get('/users/me');
+      const user: UserDto = await AuthService.checkAuth();
       console.log({ AUTHUSER: user });
       dispatch(userActions.setUser(user));
       dispatch(setLoggedIn(true));
@@ -137,7 +132,7 @@ const authenticateUser = () => {
             type: 'error',
             msg:
               (error as AxiosError).response?.data.message ||
-              (error as AxiosError).message
+              (error as AxiosError).message,
           })
         );
       }
@@ -148,7 +143,7 @@ const authenticateUser = () => {
 const logoutUser = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      await axiosClient.get('/auth/logout');
+      await AuthService.logout();
       dispatch(userActions.setUser(initialUserState));
       dispatch(setLoggedIn(false));
       dispatch(setMessage({ type: 'success', msg: 'Successful logout' }));
@@ -158,7 +153,7 @@ const logoutUser = () => {
           type: 'error',
           msg:
             (error as AxiosError).response?.data.message ||
-            (error as AxiosError).message
+            (error as AxiosError).message,
         })
       );
     }
@@ -170,9 +165,9 @@ export const authActions = {
   loginUser,
   registerUser,
   logoutUser,
-  authenticateUser
+  authenticateUser,
 };
 
-//export const authSelector = (state: AppState) => state.auth;
+export const authSelector = (state: AppState) => state.auth;
 
 export default authSlice;

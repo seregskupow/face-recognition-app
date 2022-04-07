@@ -1,0 +1,22 @@
+.AuthContainer {
+	max-width: 100vw;
+	min-height: 100vh;
+
+	display: flex;
+	align-items: center;
+
+	background: url("./recofun.png");
+	background-repeat: repeat;
+	background-attachment: fixed;
+	// background-size: 110%;
+
+	background-color: var(--primary);
+	animation: animatedBackground 1000s linear infinite;
+
+	& .AuthContainer__Inner {
+		width: 95%;
+		max-width: 975px;
+		height: 100%;
+		margin: 0 auto;
+	}
+}

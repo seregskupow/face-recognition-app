@@ -1,3 +1,7 @@
+import { AppProps } from 'next/app';
+import { NextPage } from 'next/types';
+import { ReactElement, ReactNode } from 'react';
+
 export type ActorInfo = {
   photo: string;
   name: string;
@@ -40,3 +44,13 @@ export type LoadHistoryResponse = {
   offset: number;
   data: Array<Historyitem>;
 };
+
+declare global {
+  type NextPageWithLayout = NextPage & {
+    getLayout?: (page: ReactElement) => ReactNode;
+  };
+
+  type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout;
+  };
+}

@@ -1,0 +1,54 @@
+.register__form {
+	padding: 2rem 0;
+
+	@include media("sm") {
+		width: 50%;
+	}
+
+	& input[type="file"] {
+		position: fixed;
+		top: -99999px;
+	}
+}
+
+.register__inner {
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	box-sizing: border-box;
+
+	& .register__title {
+		font-size: 3rem;
+		margin-bottom: 30px;
+	}
+}
+.avatar__wrapper {
+	width: 40%;
+	height: auto;
+
+	background: var(--accent-gradient-light);
+
+	border: 2px solid var(--color-border);
+	border-radius: 8px;
+	overflow: hidden;
+
+	cursor: pointer;
+
+	& p {
+		color: var(--color-text);
+	}
+}
+.img__controls {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+
+	& button {
+		margin: 5px 5px;
+		flex-grow: 1;
+	}
+}

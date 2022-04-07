@@ -10,7 +10,6 @@ import AvengersModel from './background.glb';
 const _ = require('lodash');
 // import Back from "../assets/background.jpg";
 
-console.log({ AvengersModel: AvengersModel });
 export default class Background {
   constructor(container) {
     this.container = container;

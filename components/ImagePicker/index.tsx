@@ -18,7 +18,9 @@ import { useActions } from '@/store/useActions';
 import axios from 'axios';
 
 export const useImagePicker = (
-  initialImage: string = AvatarPlaceholder.src
+  initialImage: string = AvatarPlaceholder.src,
+  width: number,
+  height: number
 ) => {
   const { setMessage } = useActions();
 
@@ -179,6 +181,8 @@ export const useImagePicker = (
             {showAvatarPicker && (
               <ImageEditor
                 image={originalImage as string}
+                width={width}
+                height={height}
                 getImage={(image) => {
                   setAvatar(image);
                   getImage(image);

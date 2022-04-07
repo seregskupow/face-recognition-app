@@ -1,0 +1,36 @@
+.button__container {
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.formik__submit__button {
+	width: auto;
+
+	padding: 8px 20px;
+
+	font-size: 2rem;
+	color: $white;
+
+	background: var(--accent-gradient);
+
+	border: none;
+	border-radius: 15px;
+
+	box-shadow: $smallShadow;
+
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--color-hover);
+	}
+
+	&:disabled {
+		background: var(--color-contrast-light);
+		cursor: progress;
+	}
+	& span {
+		margin-right: 5px;
+	}
+}

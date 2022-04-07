@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { Historyitem } from '@/types/index';
 import { formatDate } from '@/utils/formatDate';
-import HistoryResultBlock from '@/components/HistoryPage/HistoryResultBlock';
+import HistoryResultBlock from '@/components/Pages/HistoryPage/HistoryResultBlock';
 
 import styles from './historyItem.module.scss';
 

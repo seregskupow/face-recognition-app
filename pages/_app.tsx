@@ -17,23 +17,18 @@ import { NextPage } from 'next';
 
 injectStore(store);
 
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
-};
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
-};
-
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   const { logIn, logOut, token, userId, userName, email, ready } = useAuth();
   const isAuth = !!token;
 
+  const { authenticateUser } = useActions();
+
   const getLayout = Component.getLayout ?? ((page) => page);
   //const routes = useRoutes(!!token, state?.backgroundLocation);
   const { setMessage } = useActions();
   useEffect(() => {
+    authenticateUser();
     progressBar.on(router);
     if (typeof document === 'undefined') {
       React.useLayoutEffect = React.useEffect;
@@ -55,7 +50,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           isAuth,
         }}
       >
-        <NavBar />
         <Toast />
         {getLayout(<Component {...pageProps} />)}
       </AuthContext.Provider>
