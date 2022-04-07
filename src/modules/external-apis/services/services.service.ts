@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OMDbDto, OMDbResponseDto } from '../dto/omdb.dto';
+import { OMDbResponseDto } from '../dto/omdb.dto';
 import axios from 'axios';
 import * as utf8 from 'utf8';
 

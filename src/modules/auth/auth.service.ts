@@ -28,7 +28,7 @@ export class AuthService {
     const pass = await this.hashPassword(user.password);
 
     const newUser = await this.userService.create({ ...user, password: pass });
-
+    console.log({ createUser: newUser });
     return newUser;
   }
 

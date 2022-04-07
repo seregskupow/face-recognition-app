@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 
 export type UserDocument = User & Document;
 
 @Schema({ collection: 'users' })
 export class User {
-  @Exclude()
+  @Transform((value) => value.obj._id.toString())
   _id: string;
 
   @Prop({ required: true, min: 6, max: 255 })

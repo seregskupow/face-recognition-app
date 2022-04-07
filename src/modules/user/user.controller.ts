@@ -1,5 +1,6 @@
 import { AuthenticatedGuard } from '@core/guards/authenticated.guard';
 import { ImgUploadService } from '@core/imageUploader/img-upload.service';
+import MongooseClassSerializerInterceptor from '@core/interceptors/mongoose.interceptor';
 import { NotFoundInterceptor } from '@core/interceptors/notFound.interceptor';
 import {
   Body,
@@ -33,25 +34,27 @@ export class UserController {
     private readonly imgUploadService: ImgUploadService,
   ) {}
 
-  // @UseInterceptors(ClassSerializerInterceptor)
-  // @Post('/create')
-  // async create(@Body() userData: CreateUserDto) {
-  //   const newUser = this.userService.create(userData);
-  //   return newUser;
-  // }
+  @UseInterceptors(MongooseClassSerializerInterceptor(User))
+  @Post('/create')
+  async create(@Body() userData: CreateUserDto) {
+    const newUser = await this.userService.create(userData);
+    return newUser;
+  }
 
   @Get('/me')
   @UseGuards(AuthenticatedGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(MongooseClassSerializerInterceptor(User))
   getMe(@Req() req: SessionRequest) {
     return req.user;
   }
 
   // @Get('/id/:id')
-  // @UseGuards(AuthenticatedGuard)
-  // @UseInterceptors(ClassSerializerInterceptor)
+  // //@UseGuards(AuthenticatedGuard)
+  // @UseInterceptors(MongooseClassSerializerInterceptor(User))
   // async getUserById(@Param('id') id: string) {
-  //   return await this.userService.findOneById(id);
+  //   const u = await this.userService.findOneById(id);
+  //   console.log({ R: u });
+  //   return u;
   // }
 
   // @Get('/email/:email')
@@ -63,7 +66,7 @@ export class UserController {
   @Patch('editprofile')
   @UseGuards(AuthenticatedGuard)
   @UseInterceptors(
-    ClassSerializerInterceptor,
+    MongooseClassSerializerInterceptor(User),
     FileInterceptor('avatar'),
     new NotFoundInterceptor('No user found for given userId'),
   )

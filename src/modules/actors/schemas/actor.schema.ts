@@ -24,7 +24,6 @@ export const FilmSchema = SchemaFactory.createForClass(Film);
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 })
 export class Actor {
-  @Exclude()
   _id: string;
 
   @Prop({ required: true, min: 1, max: 255 })
@@ -45,11 +44,16 @@ export class Actor {
   @Prop({ type: [FilmSchema] })
   films: Film[];
 
+  @Exclude()
   @Prop()
   created_at: Date;
 
+  @Exclude()
   @Prop()
   updated_at: Date;
+
+  @Exclude()
+  __v: string;
 }
 
 export type ActorDocument = Actor & Document;

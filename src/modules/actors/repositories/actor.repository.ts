@@ -13,8 +13,8 @@ export class ActorRepository {
   ) {}
 
   async create(actor: ActorDto): Promise<Actor> {
-    const newActor = await this.actorModel.create(actor);
-    return plainToClass(Actor, newActor.toObject());
+    const newActor = new this.actorModel(actor);
+    return newActor.save();
   }
 
   async updateById(
@@ -26,7 +26,7 @@ export class ActorRepository {
       throw new BadRequestException('Provided id is invalid');
     }
 
-    const actor = await this.actorModel
+    return this.actorModel
       .findByIdAndUpdate(
         new Types.ObjectId(id),
         {
@@ -34,9 +34,7 @@ export class ActorRepository {
         },
         { new: true, upsert: upsert },
       )
-      .lean()
       .exec();
-    return plainToClass(Actor, actor);
   }
 
   async updateIfNotCreate(actor: UpdateActorDto): Promise<Actor> {

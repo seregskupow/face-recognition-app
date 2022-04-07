@@ -36,6 +36,11 @@ type recogniseActorsType = {
   names: string[];
   image: string;
 };
+type parsedWikiActor = {
+  photo: string;
+  name: string;
+  link: string;
+};
 
 @Injectable()
 export class ActorService {
@@ -75,7 +80,7 @@ export class ActorService {
   async parseWikiActors(names: string[]) {
     try {
       const baseUrl = 'https://en.wikipedia.org/wiki/';
-      const wikiData = [];
+      const wikiData: parsedWikiActor[] = [];
       for (let i = 0; i < names.length; i++) {
         const link = baseUrl + names[i];
         const parsed: any = await parseOGMetatags(link);

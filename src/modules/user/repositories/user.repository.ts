@@ -12,8 +12,7 @@ export class UserRepository {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const newUser = new this.userModel(createUserDto);
-    const user = await newUser.save();
-    return plainToClass(User, user.toObject());
+    return newUser.save();
   }
 
   delete(id: string) {
@@ -24,7 +23,7 @@ export class UserRepository {
   }
 
   async update(id: string, oldUser: UpdateUserDto): Promise<User> {
-    const user = await this.userModel
+    return this.userModel
       .findByIdAndUpdate(
         id,
         {
@@ -33,16 +32,13 @@ export class UserRepository {
         { new: true },
       )
       .exec();
-    return plainToClass(User, user);
   }
 
   async findOneById(id: Types.ObjectId): Promise<User> {
-    const user = await this.userModel.findById(id).lean().exec();
-    return plainToClass(User, user);
+    return this.userModel.findById(id).exec();
   }
 
   async findOneByEmail(email: string): Promise<User> {
-    const user = await this.userModel.findOne({ email }).lean().exec();
-    return plainToClass(User, user);
+    return this.userModel.findOne({ email }).exec();
   }
 }

@@ -39,8 +39,8 @@ export class AuthController {
 
   @UseGuards(DoesUserExist)
   @UseInterceptors(MongooseClassSerializerInterceptor(User))
-  @Post('signup')
-  async signUp(@Body() user: CreateUserDto, @Req() req) {
+  @Post('register')
+  async register(@Body() user: CreateUserDto, @Req() req) {
     if (req.file) {
       try {
         const dataUri =
@@ -54,9 +54,9 @@ export class AuthController {
       }
     }
     const newUser = await this.authService.createUser(user);
-    console.log({ newUser });
     req.logIn(newUser, (err) => {
       if (err) {
+        console.log(err);
         throw new InternalServerErrorException('Passport login error occured');
       }
     });
