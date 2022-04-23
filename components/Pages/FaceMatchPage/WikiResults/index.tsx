@@ -2,7 +2,7 @@ import { ActorsService } from '@/api';
 import WikiCard, { WikiLoaderCard } from '@/components/ActorCardSmall';
 import useLoadersAmount from '@/hooks/useLoadersAmount';
 import { useActions } from '@/store/useActions';
-import { WikiActorInfo } from '@/types';
+import { WikiActor } from 'api/dto/WikiActor.dto';
 import { FC, useEffect, useState } from 'react';
 import styles from './wikiResults.module.scss';
 
@@ -15,7 +15,7 @@ const WikiResults: FC<WikiResultsProps> = ({ names, recognitionFailed }) => {
   const { setMessage } = useActions();
   const loadersAmount = useLoadersAmount('WikiCard');
   const [loading, setLoading] = useState(true);
-  const [wikiActors, setWikiActors] = useState<WikiActorInfo[]>([]);
+  const [wikiActors, setWikiActors] = useState<WikiActor[]>([]);
 
   const fetchWikiActors = async (names: string[]) => {
     try {

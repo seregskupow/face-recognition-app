@@ -9,11 +9,12 @@ import clsx from 'clsx';
 
 import { FC, ReactElement, useEffect, useState } from 'react';
 
-import { RecognitionService } from '@/api';
+import { ActorsService } from '@/api';
 import styles from './facematch.module.scss';
 import Test from './test.png';
 import WithActorModal from '@/components/Layouts/WithActorModal';
 import MainLayout from '@/components/Layouts/MainLayout';
+import { recogniseActorsTypeDto } from 'api/dto/recognisedActors.dto';
 
 const FaceMatch = () => {
   const { setMessage } = useActions();
@@ -27,15 +28,17 @@ const FaceMatch = () => {
     try {
       setPhoto(photo);
       setRecognitionLoading(true);
+      setActorNames([]);
+      setRecognitionFailed(false);
       //Allow ImagePicker to close before <UploadPhoto /> unmounts
       setTimeout(() => {
         setShowImageUploader(false);
       });
 
-      const { detectedActors, imageSrc }: RecognitionResponse =
-        await RecognitionService.uploadPhoto(photo);
+      const { names, image }: recogniseActorsTypeDto =
+        await ActorsService.recogniseActors(photo);
       setRecognitionLoading(false);
-      if (detectedActors.length === 0) {
+      if (names.length === 0) {
         setRecognitionFailed(true);
         setMessage({
           msg: 'Could not find any actor in the photo',
@@ -43,8 +46,8 @@ const FaceMatch = () => {
         });
         return;
       }
-      setPhoto(imageSrc);
-      setActorNames(detectedActors);
+      setPhoto(image);
+      setActorNames(names);
     } catch (e) {
       console.log({ e });
       setMessage({ msg: (e as Error).message, type: 'error' });

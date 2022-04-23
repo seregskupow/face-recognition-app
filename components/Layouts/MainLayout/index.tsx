@@ -1,8 +1,12 @@
 import Head from 'next/head';
 import React from 'react';
 import NavBar from '@/components/NavBar';
+import Navigation from '@/components/Navigation';
+import { useSelector } from 'react-redux';
+import { authSelector } from '@/store/slices/auth.slice';
 
 const MainLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+  const { loggedIn } = useSelector(authSelector);
   return (
     <>
       <Head>
@@ -45,7 +49,8 @@ const MainLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
           crossOrigin='anonymous'
         />
       </Head>
-      <NavBar />
+      {/* <NavBar /> */}
+      {loggedIn && <Navigation />}
       {children}
     </>
   );

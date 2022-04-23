@@ -7,6 +7,7 @@ import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import useLoadersAmount from '@/hooks/useLoadersAmount';
 import styles from './foundActors.module.scss';
+import { ActorDto } from 'api/dto/actor.dto';
 
 interface FoundActorsProps {
   names: Array<string>;
@@ -22,16 +23,17 @@ const FoundActors: FC<FoundActorsProps> = ({
   const { setMessage } = useActions();
   const loadersAmount = useLoadersAmount('ActorCard');
   const [loading, setLoading] = useState(true);
-  const [foundActors, setFoundActors] = useState<ActorInfo[]>([]);
+  const [foundActors, setFoundActors] = useState<ActorDto[]>([]);
   const fetchActors = async (names: string[]) => {
     try {
       setLoading(true);
-      const data = await ActorsService.searchInfo(names, photo);
+      const data = await ActorsService.getActors(names);
       console.log({ actors: data });
       setLoading(false);
       setFoundActors(data);
       console.log({ foundActors });
     } catch (e) {
+      console.log(e);
       setLoading(false);
       setMessage({ msg: 'Couldn`t find actor info', type: 'error' });
     }

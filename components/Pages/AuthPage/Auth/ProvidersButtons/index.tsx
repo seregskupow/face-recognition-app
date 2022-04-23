@@ -21,8 +21,7 @@ const providers = {
 };
 
 const ProviderButtons: FC<any> = () => {
-  //const { authenticateUser } = useActions();
-  let authenticateUser: any = null;
+  const { authenticateUser } = useActions();
   const redirectToGoogleSSO = async (url: string) => {
     let timer: NodeJS.Timeout | null = null;
     const newWindow = window.open(url, '_blank', 'width=500,height=600');
@@ -30,7 +29,7 @@ const ProviderButtons: FC<any> = () => {
     if (newWindow) {
       timer = setInterval(() => {
         if (newWindow.closed) {
-          //authenticateUser();
+          authenticateUser();
           if (timer) clearInterval(timer);
         }
       }, 500);

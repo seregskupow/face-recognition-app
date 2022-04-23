@@ -107,7 +107,7 @@ const authenticateUser = () => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setAuthLoading(true));
-      const user: UserDto = await AuthService.checkAuth();
+      const user: UserDto = await AuthService.checkAuthClient();
       console.log({ AUTHUSER: user });
       dispatch(userActions.setUser(user));
       dispatch(setLoggedIn(true));

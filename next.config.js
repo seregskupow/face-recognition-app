@@ -36,6 +36,7 @@ module.exports = withPlugins([withSvgr], {
       'lh3.googleusercontent.com',
       'res.cloudinary.com',
       'localhost',
+      'resizing.flixster.com',
     ],
   },
   rewrites: async () => {

@@ -33,16 +33,17 @@ const History = () => {
   const page3 = () => {
     setPage(3);
   };
+  console.log({ data });
 
   const renderHistory = (): ReactElement => {
     if (error) {
       setMessage({ msg: (error as AxiosError).message, type: 'error' });
       return <>Error occured</>;
     }
-    if (!isValidating && data?.data.length) {
+    if (!isValidating && data?.history?.length) {
       return (
         <div className={clsx('mt-40')}>
-          {data?.data?.map((item) => (
+          {data?.history?.map((item) => (
             <motion.div key={item.id} animate={{ opacity: [0, 1] }}>
               <HistoryItem {...item} />
             </motion.div>

@@ -1,0 +1,137 @@
+$navHeight: 60px;
+
+.LogoBar {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	width: 100%;
+	font-size: 0.75em;
+	background-color: #2876f9;
+	background-image: linear-gradient(315deg, #2876f9 30%, #6d17cb 74%);
+	color: #fff;
+	display: inline;
+	padding: 5px;
+	text-align: center;
+	z-index: 102;
+}
+
+.LogoutBtn {
+	background-color: #990000;
+	background-image: linear-gradient(147deg, #990000 0%, #ff0000 74%);
+	color: white;
+	padding: 10px 15px;
+	border-radius: 15px;
+
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+.Header {
+	height: $navHeight;
+
+	position: fixed;
+	top: 40px;
+	right: 20px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	z-index: 100;
+
+	transition: all 0.3s ease-in-out;
+
+	&:before {
+		position: absolute;
+		content: "";
+	}
+	.UsernameIcon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		background: var(--accent-gradient-light);
+		backdrop-filter: blur(15px);
+		border-radius: 20px;
+
+		box-shadow: var(--small-shadow);
+
+		height: 100%;
+		width: $navHeight;
+
+		transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+		&:hover {
+			box-shadow: 0 0 1px 3px rgba(#6d17cb, 0.8);
+			border-color: #6d17cb;
+		}
+
+		cursor: pointer;
+
+		& .UserAvatar {
+			width: $navHeight;
+			height: $navHeight;
+
+			border: 1px solid var(--color-border);
+			border-radius: 20px;
+		}
+
+		& span {
+			color: var(--white-text);
+
+			text-shadow: $VolumeTextShadow;
+			font-size: 3rem;
+		}
+	}
+	& .Nav {
+		display: flex;
+		gap: 1rem;
+
+		height: 100%;
+
+		padding: 1rem;
+		margin-right: 10px;
+
+		// background-color: var(--transparent-grey) !important;
+		// backdrop-filter: blur(15px);
+
+		background-color: var(--secondary);
+
+		border: 1px solid var(--color-border);
+		border-radius: 20px;
+
+		box-shadow: var(--small-shadow);
+		box-sizing: border-box;
+
+		& .MenuItem {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			& .MenuLink {
+				font-size: 1.5rem;
+				padding: 10px;
+				color: $darkWhite;
+				text-decoration: none;
+				background: var(--accent-gradient-light);
+				border-radius: 15px;
+
+				box-shadow: var(--small-shadow);
+
+				transition: background 0.3s ease-in-out, box-shadow 0.2s ease;
+
+				&.ActiveLink {
+					background: var(--accent-gradient);
+				}
+
+				&:hover {
+					box-shadow: 0 0 1px 2px rgba(#6d17cb, 0.8);
+
+					&.ActiveLink {
+						box-shadow: none;
+					}
+				}
+			}
+		}
+	}
+}

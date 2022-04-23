@@ -7,6 +7,8 @@ type FilmDto = {
 };
 
 export class ActorDto {
+  id: string;
+
   name: string;
 
   photo: string;

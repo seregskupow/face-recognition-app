@@ -6,6 +6,8 @@ import styles from './registerPage.module.scss';
 // import { ensureAuth } from '@/utils/ensureAuth';
 // import { GetServerSideProps } from 'next';
 import { ReactElement } from 'react';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { AuthService } from '@/api';
 
 function Register() {
   return (
@@ -25,21 +27,7 @@ function Register() {
 Register.getLayout = (page: ReactElement) => {
   return <AuthLayout>{page}</AuthLayout>;
 };
+
+
 export default Register;
 
-// export const getServerSideProps: GetServerSideProps =
-//   wrapper.getServerSideProps(() => async (ctx) => {
-//     if (await ensureAuth(ctx)) {
-//       return {
-//         redirect: {
-//           permanent: true,
-//           destination: '/',
-//         },
-//         props: {},
-//       };
-//     }
-
-//     return {
-//       props: {},
-//     };
-//   });

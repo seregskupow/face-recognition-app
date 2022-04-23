@@ -20,7 +20,7 @@ const ActorPageComponent: FC<ActorPageComponentProps> = ({ actorName }) => {
     (key, actorName) => ActorsService.getActorinfo(actorName),
     { revalidateOnFocus: false }
   );
-  const filmNames = actorInfo?.films.map((film) => film.filmName);
+  const filmNames = actorInfo?.films.map((film) => film.title);
   const {
     data: filmsData,
     isValidating: filmsLoaing,

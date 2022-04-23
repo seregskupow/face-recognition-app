@@ -30,6 +30,7 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
       if (target === bgRef.current) setShowActors(false);
     }
   };
+  console.log({ usedImage });
   return (
     <div className={clsx(styles.ResultBlock)}>
       <div className={styles.inner}>
@@ -41,7 +42,7 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
             onError={(e) => (e.currentTarget.src = PlaceHolder)}
           /> */}
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_ADRESS}/${usedImage}`}
+            src={usedImage}
             className={styles.ResultImage}
             alt='usedImage'
           />
