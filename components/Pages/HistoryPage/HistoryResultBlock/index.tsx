@@ -30,7 +30,6 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
       if (target === bgRef.current) setShowActors(false);
     }
   };
-  console.log({ usedImage });
   return (
     <div className={clsx(styles.ResultBlock)}>
       <div className={styles.inner}>

@@ -4,13 +4,14 @@ const path = require('path');
 /** @type {import('next').NextConfig} */
 module.exports = withPlugins([withSvgr], {
   reactStrictMode: true,
-  webpack: (config, options) => {
+  webpack: (config) => {
     config.module.rules.push(
       {
         test: /\.(glb|gltf)$/,
         use: [
           {
             loader: 'url-loader',
+            options: {},
           },
         ],
       }

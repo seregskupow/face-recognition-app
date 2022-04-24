@@ -33,7 +33,9 @@ const DesktopMenu: FC = () => {
   };
   return (
     <Fragment>
-      <div className={styles.LogoBar}>RecoFun</div>
+      <div className={styles.Logo}>
+        <span>RecoFun</span>{' '}
+      </div>
       <header className={styles.Header}>
         <nav className={styles.Nav}>
           {linkData.map((link, index) => (

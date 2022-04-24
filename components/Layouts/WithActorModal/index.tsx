@@ -4,7 +4,6 @@ import { FC, Fragment } from 'react';
 
 const WithActorModal: FC<{ children?: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
-  console.log(router.query);
   return (
     <Fragment>
       {children}

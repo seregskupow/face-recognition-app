@@ -16,7 +16,6 @@ interface GoogleMapProps {
 }
 const GoogleMap: FC<GoogleMapProps> = ({ address }) => {
   const { setMessage } = useActions();
-  console.log({ address });
   const onGoogleApiLoadedHandler = (
     map: google.maps.Map,
     maps: typeof google.maps

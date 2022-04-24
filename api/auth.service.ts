@@ -1,3 +1,4 @@
+import { cookiesTostring } from '@/utils/cookiesToString';
 import { dataURItoBlob } from '@/utils/dataUriToBlob';
 import { GetServerSidePropsContext } from 'next';
 import { NextRequest } from 'next/server';
@@ -32,16 +33,11 @@ export const AuthService = {
   },
   async checkAuthMiddleware(req: NextRequest) {
     let isAuth: boolean = true;
-    const cookie = req?.cookies;
-    let cookieStr = '';
-    for (let key in cookie) {
-      cookieStr += `${key}=${cookie[key]};`;
-    }
     await fetch('http://localhost:1337/api/v1/users/me', {
       method: 'GET',
       credentials: 'include',
       headers: {
-        Cookie: cookieStr,
+        Cookie: cookiesTostring(req?.cookies || ''),
       },
     })
       .then((res) => {
