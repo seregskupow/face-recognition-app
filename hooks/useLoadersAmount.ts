@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-type LoaderType = 'ActorCard' | 'WikiCard';
+type LoaderType = 'ActorCard' | 'WikiCard' | 'HistoryBlock';
 
 interface useLoadersAmountProps {
   (loaderType: LoaderType): number;
@@ -13,20 +13,25 @@ type BreakPoints = {
 const breakPoints: BreakPoints = {
   md: 975,
   lg: 1280,
-  max: 1920
+  max: 1920,
 };
 
 const loaders: { [field in LoaderType]: BreakPoints } = {
   ActorCard: {
     md: 3,
     lg: 6,
-    max: 9
+    max: 9,
   },
   WikiCard: {
     md: 3,
     lg: 5,
-    max: 5
-  }
+    max: 5,
+  },
+  HistoryBlock: {
+    md: 3,
+    lg: 6,
+    max: 9,
+  },
 };
 
 const countLoadersAmount = (loaderType: LoaderType): number => {

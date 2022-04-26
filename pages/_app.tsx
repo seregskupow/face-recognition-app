@@ -6,7 +6,7 @@ import Loader from '@/components/Loader';
 import NavBar from '@/components/NavBar';
 import Toast from '@/components/UI/Toast';
 import { useActions } from '@/store/useActions';
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { ReactElement, ReactNode, useEffect, useRef } from 'react';
 import { store, wrapper } from '@/store/index';
 import { injectStore } from '@/api';
 import { Provider } from 'react-redux';
@@ -20,6 +20,7 @@ injectStore(store);
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   const { logIn, logOut, token, userId, userName, email, ready } = useAuth();
+
   const isAuth = !!token;
 
   const { authenticateUser } = useActions();

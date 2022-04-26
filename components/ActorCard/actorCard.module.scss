@@ -102,7 +102,7 @@
 
 .ActorLoaderCard {
 	& .imgWrap {
-		background: linear-gradient(to right, var(--primary) 4%, #292d36 25%, var(--primary) 36%);
+		background: linear-gradient(to right, var(--secondary-darker) 4%, #292d36 25%, var(--secondary-darker) 36%);
 		background-size: 1000px 100%;
 
 		animation: shimmer 2s infinite;
@@ -148,7 +148,7 @@
 
 .shimmerText {
 	animation: shimmer 2s infinite;
-	background: linear-gradient(to right, var(--primary) 4%, #292d36 25%, var(--primary) 36%);
+	background: linear-gradient(to right, var(--secondary-darker) 4%, #292d36 25%, var(--secondary-darker) 36%);
 	background-size: 1000px 100%;
 }
 @keyframes shimmer {

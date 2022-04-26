@@ -135,6 +135,7 @@ input[type="range"] {
 :root {
 	--primary: #{$backgroundGrey};
 	--secondary: #{$foregroundGrey};
+	--secondary-darker: #{$foregroundGreyDark};
 	--transparent-grey: #{$transparentGrey};
 	--accent-blue: #{$blue};
 	--accent-violet: #{$violet};

@@ -68,6 +68,7 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
                 <div key={actor.id} className={styles.item}>
                   <Link
                     scroll={false}
+                    shallow={true}
                     href={`/history/?actor=${actor.name?.split(' ').join('_')}`}
                     as={`/actorinfo/${actor.name?.split(' ').join('_')}`}
                   >
@@ -96,3 +97,20 @@ const HistoryResultBlock: FC<HistoryResultBlockProps> = ({
   );
 };
 export default HistoryResultBlock;
+
+const HistoryResultBlockLoader: FC = () => {
+  return (
+    <div className={clsx(styles.ResultBlockLoader)}>
+      <div className={styles.inner}>
+        <div className={styles.Image}></div>
+        <div className={styles.ReasultImageWrapper}></div>
+        <div className={clsx('mt-10')}>
+          <div className={styles.Button}></div>
+					<div className={styles.Button}></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export { HistoryResultBlockLoader };

@@ -10,3 +10,34 @@
 		margin-bottom: 5rem;
 	}
 }
+.ErrorBlock {
+	display: inline-block;
+
+	background-color: $lightRed;
+
+	padding: 1rem;
+
+	border-radius: 15px;
+	border: 2px solid $red;
+
+	& p {
+		font-size: 1.8rem;
+		color: var(--dark-text);
+	}
+}
+
+.LoadersWrapper {
+	width: 100%;
+	display: grid;
+	grid-gap: 2rem;
+	grid-template-columns: repeat(1, 1fr);
+
+	@include media("md") {
+		padding: 2rem;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@include media("lg") {
+		padding: 0rem;
+		grid-template-columns: repeat(3, 1fr);
+	}
+}

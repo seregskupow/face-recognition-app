@@ -75,21 +75,30 @@ $navHeight: 60px;
 		position: absolute;
 		content: "";
 	}
-	.UsernameIcon {
+
+	.AccountBtnContainer {
+		position: relative;
+
+		height: 100%;
+	}
+
+	.AccountBtn {
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-between;
 
-		background: var(--accent-gradient-light);
-		backdrop-filter: blur(15px);
+		height: 100%;
+
+		background-color: var(--secondary);
+
 		border-radius: 20px;
+		border: 1px solid var(--color-border);
 
 		box-shadow: var(--small-shadow);
 
-		height: 100%;
-		width: $navHeight;
-
 		transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+		overflow: hidden;
 
 		&:hover {
 			box-shadow: 0 0 1px 3px rgba(#6d17cb, 0.8);
@@ -99,18 +108,45 @@ $navHeight: 60px;
 		cursor: pointer;
 
 		& .UserAvatar {
-			width: $navHeight;
-			height: $navHeight;
+			height: 100%;
+			width: auto;
 
-			border: 1px solid var(--color-border);
 			border-radius: 20px;
 		}
 
-		& span {
+		& .Placeholder {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			height: 100%;
+			width: $navHeight;
+
+			background: var(--accent-gradient-dark);
+
+			border-radius: 20px;
+
 			color: var(--white-text);
 
 			text-shadow: $VolumeTextShadow;
 			font-size: 3rem;
+		}
+
+		& .Arrow {
+			display: flex;
+			align-items: center;
+			margin: 0 5px;
+
+			& svg {
+				font-size: 2rem;
+				transition: transform 0.2s ease;
+			}
+			& svg[data-open="true"] {
+				transform: rotate(-180deg);
+			}
+			& svg[data-open="false"] {
+				transform: rotate(0deg);
+			}
 		}
 	}
 	& .Nav {
@@ -163,5 +199,67 @@ $navHeight: 60px;
 				}
 			}
 		}
+	}
+}
+
+.DropdownMenu {
+	position: absolute;
+	top: 110%;
+	right: 0;
+
+	min-width: 200px;
+	max-width: 300px;
+
+	padding: 1rem;
+
+	transform-origin: top;
+
+	background-color: var(--secondary);
+
+	border-radius: 20px;
+	border: 1px solid var(--color-border);
+
+	box-shadow: var(--small-shadow);
+
+	& .DropdownItem {
+		display: flex;
+		align-items: center;
+
+		margin-left: 25px;
+
+		font-size: 1.5rem;
+
+		&.UserNameItem {
+			margin-left: 0px;
+			margin-bottom: 10px;
+
+			padding-bottom: 5px;
+
+			border-bottom: 1px solid var(--color-border);
+			& .Icon {
+				& svg {
+					font-size: 3rem;
+					fill: url("#blue-violet");
+				}
+			}
+		}
+
+		& .Icon {
+			display: flex;
+			align-items: center;
+
+			margin-right: 10px;
+
+			& svg {
+				font-size: 2rem;
+				fill: url("#blue-violet");
+			}
+		}
+	}
+
+	& .UserName {
+		font-size: 1.5rem;
+
+		text-align: center;
 	}
 }

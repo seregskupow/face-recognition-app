@@ -4,6 +4,9 @@ const path = require('path');
 /** @type {import('next').NextConfig} */
 module.exports = withPlugins([withSvgr], {
   reactStrictMode: true,
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack: (config) => {
     config.module.rules.push(
       {

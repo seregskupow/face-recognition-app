@@ -1,4 +1,5 @@
-.ResultBlock {
+.ResultBlock,
+.ResultBlockLoader {
 	width: auto;
 	// display: inline-block;
 	position: relative;
@@ -88,5 +89,35 @@
 		// & .item {
 		// 	margin: auto;
 		// }
+	}
+}
+
+.ResultBlockLoader {
+	& .Image {
+		height: 300px;
+		width: 100%;
+
+		margin: 0 auto;
+
+		background: linear-gradient(to right, var(--secondary-darker) 4%, #292d36 25%, var(--secondary-darker) 36%);
+		background-size: 1000px 100%;
+
+		animation: shimmer 2s infinite;
+
+		border-radius: 15px;
+		box-shadow: var(--small-shadow);
+	}
+	& .Button {
+		display: inline-block;
+		margin-right: 10px;
+		height: 40px;
+		width: 150px;
+		background: linear-gradient(to right, var(--secondary-darker) 4%, #292d36 25%, var(--secondary-darker) 36%);
+		background-size: 1000px 100%;
+
+		animation: shimmer 2s infinite;
+
+		border-radius: 10px;
+		box-shadow: var(--small-shadow);
 	}
 }

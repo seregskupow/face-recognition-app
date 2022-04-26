@@ -2,7 +2,7 @@ import { ActorsService } from '@/api';
 import clsx from 'clsx';
 import React, { FC, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useSWR from 'swr';
 import GoogleMap from '@/components/GoogleMap';
 import styles from './actorInfoModal.module.scss';
@@ -24,7 +24,18 @@ const ActorInfoModal: FC<ActorInfoModalProps> = ({ actorName }) => {
   const closeModal = () => {
     setClose(true);
     setTimeout(() => {
+      // console.log({ router });
       router.back();
+      // router.push(
+      //   {
+      //     pathname: '/history',
+      //     query: {
+      //       page: 2,
+      //     },
+      //   },
+      //   undefined,
+      //   { shallow: true }
+      // );
     }, opacityTransition + 100);
   };
   const closeModalBGHandler = (e: React.MouseEvent) => {
